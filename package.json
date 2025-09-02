@@ -5,8 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "echo 'Build complete'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
@@ -21,6 +25,7 @@
   },
   "homepage": "https://github.com/TCC-262/BibliotecaAtiva-TCC2025#readme",
   "dependencies": {
+    "@supabase/supabase-js": "^2.56.1",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "ejs": "^3.1.10",

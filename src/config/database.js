@@ -1,23 +1,26 @@
-import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
+import { Sequelize } from 'sequelize';
+import { createClient } from '@supabase/supabase-js';
 
-dotenv.config();
+// Configuração do Supabase
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS,
-  {
-    host: process.env.DB_HOST,
-    dialect: "mysql",
-  }
-);
-
-try {
-  await sequelize.authenticate();
-  console.log("Conectado ao banco de dados com sucesso!");
-} catch (error) {
-  console.error("Erro ao conectar ao banco de dados:", error);
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Variáveis do Supabase não configuradas');
 }
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Configuração do Sequelize para Supabase
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
+  logging: false
+});
 
 export default sequelize;
