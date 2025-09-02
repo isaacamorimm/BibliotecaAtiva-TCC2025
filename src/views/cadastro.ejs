@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro - Biblioteca Ativa</title>
+</head>
+<body>
+  <h1>Cadastro de Email</h1>
+
+  <% if (error) { %>
+    <p style="color:red;"><%= error %></p>
+  <% } %>
+
+  <form action="/cadastro" method="POST">
+    <div>
+      <label>Nome</label><br />
+      <input type="text" name="nome" placeholder="Nome" required />
+    </div>
+
+    <div>
+      <label>Sobrenome</label><br />
+      <input type="text" name="sobrenome"  placeholder="Sobrenome" required />
+    </div>
+    
+    <div>
+      <label>E-mail institucional</label><br />
+      <input type="email" name="email" value="<%= form?.email || '' %>" placeholder="E-mail" required />
+    </div>
+
+    <div>
+      <label>Senha</label><br />
+      <input type="password" name="senha" placeholder="Senha" minlength="8" required />
+    </div>
+
+    <div>
+      <label>Confirmar senha</label><br />
+      <input type="password" name="confirmarSenha" placeholder="Confirme a senha" minlength="8" required />
+    </div>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <p>Já tem conta? <a href="/login">Entrar</a></p>
+</body>
+</html>

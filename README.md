@@ -1,2 +1,2 @@
-# BibliotecaAtiva-TCC2025
-
+# BibliotecaAtiva
+TCC da ETEC Bartolomeu Bueno da Silva Anhaguera

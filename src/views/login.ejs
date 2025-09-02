@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Biblioteca Ativa</title>
+</head>
+<body>
+  <h1>Biblioteca Ativa - Login</h1>
+
+  <% if (error) { %>
+    <p style="color:red;"><%= error %></p>
+  <% } %>
+
+ <form action="/login" method="POST">
+  <input type="email" name="email" placeholder="Digite o seu email constitucional" required />
+  <input type="password" name="senha" placeholder="Sua senha" required />
+  <button type="submit">Entrar</button>
+  <h3>Não é registrado?</h3>
+  <a href="/cadastro">Cadastrar</a>
+</form>
+
+</body>
+</html>
