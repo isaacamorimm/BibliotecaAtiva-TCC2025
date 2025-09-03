@@ -10,10 +10,14 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
 import livroRepository from "./src/repositories/livroRepository.js";
+import connectPgSimple from "connect-pg-simple";
+import pg from "pg";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const PgStore = connectPgSimple(session);
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 // Configuração do EJS
 app.set("view engine", "ejs");
@@ -23,13 +27,17 @@ app.set("views", path.join(__dirname, "src/views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "segredo-super-seguro",
+    store: new PgStore({ pool }),
+    secret: process.env.SESSION_SECRET || "segredo-super-seguro",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 } // 1 hora
+    cookie: {
+      maxAge: 1000 * 60 * 60, // 1 hora
+      secure: process.env.NODE_ENV === "production", // cookie só HTTPS em produção
+      sameSite: "lax"
+    }
   })
 );
-
 // Inicialize o Passport
 app.use(passport.initialize());
 app.use(passport.session());

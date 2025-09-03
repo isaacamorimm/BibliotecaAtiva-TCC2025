@@ -10,7 +10,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
       rejectUnauthorized: false
     }
   },
-  dialectModule: await import('pg').then(mod => mod.default) // ← Adicione esta linha
+  dialectModule: await import('pg').then(mod => mod.default) 
 });
 
 export default sequelize;
