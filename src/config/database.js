@@ -14,7 +14,6 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 // Configuração do Sequelize para Supabase
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
-  dialectModule: require('pg'), // ← Adicione esta linha
   logging: false,
   dialectOptions: {
     ssl: {
