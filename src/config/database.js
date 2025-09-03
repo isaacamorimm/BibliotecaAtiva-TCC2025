@@ -1,17 +1,6 @@
 import { Sequelize } from 'sequelize';
-import { createClient } from '@supabase/supabase-js';
 
-// Configuração do Supabase
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Variáveis do Supabase não configuradas');
-}
-
-export const supabase = createClient(supabaseUrl, supabaseKey);
-
-// Configuração do Sequelize para Supabase
+// Configuração do Sequelize com importação dinâmica do pg
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   logging: false,
@@ -20,7 +9,8 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
       require: true,
       rejectUnauthorized: false
     }
-  }
+  },
+  dialectModule: await import('pg').then(mod => mod.default) // ← Adicione esta linha
 });
 
 export default sequelize;
