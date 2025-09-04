@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "bibliotecaativa",
   "version": "1.0.0",
   "description": "TCC da ETEC Bartolomeu Bueno da Silva Anhaguera",
