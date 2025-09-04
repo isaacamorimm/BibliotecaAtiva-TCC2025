@@ -1,0 +1,113 @@
+body {
+    background: #f3e2d2;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container {
+    width: 350px;
+    margin: 80px auto;
+    background: #d9ac8a;
+    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(169,84,68,0.10);
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-container h2 {
+    margin-bottom: 24px;
+    color: #a45444;
+    font-weight: 700;
+}
+
+.login-container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container label {
+    margin-bottom: 8px;
+    color: #a45444;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    border: 1px solid #dba474;
+    border-radius: 4px;
+    font-size: 15px;
+    background: #f3e2d2;
+    color: #a45444;
+    transition: border 0.2s;
+}
+
+.login-container input[type="email"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #c98c67;
+    outline: none;
+}
+
+.login-container button {
+    padding: 12px 0;
+    background: #a45444;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-container button:hover {
+    background: #c98c67;
+}
+
+.login-container .login-links {
+    margin-top: 18px;
+    text-align: center;
+}
+
+.login-container .login-links span {
+    color: #a45444;
+    font-size: 14px;
+}
+
+.login-container .login-links a {
+    color: #a45444;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 0 8px;
+    font-weight: 600;
+}
+
+.login-container .login-links a:hover {
+    text-decoration: underline;
+    color: #c98c67;
+}
+@media (max-width: 500px) {
+    .login-container {
+        width: 95vw;
+        padding: 24px 8px;
+        margin: 40px auto;
+    }
+    .login-container h2 {
+        font-size: 1.4rem;
+    }
+    .login-container form label,
+    .login-container .login-links span,
+    .login-container .login-links a {
+        font-size: 13px;
+    }
+    .login-container button {
+        font-size: 15px;
+        padding: 10px 0;
+    }
+}

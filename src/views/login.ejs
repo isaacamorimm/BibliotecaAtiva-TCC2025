@@ -3,22 +3,364 @@
 <head>
   <meta charset="UTF-8">
   <title>Login - Biblioteca Ativa</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #9e4a3c;
+      --primary-light: #c98c67;
+      --primary-dark: #7a372b;
+      --accent: #ff7e5f;
+      --background: #faf7f4;
+      --surface: #ffffff;
+      --text: #333333;
+      --text-light: #777777;
+      --error: #e53935;
+      --success: #43a047;
+      --border: #e0e0e0;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--background);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .tagline {
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    .login-container {
+      max-width: 400px;
+      width: 100%;
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 40px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .login-container h2 {
+      margin-bottom: 25px;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .login-container label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      z-index: 1;
+    }
+
+    .login-container input[type="email"],
+    .login-container input[type="password"],
+    .login-container input[type="text"] {
+      width: 100%;
+      padding: 14px 50px 14px 45px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: var(--background);
+      color: var(--text);
+      transition: var(--transition);
+    }
+
+    .login-container input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(158, 74, 60, 0.15);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1rem;
+      z-index: 2;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .password-toggle:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--primary);
+    }
+
+    .login-container button[type="submit"] {
+      padding: 16px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .login-container button[type="submit"]:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(158, 74, 60, 0.25);
+    }
+
+    .login-container button[type="submit"]:active {
+      transform: translateY(0);
+    }
+
+    .login-container .login-links {
+      margin-top: 25px;
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .login-container .login-links span {
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    .login-container .login-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin: 0 8px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .login-container .login-links a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .error-msg {
+      color: var(--error);
+      background: #ffebee;
+      border: 1px solid #ffcdd2;
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-light);
+    }
+
+    .forgot-password {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .forgot-password:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+      .login-container {
+        padding: 30px 20px;
+      }
+      
+      .remember-forgot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Biblioteca Ativa - Login</h1>
+  <div class="header">
+    <div class="logo"><i class="fas fa-book-open"></i></div>
+    <h1 class="logo-text">Biblioteca Ativa</h1>
+    <p class="tagline">Sua plataforma de conhecimento digital</p>
+  </div>
 
-  <% if (error) { %>
-    <p style="color:red;"><%= error %></p>
-  <% } %>
+  <div class="login-container">
+    <h2>Login</h2>
 
- <form action="/login" method="POST">
-  <input class="input" type="email" name="email" placeholder="Digite o seu email" required />
-  <input type="password" name="senha" placeholder="Sua senha" required />
-  <button type="submit">Entrar</button>
-  <h3>Não é registrado?</h3>
-  <a href="/cadastro">Cadastrar</a>
-</form>
+    <% if (error) { %>
+      <div class="error-msg">
+        <i class="fas fa-exclamation-circle"></i>
+        <%= error %>
+      </div>
+    <% } %>
 
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-with-icon">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" name="email" id="email" placeholder="Digite o seu email" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <div class="input-with-icon">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" name="senha" id="senha" placeholder="Sua senha" required />
+          <button type="button" class="password-toggle" id="toggleSenha">
+            <i class="far fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="remember-forgot">
+        <label class="remember">
+          <input type="checkbox" name="remember">
+          <span>Lembrar-me</span>
+        </label>
+        <a href="/esqueci-senha" class="forgot-password">Esqueci a senha</a>
+      </div>
+
+      <button type="submit">
+        <i class="fas fa-sign-in-alt"></i>
+        Entrar
+      </button>
+    </form>
+
+    <div class="login-links">
+      <span>Não é registrado?</span>
+      <a href="/cadastro">Cadastrar</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const passwordInput = document.getElementById('senha');
+      const togglePasswordBtn = document.getElementById('toggleSenha');
+      
+      togglePasswordBtn.addEventListener('click', function() {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          passwordInput.style.fontFamily = 'inherit';
+          passwordInput.style.letterSpacing = 'normal';
+          togglePasswordBtn.innerHTML = '<i class="far fa-eye-slash"></i>';
+        } else {
+          passwordInput.type = 'password';
+          passwordInput.style.fontFamily = 'inherit';
+          passwordInput.style.letterSpacing = 'normal';
+          togglePasswordBtn.innerHTML = '<i class="far fa-eye"></i>';
+        }
+        passwordInput.focus();
+      });
+    });
+  </script>
 </body>
 </html>

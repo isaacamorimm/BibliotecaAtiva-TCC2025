@@ -3,43 +3,191 @@
 <head>
   <meta charset="UTF-8" />
   <title>Cadastro - Biblioteca Ativa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/cadastro.css">
 </head>
 <body>
-  <h1>Cadastro de Email</h1>
+  <div class="header">
+    <div class="logo"><i class="fas fa-book-open"></i></div>
+    <h1 class="logo-text">Biblioteca Ativa</h1>
+    <p class="tagline">Sua plataforma de conhecimento digital</p>
+  </div>
 
-  <% if (error) { %>
-    <p style="color:red;"><%= error %></p>
-  <% } %>
+  <div class="cadastro-container">
+    <h2>Cadastro de Email</h2>
 
-  <form action="/cadastro" method="POST">
-    <div>
-      <label>Nome</label><br />
-      <input type="text" name="nome" placeholder="Nome" required />
+    <% if (error) { %>
+      <p class="error-msg">
+        <i class="fas fa-exclamation-circle"></i>
+        <%= error %>
+      </p>
+    <% } %>
+
+    <form action="/cadastro" method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <div class="input-with-icon">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" name="nome" id="nome" placeholder="Nome" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sobrenome">Sobrenome</label>
+          <div class="input-with-icon">
+            <i class="fas fa-user-tag input-icon"></i>
+            <input type="text" name="sobrenome" id="sobrenome" placeholder="Sobrenome" required />
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="email">E-mail institucional</label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" name="email" id="email" value="<%= form?.email || '' %>" placeholder="E-mail" required />
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="senha">Senha</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" name="senha" id="senha" placeholder="Senha" minlength="8" required />
+            <button type="button" class="password-toggle" id="toggleSenha">
+              <i class="far fa-eye"></i>
+            </button>
+          </div>
+          <div class="password-strength">
+            <div class="strength-meter" id="passwordStrength"></div>
+          </div>
+          <div class="password-feedback" id="passwordFeedback">Digite pelo menos 8 caracteres</div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="confirmarSenha">Confirmar senha</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirme a senha" minlength="8" required />
+            <button type="button" class="password-toggle" id="toggleConfirmSenha">
+              <i class="far fa-eye"></i>
+            </button>
+          </div>
+          <div class="password-feedback" id="confirmPasswordFeedback"></div>
+        </div>
+      </div>
+
+      <button type="submit">
+        <i class="fas fa-user-plus"></i>
+        Cadastrar
+      </button>
+    </form>
+
+    <div class="cadastro-links">
+      <span>Já tem conta?</span>
+      <a href="/login">Entrar</a>
     </div>
+  </div>
 
-    <div>
-      <label>Sobrenome</label><br />
-      <input type="text" name="sobrenome"  placeholder="Sobrenome" required />
-    </div>
-    
-    <div>
-      <label>E-mail institucional</label><br />
-      <input type="email" name="email" value="<%= form?.email || '' %>" placeholder="E-mail" required />
-    </div>
+  <div class="footer">
+    <p>&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
+  </div>
 
-    <div>
-      <label>Senha</label><br />
-      <input type="password" name="senha" placeholder="Senha" minlength="8" required />
-    </div>
-
-    <div>
-      <label>Confirmar senha</label><br />
-      <input type="password" name="confirmarSenha" placeholder="Confirme a senha" minlength="8" required />
-    </div>
-
-    <button type="submit">Cadastrar</button>
-  </form>
-
-  <p>Já tem conta? <a href="/login">Entrar</a></p>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elementos do DOM
+      const passwordInput = document.getElementById('senha');
+      const confirmPasswordInput = document.getElementById('confirmarSenha');
+      const passwordStrength = document.getElementById('passwordStrength');
+      const passwordFeedback = document.getElementById('passwordFeedback');
+      const confirmPasswordFeedback = document.getElementById('confirmPasswordFeedback');
+      const togglePasswordBtn = document.getElementById('toggleSenha');
+      const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmSenha');
+      
+      // Estado inicial
+      passwordFeedback.textContent = 'Digite pelo menos 8 caracteres';
+      
+      // Funcionalidade para mostrar/ocultar senha
+      function setupPasswordToggle(button, input) {
+        button.addEventListener('click', function() {
+          if (input.type === 'password') {
+            input.type = 'text';
+            button.innerHTML = '<i class="far fa-eye-slash"></i>';
+          } else {
+            input.type = 'password';
+            button.innerHTML = '<i class="far fa-eye"></i>';
+          }
+          input.focus();
+        });
+      }
+      
+      setupPasswordToggle(togglePasswordBtn, passwordInput);
+      setupPasswordToggle(toggleConfirmPasswordBtn, confirmPasswordInput);
+      
+      // Verificador de força da senha
+      passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        
+        // Reset
+        passwordStrength.className = 'strength-meter';
+        
+        if (password.length === 0) {
+          passwordFeedback.textContent = 'Digite pelo menos 8 caracteres';
+          passwordStrength.style.width = '0%';
+          return;
+        }
+        
+        // Calcular força
+        let strength = 0;
+        let feedback = '';
+        
+        // Verificar comprimento
+        if (password.length >= 8) strength += 20;
+        if (password.length >= 12) strength += 10;
+        
+        // Verificar variedade de caracteres
+        if (/[A-Z]/.test(password)) strength += 20;
+        if (/[0-9]/.test(password)) strength += 20;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 30;
+        
+        // Limitar a 100%
+        strength = Math.min(strength, 100);
+        
+        // Atualizar visual e feedback
+        passwordStrength.style.width = strength + '%';
+        
+        if (strength < 40) {
+          passwordStrength.classList.add('strength-weak');
+          feedback = 'Senha fraca';
+        } else if (strength < 70) {
+          passwordStrength.classList.add('strength-medium');
+          feedback = 'Senha média';
+        } else {
+          passwordStrength.classList.add('strength-strong');
+          feedback = 'Senha forte!';
+        }
+        
+        passwordFeedback.textContent = feedback;
+        
+        // Verificar se as senhas coincidem
+        validatePasswordMatch();
+      });
+      
+      // Validar correspondência de senhas
+      function validatePasswordMatch() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        
+        if (confirmPassword.length > 0 && password !== confirmPassword) {
+          confirmPasswordFeedback.textContent = 'As senhas não coincidem';
+          confirmPasswordFeedback.style.color = 'var(--error)';
+        } else {
+          confirmPasswordFeedback.textContent = '';
+        }
+      }
+      
+      confirmPasswordInput.addEventListener('input', validatePasswordMatch);
+    });
+  </script>
 </body>
 </html>
