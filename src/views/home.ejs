@@ -4,119 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca Ativa - Home</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-            border-radius: 0 0 1rem 1rem;
-        }
-        .book-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        .stats-card {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            border-radius: 1rem;
-            border: none;
-        }
-        .welcome-card {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            color: #333;
-            border-radius: 1rem;
-            border: none;
-        }
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/home">
-                <i class="bi bi-book-half"></i> Biblioteca Ativa
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="nav-brand" href="/home">
+                Biblioteca Ativa
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="nav-toggle" type="button">
+                <span>☰</span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/home">
-                            <i class="bi bi-house"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros">
-                            <i class="bi bi-book"></i> Catálogo
-                        </a>
-                    </li>
-                    <% if (user && user.role === 'admin') { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/acervo">
-                            <i class="bi bi-archive"></i> Acervo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/adicionar">
-                            <i class="bi bi-plus-circle"></i> Adicionar Livro
-                        </a>
-                    </li>
-                    <% } %>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> <%= user.nome %>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><span class="dropdown-item-text">Função: <%= user.role %></span></li>
-                            <li><span class="dropdown-item-text">Email: <%= user.email %></span></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout">
-                                <i class="bi bi-box-arrow-right"></i> Sair
-                            </a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/home">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/livros">
+                        Catálogo
+                    </a>
+                </li>
+                <% if (user && user.role === 'admin') { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/livros/acervo">
+                        Acervo
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/livros/adicionar">
+                        Adicionar Livro
+                    </a>
+                </li>
+                <% } %>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" role="button">
+                        <%= user.nome %>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><span>Função: <%= user.role %></span></li>
+                        <li><span>Email: <%= user.email %></span></li>
+                        <li class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">
+                            Sair
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <div class="hero-section">
-        <div class="container text-center">
-            <h1 class="display-4 fw-bold">
-                <i class="bi bi-book"></i> Biblioteca Ativa
+        <div class="container">
+            <h1 class="hero-title">
+                Biblioteca Ativa
             </h1>
-            <p class="lead">Sistema de gerenciamento bibliográfico completo</p>
+            <p class="hero-subtitle">Sistema de gerenciamento bibliográfico completo</p>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="container mb-5">
+    <div class="container">
         <!-- Welcome Message -->
-        <div class="row mb-4">
+        <div class="row">
             <div class="col-12">
                 <div class="card welcome-card">
                     <div class="card-body text-center">
                         <h2 class="card-title">
-                            <i class="bi bi-emoji-smile"></i> Bem-vindo, <%= user.nome %>!
+                            Bem-vindo, <%= user.nome %>!
                         </h2>
-                        <p class="card-text fs-5">
+                        <p>
                             Você está logado como: <strong><%= user.role %></strong>
                         </p>
                     </div>
@@ -126,46 +86,41 @@
 
         <!-- Alertas -->
         <% if (success) { %>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle"></i> 
+            <div class="alert alert-success">
                 <strong>Sucesso!</strong> <%= success %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <button type="button">×</button>
             </div>
         <% } %>
 
         <% if (error) { %>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle"></i> 
+            <div class="alert alert-danger">
                 <strong>Erro:</strong> <%= error %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <button type="button">×</button>
             </div>
         <% } %>
 
         <!-- Role Specific Content -->
         <% if (user.role === 'admin') { %>
-        <div class="row mb-4">
-            <div class="col-md-4 mb-3">
-                <div class="card stats-card text-center">
-                    <div class="card-body">
-                        <i class="bi bi-journals feature-icon"></i>
+        <div class="row">
+            <div class="col-4">
+                <div class="card stats-card">
+                    <div class="card-body text-center">
                         <h3>Gestão Completa</h3>
                         <p>Administre todos os aspectos da biblioteca</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
-                <div class="card stats-card text-center">
-                    <div class="card-body">
-                        <i class="bi bi-people feature-icon"></i>
+            <div class="col-4">
+                <div class="card stats-card">
+                    <div class="card-body text-center">
                         <h3>Controle Total</h3>
                         <p>Gerencie livros, usuários e empréstimos</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
-                <div class="card stats-card text-center">
-                    <div class="card-body">
-                        <i class="bi bi-graph-up feature-icon"></i>
+            <div class="col-4">
+                <div class="card stats-card">
+                    <div class="card-body text-center">
                         <h3>Relatórios</h3>
                         <p>Acesse estatísticas e relatórios detalhados</p>
                     </div>
@@ -173,22 +128,22 @@
             </div>
         </div>
 
-        <div class="row mb-4">
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body text-center">
                         <h4 class="card-title">
-                            <i class="bi bi-tools"></i> Painel Administrativo
+                            Painel Administrativo
                         </h4>
-                        <div class="d-grid gap-2 d-md-flex justify-content-center mt-3">
-                            <a class="btn btn-primary btn-lg me-md-2" href="/livros" role="button">
-                                <i class="bi bi-book"></i> Ver Todos os Livros
+                        <div class="btn-group">
+                            <a class="btn btn-primary" href="/livros" role="button">
+                                Ver Todos os Livros
                             </a>
-                            <a class="btn btn-success btn-lg me-md-2" href="/livros/adicionar" role="button">
-                                <i class="bi bi-plus-circle"></i> Adicionar Livro
+                            <a class="btn btn-success" href="/livros/adicionar" role="button">
+                                Adicionar Livro
                             </a>
-                            <a class="btn btn-info btn-lg" href="/livros/acervo" role="button">
-                                <i class="bi bi-archive"></i> Gerenciar Acervo
+                            <a class="btn btn-info" href="/livros/acervo" role="button">
+                                Gerenciar Acervo
                             </a>
                         </div>
                     </div>
@@ -196,16 +151,16 @@
             </div>
         </div>
         <% } else { %>
-        <div class="row mb-4">
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body text-center">
                         <h4 class="card-title">
-                            <i class="bi bi-search"></i> Explorar Biblioteca
+                            Explorar Biblioteca
                         </h4>
-                        <p class="card-text">Descubra nosso acervo de livros disponíveis para empréstimo</p>
-                        <a class="btn btn-primary btn-lg" href="/livros" role="button">
-                            <i class="bi bi-book"></i> Explorar Catálogo
+                        <p>Descubra nosso acervo de livros disponíveis para empréstimo</p>
+                        <a class="btn btn-primary" href="/livros" role="button">
+                            Explorar Catálogo
                         </a>
                     </div>
                 </div>
@@ -214,52 +169,48 @@
         <% } %>
 
         <!-- Livros em Destaque -->
-        <div class="row mb-4">
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                            <i class="bi bi-stars"></i> Livros em Destaque
+                            Livros em Destaque
                         </h4>
                         
-                        <div class="row">
+                        <div class="books-grid">
                             <% if (livros && livros.length === 0) { %>
                                 <div class="col-12">
                                     <div class="alert alert-info text-center">
-                                        <i class="bi bi-info-circle display-4 d-block mb-3"></i>
                                         <h5>Nenhum livro cadastrado no sistema</h5>
                                         <% if (user && user.role === 'admin') { %>
-                                            <a href="/livros/adicionar" class="btn btn-primary mt-3">
-                                                <i class="bi bi-plus-circle"></i> Adicionar Primeiro Livro
+                                            <a href="/livros/adicionar" class="btn btn-primary">
+                                                Adicionar Primeiro Livro
                                             </a>
                                         <% } %>
                                     </div>
                                 </div>
                             <% } else { %>
                                 <% livros.slice(0, 6).forEach(livro => { %>
-                                    <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
-                                        <div class="card book-card h-100">
-                                            <div class="card-body">
-                                                <h5 class="card-title text-primary"><%= livro.titulo %></h5>
-                                                <h6 class="card-subtitle mb-3 text-muted">
-                                                    <i class="bi bi-person"></i> <%= livro.autor %>
-                                                </h6>
-                                                <div class="book-details">
-                                                    <p class="card-text">
-                                                        <strong><i class="bi bi-calendar"></i> Ano:</strong> <%= livro.ano %>
-                                                    </p>
-                                                    <p class="card-text">
-                                                        <strong><i class="bi bi-tag"></i> Categoria:</strong> 
-                                                        <span class="badge bg-secondary"><%= livro.categoria %></span>
-                                                    </p>
-                                                    <p class="card-text">
-                                                        <strong>Disponibilidade:</strong> 
-                                                        <span class="badge <%= livro.disponivel ? 'bg-success' : 'bg-danger' %>">
-                                                            <i class="bi <%= livro.disponivel ? 'bi-check-circle' : 'bi-x-circle' %>"></i>
-                                                            <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
-                                                        </span>
-                                                    </p>
-                                                </div>
+                                    <div class="book-card">
+                                        <div class="card-body">
+                                            <h5 class="book-title"><%= livro.titulo %></h5>
+                                            <h6 class="book-author">
+                                                <%= livro.autor %>
+                                            </h6>
+                                            <div class="book-details">
+                                                <p class="book-detail">
+                                                    <strong>Ano:</strong> <%= livro.ano %>
+                                                </p>
+                                                <p class="book-detail">
+                                                    <strong>Categoria:</strong> 
+                                                    <span class="badge badge-secondary"><%= livro.categoria %></span>
+                                                </p>
+                                                <p class="book-detail">
+                                                    <strong>Disponibilidade:</strong> 
+                                                    <span class="badge <%= livro.disponivel ? 'badge-success' : 'badge-danger' %>">
+                                                        <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
+                                                    </span>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -268,9 +219,9 @@
                         </div>
 
                         <% if (livros && livros.length > 6) { %>
-                            <div class="text-center mt-4">
-                                <a class="btn btn-outline-primary" href="/livros">
-                                    <i class="bi bi-arrow-right"></i> Ver Todos os Livros
+                            <div class="text-center">
+                                <a class="btn btn-outline" href="/livros">
+                                    Ver Todos os Livros
                                 </a>
                             </div>
                         <% } %>
@@ -281,23 +232,24 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer mt-5 py-4 bg-dark text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="bi bi-book"></i> Biblioteca Ativa</h5>
-                    <p>Sistema de gerenciamento de acervo bibliográfico</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0">&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
-                    <p class="mb-0">Sistema desenvolvido para ETEC</p>
-                </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <h5>Biblioteca Ativa</h5>
+                <p>Sistema de gerenciamento de acervo bibliográfico</p>
+            </div>
+            <div>
+                <p>&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
+                <p>Sistema desenvolvido para ETEC</p>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS e Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Script para o menu toggle em dispositivos móveis
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('show');
+        });
+    </script>
 </body>
 </html>
