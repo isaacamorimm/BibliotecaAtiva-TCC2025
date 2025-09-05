@@ -4,144 +4,644 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca - Catálogo de Livros</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #9e4a3c;
+            --primary-light: #c98c67;
+            --primary-dark: #7a372b;
+            --accent: #ff7e5f;
+            --background: #faf7f4;
+            --surface: #ffffff;
+            --text: #333333;
+            --text-light: #777777;
+            --error: #e53935;
+            --success: #43a047;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --border: #e0e0e0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--background);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header e Navegação */
+        .header {
+            background: var(--primary-dark);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .user-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            padding: 10px 0;
+            z-index: 1000;
+            display: none;
+        }
+
+        .user-menu:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background: var(--background);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 8px 0;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Grid System */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+        }
+
+        .col-12 {
+            grid-column: span 12;
+        }
+
+        @media (min-width: 768px) {
+            .col-md-6 {
+                grid-column: span 6;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .col-lg-4 {
+                grid-column: span 4;
+            }
+            .col-lg-6 {
+                grid-column: span 6;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background: var(--background);
+            border-top: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-text {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        /* Book Card */
         .book-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             height: 100%;
         }
+
         .book-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: var(--shadow-lg);
         }
-        .availability-badge {
+
+        .book-details p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 0.85rem;
-            padding: 0.35em 0.65em;
-        }
-        .navbar-brand {
             font-weight: 600;
         }
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        .badge-success {
+            background: var(--success);
             color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-            border-radius: 0 0 1rem 1rem;
         }
+
+        .badge-error {
+            background: var(--error);
+            color: white;
+        }
+
+        .badge-secondary {
+            background: var(--text-light);
+            color: white;
+        }
+
+        .badge-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(158, 74, 60, 0.25);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            color: var(--success);
+            border: 1px solid #c8e6c9;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            color: var(--error);
+            border: 1px solid #ffcdd2;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            color: var(--info);
+            border: 1px solid #bbdefb;
+        }
+
+        .alert-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Form Elements */
+        .input-group {
+            display: flex;
+            width: 100%;
+        }
+
+        .form-control {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius) 0 0 var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(158, 74, 60, 0.15);
+        }
+
+        .input-group-btn {
+            padding: 12px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .input-group-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
         .footer {
-            background-color: #f8f9fa;
-            padding: 2rem 0;
-            margin-top: 3rem;
+            background: var(--primary-dark);
+            color: white;
+            padding: 2.5rem 0;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-text {
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        /* Utilities */
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .mb-5 { margin-bottom: 3rem; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mt-4 { margin-top: 2rem; }
+        .mt-5 { margin-top: 3rem; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+                flex-direction: column;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .text-right {
+                text-align: left;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Menu mobile */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 15px;
+            }
+            
+            .nav-menu {
+                display: none;
+                width: 100%;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .user-menu .dropdown-menu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/home">
-                <i class="bi bi-book-half"></i> Biblioteca Ativa
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/home" class="logo">
+                <i class="fas fa-book-open"></i> Biblioteca Ativa
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">
-                            <i class="bi bi-house"></i> Home
+            
+            <ul class="nav-menu">
+                <li>
+                    <a href="/home" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li>
+                    <a href="/livros" class="nav-link active">
+                        <i class="fas fa-book"></i> Catálogo
+                    </a>
+                </li>
+                <% if (user && user.role === 'admin') { %>
+                <li>
+                    <a href="/livros/acervo" class="nav-link">
+                        <i class="fas fa-archive"></i> Acervo
+                    </a>
+                </li>
+                <li>
+                    <a href="/livros/adicionar" class="nav-link">
+                        <i class="fas fa-plus-circle"></i> Adicionar Livro
+                    </a>
+                </li>
+                <% } %>
+                <li class="user-menu">
+                    <div class="user-toggle">
+                        <i class="fas fa-user-circle"></i> <%= user.nome %> <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <span class="dropdown-item">Tipo: <%= user.role %></span>
+                        <div class="divider"></div>
+                        <a href="/logout" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Sair
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/livros">
-                            <i class="bi bi-book"></i> Catálogo
-                        </a>
-                    </li>
-                    <% if (user && user.role === 'admin') { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/acervo">
-                            <i class="bi bi-archive"></i> Acervo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/adicionar">
-                            <i class="bi bi-plus-circle"></i> Adicionar Livro
-                        </a>
-                    </li>
-                    <% } %>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> <%= user.nome %>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><span class="dropdown-item-text">Tipo: <%= user.role %></span></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout">
-                                <i class="bi bi-box-arrow-right"></i> Sair
-                            </a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="container text-center">
-            <h1 class="display-4 fw-bold">
-                <i class="bi bi-book"></i> Catálogo de Livros
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="fas fa-book"></i> Catálogo de Livros
             </h1>
-            <p class="lead">Explore nossa coleção de livros disponíveis</p>
+            <p class="hero-subtitle">Explore nossa coleção de livros disponíveis</p>
         </div>
-    </div>
+    </section>
 
     <!-- Main Content -->
     <div class="container mb-5">
         <!-- Alertas -->
         <% if (success) { %>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle"></i> <%= success %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> <%= success %>
+                <button class="alert-close">&times;</button>
             </div>
         <% } %>
 
         <% if (error) { %>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle"></i> <%= error %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div class="alert alert-error">
+                <i class="fas fa-exclamation-triangle"></i> <%= error %>
+                <button class="alert-close">&times;</button>
             </div>
         <% } %>
 
         <!-- Filtros e Estatísticas -->
-        <div class="row mb-4">
-            <div class="col-md-6">
+        <div class="grid mb-4">
+            <div class="col-md-6 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <i class="bi bi-info-circle"></i> Estatísticas
+                            <i class="fas fa-info-circle"></i> Estatísticas
                         </h5>
                         <p class="card-text">
-                            Total de livros: <span class="badge bg-primary"><%= livros.length %></span>
+                            Total de livros: <span class="badge badge-primary"><%= livros.length %></span>
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <i class="bi bi-search"></i> Buscar Livros
+                            <i class="fas fa-search"></i> Buscar Livros
                         </h5>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Título, autor ou categoria..." id="searchInput">
-                            <button class="btn btn-outline-secondary" type="button" onclick="filterBooks()">
-                                <i class="bi bi-search"></i>
+                            <button class="input-group-btn" onclick="filterBooks()">
+                                <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
@@ -150,50 +650,50 @@
         </div>
 
         <!-- Grid de Livros -->
-        <div class="row" id="booksContainer">
+        <div class="grid" id="booksContainer">
             <% if (livros.length === 0) { %>
                 <div class="col-12">
                     <div class="alert alert-info text-center">
-                        <i class="bi bi-info-circle display-4 d-block mb-3"></i>
+                        <i class="fas fa-info-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
                         <h4>Nenhum livro cadastrado no sistema</h4>
-                        <p class="mb-0">Aguardando novos livros serem adicionados ao acervo.</p>
+                        <p class="mb-2">Aguardando novos livros serem adicionados ao acervo.</p>
                         <% if (user && user.role === 'admin') { %>
-                            <a href="/livros/adicionar" class="btn btn-primary mt-3">
-                                <i class="bi bi-plus-circle"></i> Adicionar Primeiro Livro
+                            <a href="/livros/adicionar" class="btn mt-3">
+                                <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
                             </a>
                         <% } %>
                     </div>
                 </div>
             <% } else { %>
                 <% livros.forEach(livro => { %>
-                    <div class="col-xl-4 col-lg-6 col-md-6 mb-4 book-item">
-                        <div class="card book-card h-100">
+                    <div class="col-lg-4 col-md-6 mb-4 book-item">
+                        <div class="card book-card">
                             <div class="card-header">
-                                <span class="badge <%= livro.disponivel ? 'bg-success' : 'bg-danger' %> availability-badge">
-                                    <i class="bi <%= livro.disponivel ? 'bi-check-circle' : 'bi-x-circle' %>"></i>
+                                <span class="badge <%= livro.disponivel ? 'badge-success' : 'badge-error' %>">
+                                    <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
                                     <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
                                 </span>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title text-primary"><%= livro.titulo %></h5>
-                                <h6 class="card-subtitle mb-3 text-muted">
-                                    <i class="bi bi-person"></i> <%= livro.autor %>
+                                <h5 class="card-title" style="color: var(--primary);"><%= livro.titulo %></h5>
+                                <h6 class="mb-3" style="color: var(--text-light);">
+                                    <i class="fas fa-user"></i> <%= livro.autor %>
                                 </h6>
                                 <div class="book-details">
-                                    <p class="card-text">
-                                        <strong><i class="bi bi-calendar"></i> Ano:</strong> <%= livro.ano %>
+                                    <p>
+                                        <strong><i class="fas fa-calendar"></i> Ano:</strong> <%= livro.ano %>
                                     </p>
-                                    <p class="card-text">
-                                        <strong><i class="bi bi-tag"></i> Categoria:</strong> 
-                                        <span class="badge bg-secondary"><%= livro.categoria %></span>
+                                    <p>
+                                        <strong><i class="fas fa-tag"></i> Categoria:</strong> 
+                                        <span class="badge badge-secondary"><%= livro.categoria %></span>
                                     </p>
                                 </div>
                             </div>
                             <% if (user && user.role === 'admin') { %>
-                                <div class="card-footer bg-transparent">
-                                    <div class="d-flex justify-content-between">
-                                        <a href="/livros/editar/<%= livro.id %>" class="btn btn-outline-primary btn-sm">
-                                            <i class="bi bi-pencil"></i> Editar
+                                <div class="card-footer">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <a href="/livros/editar/<%= livro.id %>" class="btn btn-outline btn-sm">
+                                            <i class="fas fa-pencil-alt"></i> Editar
                                         </a>
                                     </div>
                                 </div>
@@ -207,33 +707,55 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="bi bi-book"></i> Biblioteca Ativa</h5>
-                    <p>Sistema de gerenciamento de acervo bibliográfico</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p>&copy; 2024 Biblioteca Ativa. Todos os direitos reservados.</p>
-                </div>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h5 class="footer-title"><i class="fas fa-book"></i> Biblioteca Ativa</h5>
+                <p class="footer-text">Sistema de gerenciamento de acervo bibliográfico</p>
+            </div>
+            <div class="footer-col text-right">
+                <p class="footer-text">&copy; 2024 Biblioteca Ativa. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS e Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-    <!-- Script de busca -->
     <script>
+        // Menu mobile toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Fechar alertas
+        document.querySelectorAll('.alert-close').forEach(button => {
+            button.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-menu')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+            }
+        });
+
+        // Abrir/fechar dropdown do usuário
+        document.querySelector('.user-toggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menu = this.nextElementSibling;
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Script de busca
         function filterBooks() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
             const books = document.querySelectorAll('.book-item');
             
             books.forEach(book => {
                 const title = book.querySelector('.card-title').textContent.toLowerCase();
-                const author = book.querySelector('.card-subtitle').textContent.toLowerCase();
-                const category = book.querySelector('.badge.bg-secondary').textContent.toLowerCase();
+                const author = book.querySelector('h6').textContent.toLowerCase();
+                const category = book.querySelector('.badge-secondary').textContent.toLowerCase();
                 
                 if (title.includes(searchText) || author.includes(searchText) || category.includes(searchText)) {
                     book.style.display = 'block';
