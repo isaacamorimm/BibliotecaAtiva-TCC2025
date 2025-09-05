@@ -20,7 +20,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -34,19 +33,11 @@
       padding: 20px;
       justify-content: center;
       align-items: center;
-      overflow-x: hidden;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
     }
 
     .header {
       text-align: center;
       margin-bottom: 30px;
-      width: 100%;
     }
 
     .logo {
@@ -68,7 +59,8 @@
     }
 
     .login-container {
-      width: 50%;
+      max-width: 400px;
+      width: 100%;
       background: var(--surface);
       border-radius: var(--radius);
       box-shadow: var(--shadow-md);
@@ -128,7 +120,7 @@
       padding: 14px 50px 14px 45px;
       border: 2px solid var(--border);
       border-radius: 8px;
-      font-size: 16px; /* Tamanho fixo para evitar zoom no iOS */
+      font-size: 1rem;
       background: var(--background);
       color: var(--text);
       transition: var(--transition);
@@ -261,88 +253,9 @@
       text-decoration: underline;
     }
 
-    .footer {
-      margin-top: 40px;
-      text-align: center;
-      color: var(--text-light);
-      font-size: 0.9rem;
-      width: 100%;
-    }
-
-    /* Media Queries para responsividade */
-    
-    /* Tablets em modo retrato */
-    @media (max-width: 768px) {
-      body {
-        padding: 15px;
-        justify-content: flex-start;
-      }
-      
-      .container {
-        max-width: 100%;
-      }
-      
-      .logo {
-        font-size: 2.2rem;
-      }
-      
-      .logo-text {
-        font-size: 1.6rem;
-      }
-      
-      .login-container {
-        padding: 35px 25px;
-      }
-    }
-    
-    /* Celulares */
     @media (max-width: 576px) {
-      body {
-        padding: 15px;
-        justify-content: flex-start;
-      }
-      
-      .header {
-        margin-bottom: 20px;
-      }
-      
-      .logo {
-        font-size: 2rem;
-      }
-      
-      .logo-text {
-        font-size: 1.4rem;
-      }
-      
-      .tagline {
-        font-size: 0.9rem;
-      }
-      
       .login-container {
         padding: 30px 20px;
-      }
-      
-      .login-container h2 {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-      }
-      
-      .login-container input[type="email"],
-      .login-container input[type="password"],
-      .login-container input[type="text"] {
-        padding: 12px 45px 12px 40px;
-        font-size: 16px; /* Mantém o tamanho fixo */
-      }
-      
-      .input-icon {
-        left: 12px;
-        font-size: 0.9rem;
-      }
-      
-      .password-toggle {
-        right: 10px;
-        width: 28px;
-        height: 28px;
       }
       
       .remember-forgot {
@@ -350,58 +263,11 @@
         align-items: flex-start;
         gap: 10px;
       }
-      
-      .footer {
-        margin-top: 30px;
-        font-size: 0.85rem;
-      }
-    }
-    
-    /* Celulares muito pequenos */
-    @media (max-width: 360px) {
-      .logo {
-        font-size: 1.8rem;
-      }
-      
-      .logo-text {
-        font-size: 1.3rem;
-      }
-      
-      .tagline {
-        font-size: 0.85rem;
-      }
-      
-      .login-container {
-        padding: 25px 15px;
-      }
-      
-      .login-container h2 {
-        font-size: 1.3rem;
-      }
-      
-      .login-container input[type="email"],
-      .login-container input[type="password"],
-      .login-container input[type="text"] {
-        padding: 10px 40px 10px 35px;
-        font-size: 16px; /* Mantém o tamanho fixo */
-      }
-      
-      .input-icon {
-        left: 10px;
-        font-size: 0.85rem;
-      }
     }
 
-    /* Dispositivos com tela muito alta */
-    @media (min-height: 1000px) {
-      body {
-        justify-content: center;
-      }
-    }
-    
-    /* Prevenir zoom em dispositivos iOS */
-    @media screen and (max-width: 768px) {
-      input, select, textarea {
-        font-size: 16px !important;
-      }
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
     }
