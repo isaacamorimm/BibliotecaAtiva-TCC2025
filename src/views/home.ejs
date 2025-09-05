@@ -63,19 +63,20 @@
         }
 
         .navbar-brand {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: white;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.8rem;
+            padding: 0.5rem 0;
         }
 
         .navbar-nav {
             display: flex;
             list-style: none;
-            gap: 1.2rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
@@ -84,11 +85,11 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 0.9rem;
+            gap: 0.6rem;
+            padding: 0.7rem 1rem;
             border-radius: var(--radius);
             transition: var(--transition);
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -103,8 +104,8 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 0.9rem;
+            gap: 0.6rem;
+            padding: 0.7rem 1rem;
             border-radius: var(--radius);
             transition: var(--transition);
         }
@@ -120,8 +121,8 @@
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow-md);
-            min-width: 220px;
-            padding: 0.8rem 0;
+            min-width: 240px;
+            padding: 1rem 0;
             z-index: 1000;
             display: none;
         }
@@ -132,11 +133,11 @@
 
         .dropdown-item {
             display: block;
-            padding: 0.8rem 1.2rem;
+            padding: 0.8rem 1.5rem;
             color: var(--text);
             text-decoration: none;
             transition: var(--transition);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .dropdown-item:hover {
@@ -146,7 +147,7 @@
         .dropdown-divider {
             height: 1px;
             background: var(--border);
-            margin: 0.6rem 0;
+            margin: 0.8rem 0;
         }
 
         /* Mobile menu button */
@@ -154,8 +155,8 @@
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            width: 30px;
-            height: 21px;
+            width: 32px;
+            height: 24px;
             background: transparent;
             border: none;
             cursor: pointer;
@@ -173,22 +174,24 @@
         .hero-section {
             background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
-            padding: 3.5rem 0;
-            margin-bottom: 2.5rem;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
             text-align: center;
         }
 
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
             max-width: 600px;
             margin: 0 auto;
+            line-height: 1.5;
         }
 
         /* Container */
@@ -203,18 +206,18 @@
         .row {
             display: flex;
             flex-wrap: wrap;
-            margin: 0 -0.8rem;
+            margin: 0 -1rem;
         }
 
         .col {
             flex: 1;
-            padding: 0 0.8rem;
+            padding: 0 1rem;
         }
 
         .col-12 {
             flex: 0 0 100%;
             max-width: 100%;
-            padding: 0 0.8rem;
+            padding: 0 1rem;
         }
 
         @media (min-width: 768px) {
@@ -244,9 +247,10 @@
             background: var(--surface);
             border-radius: var(--radius);
             box-shadow: var(--shadow-sm);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             overflow: hidden;
             transition: var(--transition);
+            height: 100%;
         }
 
         .card:hover {
@@ -254,22 +258,24 @@
         }
 
         .card-body {
-            padding: 1.8rem;
+            padding: 2rem;
         }
 
         .card-title {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 1.2rem;
             color: var(--primary);
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            line-height: 1.3;
         }
 
         .card-text {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
             line-height: 1.6;
+            color: var(--text);
         }
 
         /* Stats Cards */
@@ -278,17 +284,28 @@
             color: white;
             text-align: center;
             height: 100%;
+            padding: 2rem 1.5rem;
+        }
+
+        .stats-card h3 {
+            font-size: 1.4rem;
+            margin: 1rem 0;
+        }
+
+        .stats-card p {
+            opacity: 0.9;
         }
 
         .welcome-card {
             background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             color: var(--text);
             text-align: center;
+            padding: 2.5rem 2rem;
         }
 
         .feature-icon {
-            font-size: 2.8rem;
-            margin-bottom: 1.2rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
         }
 
         /* Buttons */
@@ -296,8 +313,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.6rem;
-            padding: 0.9rem 1.8rem;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
             background: var(--primary);
             color: white;
             text-decoration: none;
@@ -306,7 +323,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 1rem;
+            font-size: 1.05rem;
         }
 
         .btn:hover {
@@ -316,7 +333,7 @@
         }
 
         .btn-lg {
-            padding: 1.1rem 2.2rem;
+            padding: 1.2rem 2.5rem;
             font-size: 1.1rem;
         }
 
@@ -333,20 +350,20 @@
 
         .btn-group {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 1.8rem;
+            margin-top: 2rem;
         }
 
         /* Alerts */
         .alert {
-            padding: 1.2rem 1.5rem;
+            padding: 1.2rem 1.8rem;
             border-radius: var(--radius);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.9rem;
+            gap: 1rem;
         }
 
         .alert-success {
@@ -372,21 +389,22 @@
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             padding: 0;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: inherit;
         }
 
         /* Badges */
         .badge {
             display: inline-block;
-            padding: 0.4rem 0.8rem;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
         }
 
@@ -417,17 +435,17 @@
         }
 
         .book-details p {
-            margin-bottom: 0.7rem;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
         /* Footer */
         .footer {
             background: var(--primary-dark);
             color: white;
-            padding: 2.5rem 0;
+            padding: 3rem 0 2.5rem;
             margin-top: auto;
         }
 
@@ -442,20 +460,21 @@
 
         .footer-col {
             flex: 1;
-            min-width: 250px;
-            margin-bottom: 1.5rem;
+            min-width: 280px;
+            margin-bottom: 2rem;
         }
 
         .footer h5 {
-            font-size: 1.3rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.8rem;
         }
 
         .footer p {
-            margin-bottom: 0.7rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
         }
 
         .text-center {
@@ -466,7 +485,7 @@
             text-align: right;
         }
 
-        /* Responsividade Mobile */
+        /* ========== RESPONSIVIDADE MOBILE ========== */
         @media (max-width: 768px) {
             .navbar-container {
                 padding: 0 1rem;
@@ -478,15 +497,17 @@
             
             .navbar-nav {
                 position: fixed;
-                top: 60px;
+                top: 64px;
                 left: 0;
                 width: 100%;
                 background: var(--primary-dark);
                 flex-direction: column;
                 gap: 0;
                 padding: 1rem 0;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
                 display: none;
+                max-height: calc(100vh - 64px);
+                overflow-y: auto;
             }
             
             .navbar-nav.active {
@@ -495,7 +516,7 @@
             
             .nav-link, .nav-dropdown-toggle {
                 width: 100%;
-                padding: 1rem 1.5rem;
+                padding: 1.2rem 1.5rem;
                 border-radius: 0;
                 justify-content: flex-start;
             }
@@ -506,6 +527,7 @@
                 background: rgba(0,0,0,0.1);
                 width: 100%;
                 display: none;
+                min-width: unset;
             }
             
             .nav-dropdown.active .dropdown-menu {
@@ -513,20 +535,23 @@
             }
             
             .dropdown-item {
-                padding-left: 2.5rem;
+                padding-left: 2.8rem;
+                padding-right: 1.5rem;
             }
             
             .hero-section {
-                padding: 2.5rem 1rem;
+                padding: 2.8rem 1rem;
+                margin-bottom: 2rem;
             }
             
             .hero-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                margin-bottom: 1rem;
             }
             
             .hero-subtitle {
                 font-size: 1.1rem;
-                padding: 0 1rem;
+                padding: 0;
             }
             
             .container {
@@ -537,44 +562,80 @@
                 margin: 0 -0.5rem;
             }
             
-            .col, .col-12 {
+            .col, .col-12, .col-md-4, .col-md-6, .col-lg-4, .col-lg-6 {
                 padding: 0 0.5rem;
+                flex: 0 0 100%;
+                max-width: 100%;
             }
             
             .card-body {
-                padding: 1.5rem;
+                padding: 1.8rem 1.5rem;
+            }
+            
+            .stats-card, .welcome-card {
+                padding: 1.8rem 1.5rem;
             }
             
             .btn-group {
                 flex-direction: column;
                 width: 100%;
+                gap: 1rem;
+                margin-top: 1.8rem;
             }
             
             .btn {
                 width: 100%;
                 justify-content: center;
+                text-align: center;
+            }
+            
+            .feature-icon {
+                font-size: 2.8rem;
+                margin-bottom: 1.2rem;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+            }
+            
+            .footer {
+                padding: 2.5rem 0 2rem;
             }
             
             .footer-container {
                 flex-direction: column;
                 gap: 1.5rem;
+                padding: 0 1rem;
+            }
+            
+            .footer-col {
+                min-width: unset;
+                margin-bottom: 1.8rem;
             }
             
             .text-end {
                 text-align: left;
             }
             
-            .feature-icon {
-                font-size: 2.5rem;
+            .alert {
+                padding: 1.2rem 1.5rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem;
+            }
+            
+            .alert-close {
+                margin-left: 0;
+                align-self: center;
             }
         }
 
         /* Utilitários de espaçamento */
         .mb-3 { margin-bottom: 1rem; }
-        .mb-4 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 1.8rem; }
         .mb-5 { margin-bottom: 3rem; }
         .mt-3 { margin-top: 1rem; }
-        .mt-4 { margin-top: 1.5rem; }
+        .mt-4 { margin-top: 1.8rem; }
         .mt-5 { margin-top: 3rem; }
         .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
     </style>
@@ -665,7 +726,9 @@
         <% if (success) { %>
             <div class="alert alert-success">
                 <i class="fas fa-check-circle"></i> 
-                <strong>Sucesso!</strong> <%= success %>
+                <div>
+                    <strong>Sucesso!</strong> <%= success %>
+                </div>
                 <button class="alert-close">&times;</button>
             </div>
         <% } %>
@@ -673,7 +736,9 @@
         <% if (error) { %>
             <div class="alert alert-error">
                 <i class="fas fa-exclamation-triangle"></i> 
-                <strong>Erro:</strong> <%= error %>
+                <div>
+                    <strong>Erro:</strong> <%= error %>
+                </div>
                 <button class="alert-close">&times;</button>
             </div>
         <% } %>
@@ -763,7 +828,7 @@
                             <% if (livros && livros.length === 0) { %>
                                 <div class="col-12">
                                     <div class="alert alert-info text-center">
-                                        <i class="fas fa-info-circle" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                                        <i class="fas fa-info-circle" style="font-size: 2.8rem; margin-bottom: 1.2rem;"></i>
                                         <h5>Nenhum livro cadastrado no sistema</h5>
                                         <% if (user && user.role === 'admin') { %>
                                             <a href="/livros/adicionar" class="btn mt-3">
@@ -777,8 +842,8 @@
                                     <div class="col-lg-4 col-md-6 mb-3">
                                         <div class="card book-card">
                                             <div class="card-body">
-                                                <h5 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.2rem;"><%= livro.titulo %></h5>
-                                                <h6 style="color: var(--text-light); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+                                                <h5 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem;"><%= livro.titulo %></h5>
+                                                <h6 style="color: var(--text-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem;">
                                                     <i class="fas fa-user"></i> <%= livro.autor %>
                                                 </h6>
                                                 <div class="book-details">
@@ -834,13 +899,26 @@
     <script>
         // Menu mobile toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
-            document.getElementById('navbarNav').classList.toggle('active');
+            const navbarNav = document.getElementById('navbarNav');
+            navbarNav.classList.toggle('active');
+            
+            // Animar o ícone do menu hamburguer
+            const spans = this.querySelectorAll('span');
+            if (navbarNav.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
         });
 
         // Dropdown mobile
         document.querySelectorAll('.nav-dropdown-toggle').forEach(toggle => {
             toggle.addEventListener('click', function(e) {
-                if (window.innerWidth < 768) {
+                if (window.innerWidth <= 768) {
                     this.parentElement.classList.toggle('active');
                     e.stopPropagation();
                 }
@@ -850,23 +928,37 @@
         // Fechar alertas
         document.querySelectorAll('.alert-close').forEach(button => {
             button.addEventListener('click', function() {
-                this.parentElement.style.display = 'none';
+                this.closest('.alert').style.display = 'none';
             });
         });
 
         // Fechar menu ao clicar fora
         document.addEventListener('click', function(e) {
-            if (window.innerWidth < 768) {
-                if (!e.target.closest('.navbar-nav') && !e.target.closest('.menu-toggle')) {
-                    document.getElementById('navbarNav').classList.remove('active');
+            if (window.innerWidth <= 768) {
+                const navbarNav = document.getElementById('navbarNav');
+                const menuToggle = document.getElementById('menuToggle');
+                
+                if (!e.target.closest('.navbar-nav') && !e.target.closest('.menu-toggle') && navbarNav.classList.contains('active')) {
+                    navbarNav.classList.remove('active');
+                    
+                    // Reverter animação do menu hamburguer
+                    const spans = menuToggle.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
                 }
                 
                 document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
-                    if (!e.target.closest('.nav-dropdown')) {
+                    if (!e.target.closest('.nav-dropdown') && dropdown.classList.contains('active')) {
                         dropdown.classList.remove('active');
                     }
                 });
             }
+        });
+
+        // Prevenir que cliques dentro do menu fechem ele
+        document.getElementById('navbarNav').addEventListener('click', function(e) {
+            e.stopPropagation();
         });
     </script>
 </body>
