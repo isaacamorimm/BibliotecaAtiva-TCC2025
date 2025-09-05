@@ -10,24 +10,21 @@
             --primary: #9e4a3c;
             --primary-light: #c98c67;
             --primary-dark: #7a372b;
-            --secondary: #6c757d;
-            --success: #28a745;
-            --info: #17a2b8;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --light: #f8f9fa;
-            --dark: #343a40;
+            --accent: #ff7e5f;
             --background: #faf7f4;
             --surface: #ffffff;
             --text: #333333;
             --text-light: #777777;
-            --border: #dee2e6;
-            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-            --radius: 0.375rem;
-            --radius-lg: 0.5rem;
-            --transition: all 0.15s ease-in-out;
+            --error: #e53935;
+            --success: #43a047;
+            --warning: #ff9800;
+            --info: #2196f3;
+            --border: #e0e0e0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -37,544 +34,228 @@
         }
 
         body {
+            background: var(--background);
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
             color: var(--text);
-            background-color: var(--background);
+            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Container */
-        .container {
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: auto;
+        /* Header e Navegação */
+        .header {
+            background: var(--primary-dark);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        @media (min-width: 576px) {
-            .container {
-                max-width: 540px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                max-width: 720px;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .container {
-                max-width: 960px;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .container {
-                max-width: 1140px;
-            }
-        }
-
-        /* Grid System */
-        .row {
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
-            flex-wrap: wrap;
-            margin-right: -15px;
-            margin-left: -15px;
-        }
-
-        .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, 
-        .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
-        .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6,
-        .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
-        .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6,
-        .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12,
-        .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6,
-        .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
-            position: relative;
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-        }
-
-        .col {
-            flex-basis: 0;
-            flex-grow: 1;
-            max-width: 100%;
-        }
-
-        .col-12 {
-            flex: 0 0 100%;
-            max-width: 100%;
-        }
-
-        @media (min-width: 768px) {
-            .col-md {
-                flex-basis: 0;
-                flex-grow: 1;
-                max-width: 100%;
-            }
-            
-            .col-md-4 {
-                flex: 0 0 33.333333%;
-                max-width: 33.333333%;
-            }
-            
-            .col-md-6 {
-                flex: 0 0 50%;
-                max-width: 50%;
-            }
-            
-            .col-md-8 {
-                flex: 0 0 66.666667%;
-                max-width: 66.666667%;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .col-lg {
-                flex-basis: 0;
-                flex-grow: 1;
-                max-width: 100%;
-            }
-            
-            .col-lg-4 {
-                flex: 0 0 33.333333%;
-                max-width: 33.333333%;
-            }
-            
-            .col-lg-6 {
-                flex: 0 0 50%;
-                max-width: 50%;
-            }
-            
-            .col-lg-8 {
-                flex: 0 0 66.666667%;
-                max-width: 66.666667%;
-            }
-        }
-
-        /* Navbar */
-        .navbar {
-            position: relative;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 1rem;
-            background-color: var(--primary-dark);
+            align-items: center;
         }
 
-        .navbar-brand {
-            display: inline-block;
-            padding-top: 0.3125rem;
-            padding-bottom: 0.3125rem;
-            margin-right: 1rem;
-            font-size: 1.25rem;
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
             color: white;
             text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .navbar-brand:hover {
-            color: white;
-            text-decoration: none;
-        }
-
-        .navbar-nav {
             display: flex;
-            flex-direction: column;
-            padding-left: 0;
-            margin-bottom: 0;
-            list-style: none;
+            align-items: center;
+            gap: 10px;
         }
 
-        .navbar-nav .nav-link {
-            padding-right: 0;
-            padding-left: 0;
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
         }
 
         .nav-link {
-            display: block;
-            padding: 0.5rem 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.15s ease-in-out;
-        }
-
-        .nav-link:hover, .nav-link:focus {
             color: white;
             text-decoration: none;
-        }
-
-        .nav-link.active {
-            color: white;
-        }
-
-        .navbar-collapse {
-            flex-basis: 100%;
-            flex-grow: 1;
+            display: flex;
             align-items: center;
-        }
-
-        .navbar-toggler {
-            padding: 0.25rem 0.75rem;
-            font-size: 1.25rem;
-            line-height: 1;
-            background-color: transparent;
-            border: 1px solid transparent;
+            gap: 8px;
+            padding: 10px 15px;
             border-radius: var(--radius);
-            color: rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
         }
 
-        .navbar-toggler:hover {
-            color: white;
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Dropdown */
-        .dropdown {
+        .user-menu {
             position: relative;
+        }
+
+        .user-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .user-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .dropdown-menu {
             position: absolute;
+            right: 0;
             top: 100%;
-            left: 0;
-            z-index: 1000;
-            display: none;
-            float: left;
-            min-width: 10rem;
-            padding: 0.5rem 0;
-            margin: 0.125rem 0 0;
-            font-size: 1rem;
-            color: var(--text);
-            text-align: left;
-            list-style: none;
-            background-color: white;
-            background-clip: padding-box;
-            border: 1px solid rgba(0, 0, 0, 0.15);
+            background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            padding: 10px 0;
+            z-index: 1000;
+            display: none;
+        }
+
+        .user-menu:hover .dropdown-menu {
+            display: block;
         }
 
         .dropdown-item {
             display: block;
-            width: 100%;
-            padding: 0.25rem 1.5rem;
-            clear: both;
-            font-weight: 400;
+            padding: 10px 20px;
             color: var(--text);
-            text-align: inherit;
-            white-space: nowrap;
-            background-color: transparent;
-            border: 0;
             text-decoration: none;
-        }
-
-        .dropdown-item:hover, .dropdown-item:focus {
-            color: var(--text);
-            background-color: var(--light);
-            text-decoration: none;
-        }
-
-        .dropdown-divider {
-            height: 0;
-            margin: 0.5rem 0;
-            overflow: hidden;
-            border-top: 1px solid var(--border);
-        }
-
-        .dropdown-toggle::after {
-            display: inline-block;
-            margin-left: 0.255em;
-            vertical-align: 0.255em;
-            content: "";
-            border-top: 0.3em solid;
-            border-right: 0.3em solid transparent;
-            border-bottom: 0;
-            border-left: 0.3em solid transparent;
-        }
-
-        /* Cards */
-        .card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: var(--surface);
-            background-clip: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.125);
-            border-radius: var(--radius-lg);
-        }
-
-        .card-body {
-            flex: 1 1 auto;
-            padding: 1.25rem;
-        }
-
-        .card-title {
-            margin-bottom: 0.75rem;
-            font-size: 1.25rem;
-            font-weight: 500;
-        }
-
-        .card-text:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            font-weight: 400;
-            color: var(--text);
-            text-align: center;
-            vertical-align: middle;
-            user-select: none;
-            background-color: transparent;
-            border: 1px solid transparent;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            line-height: 1.5;
-            border-radius: var(--radius);
             transition: var(--transition);
-            text-decoration: none;
         }
 
-        .btn:hover {
-            text-decoration: none;
+        .dropdown-item:hover {
+            background: var(--background);
         }
 
-        .btn:focus {
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(158, 74, 60, 0.25);
-        }
-
-        .btn-primary {
-            color: white;
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .btn-primary:hover {
-            color: white;
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
-        }
-
-        .btn-success {
-            color: white;
-            background-color: var(--success);
-            border-color: var(--success);
-        }
-
-        .btn-info {
-            color: white;
-            background-color: var(--info);
-            border-color: var(--info);
-        }
-
-        .btn-lg {
-            padding: 0.5rem 1rem;
-            font-size: 1.25rem;
-            line-height: 1.5;
-            border-radius: var(--radius-lg);
-        }
-
-        .btn-outline-primary {
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .btn-outline-primary:hover {
-            color: white;
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        /* Alerts */
-        .alert {
-            position: relative;
-            padding: 0.75rem 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid transparent;
-            border-radius: var(--radius);
-        }
-
-        .alert-success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-
-        .alert-danger {
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
-
-        .alert-dismissible {
-            padding-right: 4rem;
-        }
-
-        .alert-dismissible .close {
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 0.75rem 1.25rem;
-            color: inherit;
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 0.25em 0.4em;
-            font-size: 75%;
-            font-weight: 700;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: var(--radius);
-        }
-
-        .badge-success {
-            color: white;
-            background-color: var(--success);
-        }
-
-        .badge-danger {
-            color: white;
-            background-color: var(--danger);
-        }
-
-        .badge-secondary {
-            color: white;
-            background-color: var(--secondary);
-        }
-
-        /* Utilities */
-        .text-center {
-            text-align: center !important;
-        }
-
-        .text-white {
-            color: white !important;
-        }
-
-        .text-muted {
-            color: #6c757d !important;
-        }
-
-        .bg-dark {
-            background-color: var(--dark) !important;
-        }
-
-        .bg-primary {
-            background-color: var(--primary) !important;
-        }
-
-        .d-block {
-            display: block !important;
-        }
-
-        .d-flex {
-            display: flex !important;
-        }
-
-        .justify-content-center {
-            justify-content: center !important;
-        }
-
-        .align-items-center {
-            align-items: center !important;
-        }
-
-        .gap-2 {
-            gap: 0.5rem !important;
-        }
-
-        .me-2 {
-            margin-right: 0.5rem !important;
-        }
-
-        .me-md-2 {
-            margin-right: 0.5rem !important;
-        }
-
-        .mb-0 {
-            margin-bottom: 0 !important;
-        }
-
-        .mb-3 {
-            margin-bottom: 1rem !important;
-        }
-
-        .mb-4 {
-            margin-bottom: 1.5rem !important;
-        }
-
-        .mb-5 {
-            margin-bottom: 3rem !important;
-        }
-
-        .mt-3 {
-            margin-top: 1rem !important;
-        }
-
-        .mt-4 {
-            margin-top: 1.5rem !important;
-        }
-
-        .mt-5 {
-            margin-top: 3rem !important;
-        }
-
-        .py-4 {
-            padding-top: 1.5rem !important;
-            padding-bottom: 1.5rem !important;
-        }
-
-        .display-4 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            line-height: 1.2;
-        }
-
-        .fw-bold {
-            font-weight: 700 !important;
-        }
-
-        .lead {
-            font-size: 1.25rem;
-            font-weight: 300;
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 8px 0;
         }
 
         /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
-            padding: 3rem 0;
+            padding: 4rem 0;
+            text-align: center;
             margin-bottom: 2rem;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Grid System */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+        }
+
+        .col-12 {
+            grid-column: span 12;
+        }
+
+        @media (min-width: 768px) {
+            .col-md-4 {
+                grid-column: span 4;
+            }
+            .col-md-6 {
+                grid-column: span 6;
+            }
+            .col-md-8 {
+                grid-column: span 8;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-5px);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-text {
+            margin-bottom: 1rem;
+            color: var(--text-light);
         }
 
         /* Stats Cards */
         .stats-card {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            border: none;
+            text-align: center;
         }
 
         .welcome-card {
             background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             color: var(--text);
-            border: none;
+            text-align: center;
         }
 
         .feature-icon {
@@ -582,10 +263,117 @@
             margin-bottom: 1rem;
         }
 
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(158, 74, 60, 0.25);
+        }
+
+        .btn-lg {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            color: var(--success);
+            border: 1px solid #c8e6c9;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            color: var(--error);
+            border: 1px solid #ffcdd2;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            color: var(--info);
+            border: 1px solid #bbdefb;
+        }
+
+        .alert-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-error {
+            background: var(--error);
+            color: white;
+        }
+
+        .badge-secondary {
+            background: var(--text-light);
+            color: white;
+        }
+
         /* Book Card */
         .book-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
         }
 
         .book-card:hover {
@@ -593,160 +381,212 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* Footer */
-        .footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 1.5rem 0;
-            margin-top: auto;
-        }
-
-        /* Responsive navbar */
-        @media (min-width: 992px) {
-            .navbar-expand-lg {
-                flex-flow: row nowrap;
-                justify-content: flex-start;
-            }
-            
-            .navbar-expand-lg .navbar-nav {
-                flex-direction: row;
-            }
-            
-            .navbar-expand-lg .navbar-nav .nav-link {
-                padding-right: 0.5rem;
-                padding-left: 0.5rem;
-            }
-            
-            .navbar-expand-lg .navbar-collapse {
-                display: flex !important;
-                flex-basis: auto;
-            }
-            
-            .navbar-expand-lg .navbar-toggler {
-                display: none;
-            }
-            
-            .dropdown-menu {
-                position: absolute;
-            }
-        }
-
-        @media (max-width: 991.98px) {
-            .navbar-collapse {
-                display: none;
-            }
-            
-            .navbar-toggler {
-                display: block;
-            }
-            
-            .navbar-nav .dropdown-menu {
-                position: static;
-                float: none;
-            }
-        }
-
-        /* Custom styles */
         .book-details p {
             margin-bottom: 0.5rem;
         }
 
-        .d-md-flex {
-            display: flex !important;
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 2.5rem 0;
+            margin-top: auto;
         }
 
-        .justify-content-md-center {
-            justify-content: center !important;
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
 
-        .text-md-end {
-            text-align: right !important;
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
         }
 
-        @media (max-width: 767.98px) {
-            .text-md-end {
-                text-align: left !important;
+        .footer-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-text {
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        /* Utilities */
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .mb-5 { margin-bottom: 3rem; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mt-4 { margin-top: 2rem; }
+        .mt-5 { margin-top: 3rem; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
             }
             
-            .d-md-flex {
+            .nav-menu {
                 flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+                flex-direction: column;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .text-right {
+                text-align: left;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Menu mobile */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 15px;
+            }
+            
+            .nav-menu {
+                display: none;
+                width: 100%;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .user-menu .dropdown-menu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                margin-top: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/home">
-                <i class="fas fa-book-half"></i> Biblioteca Ativa
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/home" class="logo">
+                <i class="fas fa-book-open"></i> Biblioteca Ativa
             </a>
-            <button class="navbar-toggler" type="button">
-                <span class="navbar-toggler-icon"><i class="fas fa-bars text-white"></i></span>
+            
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="navbar-collapse">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/home">
-                            <i class="fas fa-home"></i> Home
+            
+            <ul class="nav-menu">
+                <li>
+                    <a href="/home" class="nav-link active">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li>
+                    <a href="/livros" class="nav-link">
+                        <i class="fas fa-book"></i> Catálogo
+                    </a>
+                </li>
+                <% if (user && user.role === 'admin') { %>
+                <li>
+                    <a href="/livros/acervo" class="nav-link">
+                        <i class="fas fa-archive"></i> Acervo
+                    </a>
+                </li>
+                <li>
+                    <a href="/livros/adicionar" class="nav-link">
+                        <i class="fas fa-plus-circle"></i> Adicionar Livro
+                    </a>
+                </li>
+                <% } %>
+                <li class="user-menu">
+                    <div class="user-toggle">
+                        <i class="fas fa-user-circle"></i> <%= user.nome %> <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <span class="dropdown-item">Função: <%= user.role %></span>
+                        <span class="dropdown-item">Email: <%= user.email %></span>
+                        <div class="divider"></div>
+                        <a href="/logout" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Sair
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros">
-                            <i class="fas fa-book"></i> Catálogo
-                        </a>
-                    </li>
-                    <% if (user && user.role === 'admin') { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/acervo">
-                            <i class="fas fa-archive"></i> Acervo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/adicionar">
-                            <i class="fas fa-plus-circle"></i> Adicionar Livro
-                        </a>
-                    </li>
-                    <% } %>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button">
-                            <i class="fas fa-person-circle"></i> <%= user.nome %>
-                        </a>
-                        <div class="dropdown-menu">
-                            <span class="dropdown-item-text">Função: <%= user.role %></span>
-                            <span class="dropdown-item-text">Email: <%= user.email %></span>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/logout">
-                                <i class="fas fa-box-arrow-right"></i> Sair
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="container text-center">
-            <h1 class="display-4 fw-bold">
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
                 <i class="fas fa-book"></i> Biblioteca Ativa
             </h1>
-            <p class="lead">Sistema de gerenciamento bibliográfico completo</p>
+            <p class="hero-subtitle">Sistema de gerenciamento bibliográfico completo</p>
         </div>
-    </div>
+    </section>
 
     <!-- Main Content -->
     <div class="container mb-5">
         <!-- Welcome Message -->
-        <div class="row mb-4">
+        <div class="grid mb-4">
             <div class="col-12">
                 <div class="card welcome-card">
-                    <div class="card-body text-center">
+                    <div class="card-body">
                         <h2 class="card-title">
-                            <i class="fas fa-emoji-smile"></i> Bem-vindo, <%= user.nome %>!
+                            <i class="fas fa-smile"></i> Bem-vindo, <%= user.nome %>!
                         </h2>
                         <p class="card-text">
                             Você está logado como: <strong><%= user.role %></strong>
@@ -758,46 +598,46 @@
 
         <!-- Alertas -->
         <% if (success) { %>
-            <div class="alert alert-success alert-dismissible">
+            <div class="alert alert-success">
                 <i class="fas fa-check-circle"></i> 
                 <strong>Sucesso!</strong> <%= success %>
-                <button type="button" class="close">&times;</button>
+                <button class="alert-close">&times;</button>
             </div>
         <% } %>
 
         <% if (error) { %>
-            <div class="alert alert-danger alert-dismissible">
+            <div class="alert alert-error">
                 <i class="fas fa-exclamation-triangle"></i> 
                 <strong>Erro:</strong> <%= error %>
-                <button type="button" class="close">&times;</button>
+                <button class="alert-close">&times;</button>
             </div>
         <% } %>
 
         <!-- Role Specific Content -->
         <% if (user.role === 'admin') { %>
-        <div class="row mb-4">
+        <div class="grid mb-4">
             <div class="col-md-4 mb-3">
-                <div class="card stats-card text-center text-white">
+                <div class="card stats-card">
                     <div class="card-body">
-                        <i class="fas fa-journals feature-icon"></i>
+                        <i class="fas fa-book feature-icon"></i>
                         <h3>Gestão Completa</h3>
                         <p>Administre todos os aspectos da biblioteca</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="card stats-card text-center text-white">
+                <div class="card stats-card">
                     <div class="card-body">
-                        <i class="fas fa-people feature-icon"></i>
+                        <i class="fas fa-users feature-icon"></i>
                         <h3>Controle Total</h3>
                         <p>Gerencie livros, usuários e empréstimos</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="card stats-card text-center text-white">
+                <div class="card stats-card">
                     <div class="card-body">
-                        <i class="fas fa-graph-up feature-icon"></i>
+                        <i class="fas fa-chart-line feature-icon"></i>
                         <h3>Relatórios</h3>
                         <p>Acesse estatísticas e relatórios detalhados</p>
                     </div>
@@ -805,21 +645,21 @@
             </div>
         </div>
 
-        <div class="row mb-4">
+        <div class="grid mb-4">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body text-center">
                         <h4 class="card-title">
                             <i class="fas fa-tools"></i> Painel Administrativo
                         </h4>
-                        <div class="d-md-flex justify-content-md-center gap-2 mt-3">
-                            <a class="btn btn-primary btn-lg me-md-2" href="/livros">
+                        <div class="btn-group">
+                            <a class="btn btn-lg" href="/livros">
                                 <i class="fas fa-book"></i> Ver Todos os Livros
                             </a>
-                            <a class="btn btn-success btn-lg me-md-2" href="/livros/adicionar">
+                            <a class="btn btn-lg" href="/livros/adicionar">
                                 <i class="fas fa-plus-circle"></i> Adicionar Livro
                             </a>
-                            <a class="btn btn-info btn-lg" href="/livros/acervo">
+                            <a class="btn btn-lg" href="/livros/acervo">
                                 <i class="fas fa-archive"></i> Gerenciar Acervo
                             </a>
                         </div>
@@ -828,7 +668,7 @@
             </div>
         </div>
         <% } else { %>
-        <div class="row mb-4">
+        <div class="grid mb-4">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body text-center">
@@ -836,7 +676,7 @@
                             <i class="fas fa-search"></i> Explorar Biblioteca
                         </h4>
                         <p class="card-text">Descubra nosso acervo de livros disponíveis para empréstimo</p>
-                        <a class="btn btn-primary btn-lg" href="/livros">
+                        <a class="btn btn-lg" href="/livros">
                             <i class="fas fa-book"></i> Explorar Catálogo
                         </a>
                     </div>
@@ -846,22 +686,22 @@
         <% } %>
 
         <!-- Livros em Destaque -->
-        <div class="row mb-4">
+        <div class="grid mb-4">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                            <i class="fas fa-stars"></i> Livros em Destaque
+                            <i class="fas fa-star"></i> Livros em Destaque
                         </h4>
                         
-                        <div class="row">
+                        <div class="grid">
                             <% if (livros && livros.length === 0) { %>
                                 <div class="col-12">
                                     <div class="alert alert-info text-center">
-                                        <i class="fas fa-info-circle display-4 d-block mb-3"></i>
+                                        <i class="fas fa-info-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
                                         <h5>Nenhum livro cadastrado no sistema</h5>
                                         <% if (user && user.role === 'admin') { %>
-                                            <a href="/livros/adicionar" class="btn btn-primary mt-3">
+                                            <a href="/livros/adicionar" class="btn mt-3">
                                                 <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
                                             </a>
                                         <% } %>
@@ -869,25 +709,25 @@
                                 </div>
                             <% } else { %>
                                 <% livros.slice(0, 6).forEach(livro => { %>
-                                    <div class="col-lg-4 col-md-6 mb-4">
-                                        <div class="card book-card h-100">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card book-card">
                                             <div class="card-body">
-                                                <h5 class="card-title text-primary"><%= livro.titulo %></h5>
-                                                <h6 class="card-subtitle mb-3 text-muted">
-                                                    <i class="fas fa-person"></i> <%= livro.autor %>
+                                                <h5 class="card-title" style="color: var(--primary);"><%= livro.titulo %></h5>
+                                                <h6 class="mb-3" style="color: var(--text-light);">
+                                                    <i class="fas fa-user"></i> <%= livro.autor %>
                                                 </h6>
                                                 <div class="book-details">
-                                                    <p class="card-text">
+                                                    <p>
                                                         <strong><i class="fas fa-calendar"></i> Ano:</strong> <%= livro.ano %>
                                                     </p>
-                                                    <p class="card-text">
+                                                    <p>
                                                         <strong><i class="fas fa-tag"></i> Categoria:</strong> 
-                                                        <span class="badge bg-secondary"><%= livro.categoria %></span>
+                                                        <span class="badge badge-secondary"><%= livro.categoria %></span>
                                                     </p>
-                                                    <p class="card-text">
+                                                    <p>
                                                         <strong>Disponibilidade:</strong> 
-                                                        <span class="badge <%= livro.disponivel ? 'badge-success' : 'badge-danger' %>">
-                                                            <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-x-circle' %>"></i>
+                                                        <span class="badge <%= livro.disponivel ? 'badge-success' : 'badge-error' %>">
+                                                            <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
                                                             <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
                                                         </span>
                                                     </p>
@@ -901,7 +741,7 @@
 
                         <% if (livros && livros.length > 6) { %>
                             <div class="text-center mt-4">
-                                <a class="btn btn-outline-primary" href="/livros">
+                                <a class="btn btn-outline" href="/livros">
                                     <i class="fas fa-arrow-right"></i> Ver Todos os Livros
                                 </a>
                             </div>
@@ -913,51 +753,46 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer mt-5 py-4 bg-dark text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="fas fa-book"></i> Biblioteca Ativa</h5>
-                    <p>Sistema de gerenciamento de acervo bibliográfico</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0">&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
-                    <p class="mb-0">Sistema desenvolvido para ETEC</p>
-                </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h5 class="footer-title"><i class="fas fa-book"></i> Biblioteca Ativa</h5>
+                <p class="footer-text">Sistema de gerenciamento de acervo bibliográfico</p>
+            </div>
+            <div class="footer-col text-right">
+                <p class="footer-text">&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
+                <p class="footer-text">Sistema desenvolvido para ETEC</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Toggle navbar on mobile
-        document.querySelector('.navbar-toggler').addEventListener('click', function() {
-            const navbarCollapse = document.querySelector('.navbar-collapse');
-            navbarCollapse.style.display = navbarCollapse.style.display === 'flex' ? 'none' : 'flex';
+        // Menu mobile toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
         });
 
-        // Close alerts
-        document.querySelectorAll('.close').forEach(button => {
+        // Fechar alertas
+        document.querySelectorAll('.alert-close').forEach(button => {
             button.addEventListener('click', function() {
                 this.parentElement.style.display = 'none';
             });
         });
 
-        // Dropdown functionality
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                const dropdownMenu = this.nextElementSibling;
-                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-
-        // Close dropdowns when clicking outside
+        // Fechar dropdown ao clicar fora
         document.addEventListener('click', function(e) {
-            if (!e.target.matches('.dropdown-toggle')) {
+            if (!e.target.closest('.user-menu')) {
                 document.querySelectorAll('.dropdown-menu').forEach(menu => {
                     menu.style.display = 'none';
                 });
             }
+        });
+
+        // Abrir/fechar dropdown do usuário
+        document.querySelector('.user-toggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menu = this.nextElementSibling;
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         });
     </script>
 </body>
