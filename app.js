@@ -107,8 +107,7 @@ app.use("/", authRoutes);
 // Página inicial protegida
 app.get("/home", isAuthenticated, async (req, res) => {
   try {
-    const livros = await livroRepository.findAll();
-    
+    const livros = await livroRepository.findPublicados();
     res.render("home", {
       user: req.user,
       livros: livros || [], 
