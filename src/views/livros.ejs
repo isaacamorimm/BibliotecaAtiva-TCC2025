@@ -3,28 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biblioteca - Catálogo de Livros</title>
+    <title>Catálogo - Biblioteca Ativa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #9e4a3c;
-            --primary-light: #c98c67;
+            --primary-light: #d9ac8a;
             --primary-dark: #7a372b;
-            --accent: #ff7e5f;
             --background: #faf7f4;
             --surface: #ffffff;
             --text: #333333;
             --text-light: #777777;
-            --error: #e53935;
             --success: #43a047;
-            --warning: #ff9800;
-            --info: #2196f3;
-            --border: #e0e0e0;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+            --error: #e53935;
+            --border: #e8e1d9;
             --radius: 12px;
-            --transition: all 0.3s ease;
+            --transition: all 0.2s ease;
         }
 
         * {
@@ -34,30 +28,29 @@
         }
 
         body {
-            background: var(--background);
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--background);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header e Navegação */
+        /* Header */
         .header {
-            background: var(--primary-dark);
-            color: white;
+            background: var(--surface);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             padding: 1rem 0;
-            box-shadow: var(--shadow-md);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
         }
 
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -66,567 +59,390 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: white;
+            color: var(--primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
 
+        /* Navigation */
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 15px;
+            gap: 1.5rem;
             align-items: center;
         }
 
         .nav-link {
-            color: white;
+            color: var(--text);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            border-radius: var(--radius);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
             transition: var(--transition);
-            font-size: 0.95rem;
         }
 
         .nav-link:hover, .nav-link.active {
-            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
         }
 
         .user-menu {
-            position: relative;
-        }
-
-        .user-toggle {
-            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            border-radius: var(--radius);
-            transition: var(--transition);
-            font-size: 0.95rem;
-        }
-
-        .user-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            min-width: 180px;
-            padding: 10px 0;
-            z-index: 1000;
-            display: none;
-        }
-
-        .user-menu:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-item {
-            display: block;
-            padding: 8px 16px;
+            gap: 0.75rem;
             color: var(--text);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .dropdown-item:hover {
-            background: var(--background);
-        }
-
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 8px 0;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .hero-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
         }
 
-        .hero-subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 2rem 0;
         }
 
-        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
+            padding: 0 1.5rem;
         }
 
-        /* Grid System */
-        .grid {
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Stats and Search */
+        .tools-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        /* Cards */
-        .card {
+        .stat-card, .search-card {
             background: var(--surface);
+            padding: 1.5rem;
             border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-btn {
+            padding: 0.75rem 1.25rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
             transition: var(--transition);
         }
 
-        .card:hover {
-            box-shadow: var(--shadow-md);
+        .search-btn:hover {
+            background: var(--primary-dark);
         }
 
-        .card-header {
-            padding: 1rem;
-            background: var(--background);
-            border-bottom: 1px solid var(--border);
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
         }
 
-        .card-body {
-            padding: 1.25rem;
-        }
-
-        .card-footer {
-            padding: 1rem;
-            background: var(--background);
-            border-top: 1px solid var(--border);
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card-text {
-            margin-bottom: 0.75rem;
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        /* Book Card */
         .book-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
+            background: var(--surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: var(--transition);
         }
 
         .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
         }
 
-        .book-details p {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+        .book-header {
+            padding: 1.25rem 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 16px;
+        .book-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
         }
 
-        .badge-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .badge-error {
-            background: var(--error);
-            color: white;
-        }
-
-        .badge-secondary {
-            background: var(--text-light);
-            color: white;
-        }
-
-        .badge-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 8px 16px;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: var(--radius);
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(158, 74, 60, 0.25);
-        }
-
-        .btn-sm {
-            padding: 5px 10px;
-            font-size: 0.85rem;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 1rem;
-            border-radius: var(--radius);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
-        }
-
-        .alert-success {
+        .badge-available {
             background: #e8f5e9;
             color: var(--success);
-            border: 1px solid #c8e6c9;
         }
 
-        .alert-error {
+        .badge-unavailable {
             background: #ffebee;
             color: var(--error);
-            border: 1px solid #ffcdd2;
         }
 
-        .alert-info {
-            background: #e3f2fd;
-            color: var(--info);
-            border: 1px solid #bbdefb;
+        .book-body {
+            padding: 1.25rem 1.5rem;
         }
 
-        .alert-close {
-            margin-left: auto;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
+        .book-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
         }
 
-        /* Form Elements */
-        .input-group {
+        .book-author {
+            color: var(--text-light);
+            margin-bottom: 1rem;
             display: flex;
-            width: 100%;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .form-control {
-            flex: 1;
-            padding: 10px 14px;
-            border: 2px solid var(--border);
-            border-radius: var(--radius) 0 0 var(--radius);
-            font-size: 0.95rem;
+        .book-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .book-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .book-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-edit {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-size: 0.9rem;
             transition: var(--transition);
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(158, 74, 60, 0.15);
-        }
-
-        .input-group-btn {
-            padding: 10px 14px;
+        .btn-edit:hover {
             background: var(--primary);
             color: white;
-            border: none;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            cursor: pointer;
-            transition: var(--transition);
         }
 
-        .input-group-btn:hover {
-            background: var(--primary-dark);
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
         }
 
         /* Footer */
         .footer {
-            background: var(--primary-dark);
-            color: white;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
             padding: 2rem 0;
-            margin-top: auto;
+            margin-top: 3rem;
         }
 
         .footer-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1.5rem;
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
-        }
-
-        .footer-col {
-            flex: 1;
-            min-width: 250px;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-            display: flex;
             align-items: center;
-            gap: 8px;
         }
 
-        .footer-text {
-            margin-bottom: 0.5rem;
-            opacity: 0.8;
-            font-size: 0.9rem;
+        .footer-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
         }
 
-        .text-center {
-            text-align: center;
+        .footer-copyright {
+            color: var(--text-light);
         }
 
-        .text-right {
-            text-align: right;
-        }
-
-        /* Utilities */
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .mb-3 { margin-bottom: 1.5rem; }
-        .mb-4 { margin-bottom: 2rem; }
-        .mb-5 { margin-bottom: 3rem; }
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .mt-3 { margin-top: 1.5rem; }
-        .mt-4 { margin-top: 2rem; }
-        .mt-5 { margin-top: 3rem; }
-
-        /* Menu mobile */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Media Queries para Responsividade */
+        /* Responsive Design */
         @media (min-width: 640px) {
-            .grid {
+            .tools-grid {
+                grid-template-columns: 1fr 2fr;
+            }
+            
+            .books-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
             }
         }
 
         @media (min-width: 768px) {
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .nav-menu {
-                gap: 20px;
+                gap: 2rem;
             }
             
-            .nav-link {
-                font-size: 1rem;
-                padding: 10px 15px;
-            }
-            
-            .user-toggle {
-                font-size: 1rem;
-                padding: 10px 15px;
-            }
-            
-            .card-header {
-                padding: 1rem 1.5rem;
-            }
-            
-            .card-body {
-                padding: 1.5rem;
-            }
-            
-            .card-footer {
-                padding: 1rem 1.5rem;
+            .page-title {
+                font-size: 3rem;
             }
         }
 
         @media (min-width: 1024px) {
-            .grid {
+            .books-grid {
                 grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .hero-title {
-                font-size: 2.8rem;
             }
         }
 
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
-                gap: 15px;
-                padding: 0 15px;
+                gap: 1rem;
+                text-align: center;
             }
             
             .nav-menu {
-                flex-direction: column;
-                gap: 10px;
-                width: 100%;
-                display: none;
-            }
-            
-            .nav-menu.active {
-                display: flex;
-            }
-            
-            .hero-title {
-                font-size: 2rem;
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .hero-subtitle {
-                font-size: 1rem;
-                padding: 0 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
             }
             
             .footer-container {
                 flex-direction: column;
+                gap: 1rem;
                 text-align: center;
             }
             
-            .text-right {
-                text-align: center;
-            }
-            
-            .menu-toggle {
-                display: block;
-                position: absolute;
-                right: 15px;
-                top: 15px;
-            }
-            
-            .user-menu .dropdown-menu {
-                position: static;
-                width: 100%;
-                box-shadow: none;
-                margin-top: 10px;
-            }
-            
-            .container {
-                padding: 0 15px;
-            }
-            
-            .card-title {
-                font-size: 1.2rem;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .input-group {
+            .search-form {
                 flex-direction: column;
-            }
-            
-            .form-control {
-                border-radius: var(--radius) var(--radius) 0 0;
-            }
-            
-            .input-group-btn {
-                border-radius: 0 0 var(--radius) var(--radius);
             }
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 1.3rem;
+            .page-title {
+                font-size: 2rem;
             }
             
-            .hero-section {
-                padding: 2rem 0;
-            }
-            
-            .hero-title {
-                font-size: 1.8rem;
-            }
-            
-            .card-body {
+            .book-header, .book-body, .book-footer {
                 padding: 1rem;
             }
-            
-            .alert {
-                flex-direction: column;
-                text-align: center;
-                gap: 8px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1.5rem;
             }
             
-            .alert-close {
-                margin-left: 0;
+            .nav-menu {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+            
+            .nav-menu.active {
+                display: flex;
             }
         }
     </style>
@@ -639,244 +455,159 @@
                 <i class="fas fa-book-open"></i> Biblioteca Ativa
             </a>
             
-            <button class="menu-toggle">
+            <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
             
             <ul class="nav-menu">
-                <li>
-                    <a href="/home" class="nav-link">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li>
-                    <a href="/livros" class="nav-link active">
-                        <i class="fas fa-book"></i> Catálogo
-                    </a>
-                </li>
+                <li><a href="/home" class="nav-link">Home</a></li>
+                <li><a href="/livros" class="nav-link active">Catálogo</a></li>
                 <% if (user && user.role === 'admin') { %>
-                <li>
-                    <a href="/livros/acervo" class="nav-link">
-                        <i class="fas fa-archive"></i> Acervo
-                    </a>
-                </li>
-                <li>
-                    <a href="/livros/adicionar" class="nav-link">
-                        <i class="fas fa-plus-circle"></i> Adicionar Livro
-                    </a>
-                </li>
+                <li><a href="/livros/acervo" class="nav-link">Acervo</a></li>
+                <li><a href="/livros/adicionar" class="nav-link">Adicionar Livro</a></li>
                 <% } %>
-                <li class="user-menu">
-                    <div class="user-toggle">
-                        <i class="fas fa-user-circle"></i> <%= user.nome %> <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="dropdown-menu">
-                        <span class="dropdown-item">Tipo: <%= user.role %></span>
-                        <div class="divider"></div>
-                        <a href="/logout" class="dropdown-item">
-                            <i class="fas fa-sign-out-alt"></i> Sair
-                        </a>
-                    </div>
-                </li>
             </ul>
+            
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <%= user.nome.charAt(0).toUpperCase() %>
+                </div>
+                <span><%= user.nome %></span>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">
-                <i class="fas fa-book"></i> Catálogo de Livros
-            </h1>
-            <p class="hero-subtitle">Explore nossa coleção de livros disponíveis</p>
-        </div>
-    </section>
-
     <!-- Main Content -->
-    <div class="container mb-5">
-        <!-- Alertas -->
-        <% if (success) { %>
-            <div class="alert alert-success">
-                <i class="fas fa-check-circle"></i> <%= success %>
-                <button class="alert-close">&times;</button>
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Catálogo de Livros</h1>
+                <p class="page-subtitle">Explore nossa coleção completa</p>
             </div>
-        <% } %>
 
-        <% if (error) { %>
-            <div class="alert alert-error">
-                <i class="fas fa-exclamation-triangle"></i> <%= error %>
-                <button class="alert-close">&times;</button>
-            </div>
-        <% } %>
-
-        <!-- Filtros e Estatísticas -->
-        <div class="grid mb-4">
-            <div class="col-12 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="fas fa-info-circle"></i> Estatísticas
-                        </h5>
-                        <p class="card-text">
-                            Total de livros: <span class="badge badge-primary"><%= livros.length %></span>
-                        </p>
+            <!-- Stats and Search -->
+            <div class="tools-grid">
+                <div class="stat-card">
+                    <h3>Total de Livros</h3>
+                    <div class="stat-value"><%= livros.length %></div>
+                    <p>Disponíveis no acervo</p>
+                </div>
+                
+                <div class="search-card">
+                    <h3>Buscar Livros</h3>
+                    <div class="search-form">
+                        <input type="text" class="search-input" placeholder="Título, autor ou categoria..." id="searchInput">
+                        <button class="search-btn" onclick="filterBooks()">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="col-12 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="fas fa-search"></i> Buscar Livros
-                        </h5>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Título, autor ou categoria..." id="searchInput">
-                            <button class="input-group-btn" onclick="filterBooks()">
-                                <i class="fas fa-search"></i>
-                            </button>
+
+            <!-- Books Grid -->
+            <div class="books-grid" id="booksContainer">
+                <% if (livros.length === 0) { %>
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-book-open"></i>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Grid de Livros -->
-        <div class="grid" id="booksContainer">
-            <% if (livros.length === 0) { %>
-                <div class="col-12">
-                    <div class="alert alert-info text-center">
-                        <i class="fas fa-info-circle" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
-                        <h4>Nenhum livro cadastrado no sistema</h4>
-                        <p class="mb-2">Aguardando novos livros serem adicionados ao acervo.</p>
+                        <h3 class="empty-title">Nenhum livro encontrado</h3>
+                        <p class="empty-text">Aguardando novos livros serem adicionados ao acervo.</p>
                         <% if (user && user.role === 'admin') { %>
-                            <a href="/livros/adicionar" class="btn mt-3">
-                                <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
+                            <a href="/livros/adicionar" class="btn-edit">
+                                <i class="fas fa-plus"></i> Adicionar Primeiro Livro
                             </a>
                         <% } %>
                     </div>
-                </div>
-            <% } else { %>
-                <% livros.forEach(livro => { %>
-                    <div class="col-12 mb-4 book-item">
-                        <div class="card book-card">
-                            <div class="card-header">
-                                <span class="badge <%= livro.disponivel ? 'badge-success' : 'badge-error' %>">
-                                    <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
+                <% } else { %>
+                    <% livros.forEach(livro => { %>
+                        <div class="book-card book-item">
+                            <div class="book-header">
+                                <span class="book-badge <%= livro.disponivel ? 'badge-available' : 'badge-unavailable' %>">
                                     <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
                                 </span>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title" style="color: var(--primary);"><%= livro.titulo %></h5>
-                                <h6 class="mb-3" style="color: var(--text-light);">
+                            
+                            <div class="book-body">
+                                <h3 class="book-title"><%= livro.titulo %></h3>
+                                <div class="book-author">
                                     <i class="fas fa-user"></i> <%= livro.autor %>
-                                </h6>
+                                </div>
+                                
                                 <div class="book-details">
-                                    <p>
-                                        <strong><i class="fas fa-calendar"></i> Ano:</strong> <%= livro.ano %>
-                                    </p>
-                                    <p>
-                                        <strong><i class="fas fa-tag"></i> Categoria:</strong> 
-                                        <span class="badge badge-secondary"><%= livro.categoria %></span>
-                                    </p>
+                                    <div class="book-detail">
+                                        <i class="fas fa-calendar"></i> Ano: <%= livro.ano %>
+                                    </div>
+                                    <div class="book-detail">
+                                        <i class="fas fa-tag"></i> Categoria: <%= livro.categoria %>
+                                    </div>
                                 </div>
                             </div>
+                            
                             <% if (user && user.role === 'admin') { %>
-                                <div class="card-footer">
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <a href="/livros/editar/<%= livro.id %>" class="btn btn-outline btn-sm">
-                                            <i class="fas fa-pencil-alt"></i> Editar
-                                        </a>
-                                    </div>
+                                <div class="book-footer">
+                                    <a href="/livros/editar/<%= livro.id %>" class="btn-edit">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
                                 </div>
                             <% } %>
                         </div>
-                    </div>
-                <% }); %>
-            <% } %>
+                    <% }); %>
+                <% } %>
+            </div>
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <div class="footer-col">
-                <h5 class="footer-title"><i class="fas fa-book"></i> Biblioteca Ativa</h5>
-                <p class="footer-text">Sistema de gerenciamento de acervo bibliográfico</p>
-            </div>
-            <div class="footer-col text-center text-right">
-                <p class="footer-text">&copy; 2024 Biblioteca Ativa. Todos os direitos reservados.</p>
-            </div>
+            <div class="footer-brand">Biblioteca Ativa</div>
+            <div class="footer-copyright">&copy; 2024 - Todos os direitos reservados</div>
         </div>
     </footer>
 
     <script>
-        // Menu mobile toggle
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             document.querySelector('.nav-menu').classList.toggle('active');
         });
 
-        // Fechar alertas
-        document.querySelectorAll('.alert-close').forEach(button => {
-            button.addEventListener('click', function() {
-                this.parentElement.style.display = 'none';
-            });
-        });
-
-        // Fechar dropdown ao clicar fora
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.user-menu')) {
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    menu.style.display = 'none';
-                });
-            }
-        });
-
-        // Abrir/fechar dropdown do usuário
-        document.querySelector('.user-toggle').addEventListener('click', function(e) {
-            e.stopPropagation();
-            const menu = this.nextElementSibling;
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Script de busca
+        // Search functionality
         function filterBooks() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
             const books = document.querySelectorAll('.book-item');
+            let visibleBooks = 0;
             
             books.forEach(book => {
-                const title = book.querySelector('.card-title').textContent.toLowerCase();
-                const author = book.querySelector('h6').textContent.toLowerCase();
-                const category = book.querySelector('.badge-secondary').textContent.toLowerCase();
+                const title = book.querySelector('.book-title').textContent.toLowerCase();
+                const author = book.querySelector('.book-author').textContent.toLowerCase();
+                const category = book.querySelector('.book-detail:nth-child(2)').textContent.toLowerCase();
                 
                 if (title.includes(searchText) || author.includes(searchText) || category.includes(searchText)) {
                     book.style.display = 'block';
+                    visibleBooks++;
                 } else {
                     book.style.display = 'none';
                 }
             });
-        }
-
-        // Busca ao digitar
-        document.getElementById('searchInput').addEventListener('keyup', filterBooks);
-        
-        // Ajustar grid baseado no tamanho da tela
-        function adjustGrid() {
-            const grid = document.querySelector('.grid');
-            const booksContainer = document.getElementById('booksContainer');
-            const books = document.querySelectorAll('.book-item');
             
-            if (window.innerWidth >= 1024) {
-                booksContainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
-            } else if (window.innerWidth >= 768) {
-                booksContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
-            } else {
-                booksContainer.style.gridTemplateColumns = '1fr';
+            // Show empty state if no books match
+            const emptyState = document.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.style.display = visibleBooks === 0 ? 'block' : 'none';
             }
         }
+
+        // Search as you type
+        document.getElementById('searchInput').addEventListener('keyup', filterBooks);
         
-        // Ajustar grid no carregamento e redimensionamento
-        window.addEventListener('load', adjustGrid);
-        window.addEventListener('resize', adjustGrid);
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-menu') && !e.target.closest('.mobile-menu-btn')) {
+                document.querySelector('.nav-menu').classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>
