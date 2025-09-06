@@ -2,9 +2,323 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Biblioteca Ativa</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/login.css">
+  <style>
+    :root {
+      --primary: #9e4a3c;
+      --primary-light: #d9ac8a;
+      --primary-dark: #7a372b;
+      --background: #faf7f4;
+      --surface: #ffffff;
+      --text: #333333;
+      --text-light: #777777;
+      --error: #e53935;
+      --border: #e8e1d9;
+      --radius: 12px;
+      --transition: all 0.2s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .logo-text {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    /* Login Container */
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    }
+
+    .login-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2rem;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      z-index: 1;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 3rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      background: var(--background);
+      color: var(--text);
+      transition: var(--transition);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(158, 74, 60, 0.1);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1rem;
+      z-index: 2;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .password-toggle:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--primary);
+    }
+
+    /* Options */
+    .login-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      appearance: none;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .checkbox:checked {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-size: 0.8rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .forgot-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .forgot-link:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    /* Button */
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .login-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(158, 74, 60, 0.25);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Links */
+    .login-links {
+      margin-top: 2rem;
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .login-text {
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .signup-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .signup-link:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    /* Error Message */
+    .error-msg {
+      background: #ffebee;
+      color: var(--error);
+      border: 1px solid #ffcdd2;
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .error-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+      
+      .logo {
+        font-size: 2.5rem;
+      }
+      
+      .logo-text {
+        font-size: 1.7rem;
+      }
+      
+      .login-container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .login-title {
+        font-size: 1.6rem;
+      }
+      
+      .login-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="header">
@@ -14,58 +328,75 @@
   </div>
 
   <div class="login-container">
-    <h2>Login</h2>
+    <h2 class="login-title">Login</h2>
 
     <% if (error) { %>
       <div class="error-msg">
-        <i class="fas fa-exclamation-circle"></i>
-        <%= error %>
+        <i class="fas fa-exclamation-circle error-icon"></i>
+        <span><%= error %></span>
       </div>
     <% } %>
 
     <form action="/login" method="POST">
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email" class="form-label">Email</label>
         <div class="input-with-icon">
           <i class="fas fa-envelope input-icon"></i>
-          <input type="email" name="email" id="email" placeholder="Digite o seu email" required />
+          <input type="email" name="email" id="email" class="form-input" placeholder="Digite o seu email" required />
         </div>
       </div>
 
       <div class="form-group">
-        <label for="senha">Senha</label>
+        <label for="senha" class="form-label">Senha</label>
         <div class="input-with-icon">
           <i class="fas fa-lock input-icon"></i>
-          <input type="password" name="senha" id="senha" placeholder="Sua senha" required />
+          <input type="password" name="senha" id="senha" class="form-input" placeholder="Sua senha" required />
           <button type="button" class="password-toggle" id="toggleSenha">
             <i class="far fa-eye"></i>
           </button>
         </div>
       </div>
 
-      <div class="remember-forgot">
+      <div class="login-options">
         <label class="remember">
-          <input type="checkbox" name="remember">
+          <input type="checkbox" name="remember" class="checkbox">
           <span>Lembrar-me</span>
         </label>
-        <a href="/esqueci-senha" class="forgot-password">Esqueci a senha</a>
+        <a href="/esqueci-senha" class="forgot-link">Esqueci a senha</a>
       </div>
 
-      <button type="submit">
+      <button type="submit" class="login-btn">
         <i class="fas fa-sign-in-alt"></i>
         Entrar
       </button>
     </form>
 
     <div class="login-links">
-      <span>Não é registrado?</span>
-      <a href="/cadastro">Cadastrar</a>
+      <p class="login-text">Não é registrado?</p>
+      <a href="/cadastro" class="signup-link">Criar uma conta</a>
     </div>
   </div>
 
   <div class="footer">
     <p>&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
   </div>
-    <script src="/js/login.js"></script>
-  </body>
-  </html>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const passwordInput = document.getElementById('senha');
+      const togglePasswordBtn = document.getElementById('toggleSenha');
+      
+      togglePasswordBtn.addEventListener('click', function() {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          togglePasswordBtn.innerHTML = '<i class="far fa-eye-slash"></i>';
+        } else {
+          passwordInput.type = 'password';
+          togglePasswordBtn.innerHTML = '<i class="far fa-eye"></i>';
+        }
+        passwordInput.focus();
+      });
+    });
+  </script>
+</body>
+</html>
