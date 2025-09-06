@@ -512,3 +512,52 @@
                 display: flex;
             }
         }
+        .capa-search-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .capas-results-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .capa-item {
+            border: 3px solid transparent;
+            padding: 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .capa-item img {
+            width: 120px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .capa-item.selected {
+            border-color: #0d6efd; /* Cor principal do seu site */
+            background-color: #e7f1ff;
+        }
+
+        /* Um simples loader para o feedback visual */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }

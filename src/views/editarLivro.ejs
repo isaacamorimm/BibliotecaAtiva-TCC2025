@@ -89,7 +89,7 @@
 
             <!-- Formulário -->
             <div class="form-container">
-                <form action="/livros/editar/<%= livro.id %>" method="POST">
+                <form action="/catalogo/editar/<%= livro.id %>" method="POST">
                     <!-- Título -->
                     <div class="form-group">
                         <label for="titulo" class="form-label">
@@ -108,6 +108,32 @@
                         <input type="text" class="form-input" id="autor" name="autor" 
                                value="<%= livro.autor %>" required>
                         <div class="form-text">Nome completo do autor</div>
+                    </div>
+
+                    <!-- Capa -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-image"></i> Capa do Livro
+                        </label>
+                        
+                        <div class="capa-atual-container">
+                            <p class="form-text">Capa atual:</p>
+                            <% if (livro.capa_url) { %>
+                                <img src="<%= livro.capa_url %>" alt="Capa atual de <%= livro.titulo %>" id="capa-atual-img" class="capa-atual">
+                            <% } else { %>
+                                <p id="capa-atual-img" class="form-text">Nenhuma capa cadastrada.</p>
+                            <% } %>
+                        </div>
+                        <div class="capa-search-container">
+                            <button type="button" class="btn btn-outline" id="btnBuscarCapa">
+                                <i class="fas fa-search"></i> Buscar Nova Capa Online
+                            </button>
+                        </div>
+
+                        <div id="resultados-capas" class="capas-results-grid">
+                            </div>
+                        
+                        <input type="hidden" id="capa_url" name="capa_url" value="<%= livro.capa_url || '' %>">
                     </div>
 
                     <!-- Ano e Categoria -->

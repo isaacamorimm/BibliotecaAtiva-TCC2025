@@ -117,11 +117,12 @@ class LivroController {
     async atualizarLivro(req, res) {
         try {
             const { id } = req.params;
-            const { titulo, autor, ano, categoria } = req.body;
+            const { titulo, autor, ano, categoria, capa_url } = req.body;
             const disponivel = req.body.disponivel === 'on';
             
             await livroRepository.update(id, {
-                titulo, autor, ano, categoria, disponivel
+                titulo, autor, ano, categoria, disponivel,
+                capa_url: capa_url || null // Atualiza a capa ou define como null
             });
             
             res.redirect('/catalogo/acervo?success=Livro atualizado com sucesso');
