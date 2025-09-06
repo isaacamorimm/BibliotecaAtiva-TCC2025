@@ -35,7 +35,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 }, // 1 hora
+    cookie: { maxAge: 1000 * 60 * 60 },
   })
 );
 
@@ -132,7 +132,7 @@ app.get("/home", isAuthenticated, async (req, res) => {
 });
 
 // Rota para livros com autenticação
-app.use('/livros', isAuthenticated, livroRoutes);
+app.use('/catalogo', isAuthenticated, livroRoutes);
 
 // Rota para perfil com autenticação
 app.use(perfilRoutes);

@@ -20,9 +20,9 @@
             
             <ul class="nav-menu">
                 <li><a href="/home" class="nav-link">Home</a></li>
-                <li><a href="/livros" class="nav-link">Catálogo</a></li>
-                <li><a href="/livros/acervo" class="nav-link">Acervo</a></li>
-                <li><a href="/livros/adicionar" class="nav-link">Adicionar Livro</a></li>
+                <li><a href="/catalogo" class="nav-link">Catálogo</a></li>
+                <li><a href="/catalogo/acervo" class="nav-link">Acervo</a></li>
+                <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
                 <li><a href="#" class="nav-link active">Editar Livro</a></li>
             </ul>
             
@@ -148,7 +148,7 @@
 
                     <!-- Botões -->
                     <div class="btn-group">
-                        <a href="<%= livro.publicado ? '/livros' : '/livros/acervo' %>" class="btn btn-outline">
+                        <a href="<%= livro.publicado ? '/catalogo' : '/catalogo/acervo' %>" class="btn btn-outline">
                             <i class="fas fa-arrow-left"></i> Voltar
                         </a>
                         <button type="submit" class="btn">
@@ -166,20 +166,20 @@
                 </h3>
                 <div class="actions-grid">
                     <% if (!livro.publicado) { %>
-                        <form action="/livros/publicar/<%= livro.id %>" method="POST">
+                        <form action="/catalogo/publicar/<%= livro.id %>" method="POST">
                             <button type="submit" class="btn btn-success action-btn">
                                 <i class="fas fa-megaphone"></i> Publicar no Catálogo
                             </button>
                         </form>
                     <% } else { %>
-                        <form action="/livros/despublicar/<%= livro.id %>" method="POST">
+                        <form action="/catalogo/despublicar/<%= livro.id %>" method="POST">
                             <button type="submit" class="btn btn-warning action-btn" 
                                     onclick="return confirm('Tem certeza que deseja remover este livro do catálogo?')">
                                 <i class="fas fa-arrow-left"></i> Mover para Acervo
                             </button>
                         </form>
                     <% } %>
-                    <form action="/livros/remover/<%= livro.id %>" method="POST">
+                    <form action="/catalogo/remover/<%= livro.id %>" method="POST">
                         <button type="submit" class="btn btn-danger action-btn" 
                                 onclick="return confirm('Tem certeza que deseja remover este livro permanentemente?')">
                             <i class="fas fa-trash"></i> Excluir Permanentemente

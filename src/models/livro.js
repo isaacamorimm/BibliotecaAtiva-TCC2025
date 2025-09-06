@@ -51,6 +51,10 @@ class Livro extends Model {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false, 
             },
+            capa_url: {
+                type: DataTypes.STRING,
+                allowNull: true
+            },
         },
         {
             sequelize,

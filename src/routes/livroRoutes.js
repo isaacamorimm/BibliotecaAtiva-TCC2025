@@ -13,6 +13,8 @@ router.get('/acervo', isAuthenticated, isAdmin, livroController.listarAcervo);
 // Exibir formulário para adicionar livro (apenas admin)
 router.get('/adicionar', isAuthenticated, isAdmin, livroController.exibirFormularioAdicionar);
 
+router.get('/api/buscar-capa', isAuthenticated, isAdmin, livroController.buscarCapa);
+
 // Adicionar livro (apenas admin) - vai para o acervo (não publicado)
 router.post('/adicionar', isAuthenticated, isAdmin, livroController.adicionarLivro);
 

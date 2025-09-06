@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - Biblioteca Ativa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/livros.css">
+    <link rel="stylesheet" href="/css/catalogo.css">
 </head>
 </body>
     <header class="header">
@@ -20,10 +20,10 @@
             
             <ul class="nav-menu">
                 <li><a href="/home" class="nav-link">Home</a></li>
-                <li><a href="/livros" class="nav-link active">Catálogo</a></li>
+                <li><a href="/catalogo" class="nav-link active">Catálogo</a></li>
                 <% if (user && user.role === 'admin') { %>
-                <li><a href="/livros/acervo" class="nav-link">Acervo</a></li>
-                <li><a href="/livros/adicionar" class="nav-link">Adicionar Livro</a></li>
+                <li><a href="/catalogo/acervo" class="nav-link">Acervo</a></li>
+                <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
                 <% } %>
             </ul>
             
@@ -89,6 +89,9 @@
                             </div>
                             
                             <div class="book-body">
+                                <div class="book-cover">
+                                    <img src="<%= livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa do Livro">
+                                </div>
                                 <h3 class="book-title"><%= livro.titulo %></h3>
                                 <div class="book-author">
                                     <i class="fas fa-user"></i> <%= livro.autor %>
@@ -106,7 +109,7 @@
                             
                             <% if (user && user.role === 'admin') { %>
                                 <div class="book-footer">
-                                    <a href="/livros/editar/<%= livro.id %>" class="btn-edit">
+                                    <a href="/catalogo/editar/<%= livro.id %>" class="btn-edit">
                                         <i class="fas fa-edit"></i> Editar
                                     </a>
                                 </div>
@@ -125,6 +128,6 @@
             <div class="footer-copyright">&copy; 2024 - Todos os direitos reservados</div>
         </div>
     </footer>
-    <script src="/js/livros.js"></script>
+    <script src="/js/catalogo.js"></script>
 </body>
 </html>

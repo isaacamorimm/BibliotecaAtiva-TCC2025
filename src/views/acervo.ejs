@@ -20,9 +20,9 @@
             
             <ul class="nav-menu">
                 <li><a href="/home" class="nav-link">Home</a></li>
-                <li><a href="/livros" class="nav-link">Catálogo</a></li>
-                <li><a href="/livros/acervo" class="nav-link active">Acervo</a></li>
-                <li><a href="/livros/adicionar" class="nav-link">Adicionar Livro</a></li>
+                <li><a href="/catalogo" class="nav-link">Catálogo</a></li>
+                <li><a href="/catalogo/acervo" class="nav-link active">Acervo</a></li>
+                <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
             </ul>
             
             <div class="user-menu">
@@ -61,7 +61,7 @@
                         O acervo contém livros que ainda não estão visíveis para os usuários no catálogo. 
                         Após adicionar um livro aqui, você pode revisá-lo e publicá-lo quando estiver pronto.
                     </p>
-                    <a href="/livros/adicionar" class="btn">
+                    <a href="/catalogo/adicionar" class="btn">
                         <i class="fas fa-plus-circle"></i> Adicionar Novo Livro
                     </a>
                 </div>
@@ -76,7 +76,7 @@
                         </div>
                         <h3 class="empty-title">Acervo Vazio</h3>
                         <p class="empty-text">Não há livros no acervo no momento.</p>
-                        <a href="/livros/adicionar" class="btn">
+                        <a href="/catalogo/adicionar" class="btn">
                             <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
                         </a>
                     </div>
@@ -94,6 +94,9 @@
                             </div>
                             
                             <div class="book-body">
+                                <div class="book-cover">
+                                    <img src="<%= livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa do Livro">
+                                </div>
                                 <h3 class="book-title"><%= livro.titulo %></h3>
                                 <div class="book-author">
                                     <i class="fas fa-user"></i> <%= livro.autor %>
@@ -116,17 +119,17 @@
                             
                             <div class="book-footer">
                                 <div class="book-actions">
-                                    <form action="/livros/publicar/<%= livro.id %>" method="POST" class="book-action">
+                                    <form action="/catalogo/publicar/<%= livro.id %>" method="POST" class="book-action">
                                         <button type="submit" class="btn btn-success btn-sm">
                                             <i class="fas fa-megaphone"></i> Publicar
                                         </button>
                                     </form>
                                     
                                     <div class="action-group">
-                                        <a href="/livros/editar/<%= livro.id %>" class="btn btn-outline btn-sm">
+                                        <a href="/catalogo/editar/<%= livro.id %>" class="btn btn-outline btn-sm">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
-                                        <form action="/livros/remover/<%= livro.id %>" method="POST" class="book-action">
+                                        <form action="/catalogo/remover/<%= livro.id %>" method="POST" class="book-action">
                                             <button type="submit" class="btn btn-outline btn-sm" 
                                                     onclick="return confirm('Tem certeza que deseja remover este livro?')">
                                                 <i class="fas fa-trash"></i> Remover
