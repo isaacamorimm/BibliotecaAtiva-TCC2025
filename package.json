@@ -32,13 +32,11 @@
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
-    "mysql2": "^3.14.3",
     "package": "^1.0.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
-    "router": "^2.2.0",
     "sequelize": "^6.37.7"
   }
 }

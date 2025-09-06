@@ -1,11 +1,13 @@
 import express from "express";
 import session from "express-session";
+import pgSimple from "connect-pg-simple";
 import path from "path";
 import { fileURLToPath } from "url";
 import sequelize from "./src/config/database.js";
 import Usuario from "./src/models/usuario.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import livroRoutes from './src/routes/livroRoutes.js';
+import perfilRoutes from './src/routes/perfilRoutes.js';
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
@@ -15,6 +17,7 @@ import livroRepository from "./src/repositories/livroRepository.js";
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const sessionStore = pgSimple(session);
 
 // Configuração do EJS
 app.set("view engine", "ejs");
@@ -25,10 +28,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
+    store: new sessionStore({
+      conString: process.env.DATABASE_URL,
+      tableName: 'sessions' 
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 } // 1 hora
+    cookie: { maxAge: 1000 * 60 * 60 }, // 1 hora
   })
 );
 
@@ -126,6 +133,9 @@ app.get("/home", isAuthenticated, async (req, res) => {
 
 // Rota para livros com autenticação
 app.use('/livros', isAuthenticated, livroRoutes);
+
+// Rota para perfil com autenticação
+app.use(perfilRoutes);
 
 // Sincroniza models com o banco
 sequelize.sync()
