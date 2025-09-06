@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/acervo.css">
 </head>
-<body>
-    <!-- Header -->
+</body>
     <header class="header">
         <div class="header-container">
             <a href="/home" class="logo">
@@ -150,28 +149,6 @@
             <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
         </div>
     </footer>
-
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('.nav-menu').classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.nav-menu') && !e.target.closest('.mobile-menu-btn')) {
-                document.querySelector('.nav-menu').classList.remove('active');
-            }
-        });
-
-        // Confirm delete action
-        document.querySelectorAll('form[action*="remover"]').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                if (!confirm('Tem certeza que deseja remover este livro?')) {
-                    e.preventDefault();
-                }
-            });
-        });
-    </script>
+    <script src="/js/acervo.js"></script>
 </body>
 </html>

@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/livros.css">
 </head>
-<body>
-    <!-- Header -->
+</body>
     <header class="header">
         <div class="header-container">
             <a href="/home" class="logo">
@@ -126,48 +125,6 @@
             <div class="footer-copyright">&copy; 2024 - Todos os direitos reservados</div>
         </div>
     </footer>
-
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('.nav-menu').classList.toggle('active');
-        });
-
-        // Search functionality
-        function filterBooks() {
-            const searchText = document.getElementById('searchInput').value.toLowerCase();
-            const books = document.querySelectorAll('.book-item');
-            let visibleBooks = 0;
-            
-            books.forEach(book => {
-                const title = book.querySelector('.book-title').textContent.toLowerCase();
-                const author = book.querySelector('.book-author').textContent.toLowerCase();
-                const category = book.querySelector('.book-detail:nth-child(2)').textContent.toLowerCase();
-                
-                if (title.includes(searchText) || author.includes(searchText) || category.includes(searchText)) {
-                    book.style.display = 'block';
-                    visibleBooks++;
-                } else {
-                    book.style.display = 'none';
-                }
-            });
-            
-            // Show empty state if no books match
-            const emptyState = document.querySelector('.empty-state');
-            if (emptyState) {
-                emptyState.style.display = visibleBooks === 0 ? 'block' : 'none';
-            }
-        }
-
-        // Search as you type
-        document.getElementById('searchInput').addEventListener('keyup', filterBooks);
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.nav-menu') && !e.target.closest('.mobile-menu-btn')) {
-                document.querySelector('.nav-menu').classList.remove('active');
-            }
-        });
-    </script>
+    <script src="/js/livros.js"></script>
 </body>
 </html>
