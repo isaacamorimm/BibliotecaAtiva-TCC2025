@@ -4,269 +4,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Livro - Biblioteca Ativa</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            border-radius: 0 0 1rem 1rem;
-        }
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .card {
-            border: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border-radius: 1rem;
-        }
-        .form-label {
-            font-weight: 500;
-            color: #495057;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-            transform: translateY(-2px);
-        }
-        .book-info {
-            background-color: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/editarLivro.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/home">
-                <i class="bi bi-book-half"></i> Biblioteca Ativa
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/home" class="logo">
+                <i class="fas fa-book-open"></i> Biblioteca Ativa
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">
-                            <i class="bi bi-house"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros">
-                            <i class="bi bi-book"></i> Catálogo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/acervo">
-                            <i class="bi bi-archive"></i> Acervo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/adicionar">
-                            <i class="bi bi-plus-circle"></i> Adicionar Livro
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <i class="bi bi-pencil"></i> Editar Livro
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> <%= user.nome %>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><span class="dropdown-item-text">Tipo: <%= user.role %></span></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout">
-                                <i class="bi bi-box-arrow-right"></i> Sair
-                            </a></li>
-                        </ul>
-                    </li>
-                </ul>
+            
+            <ul class="nav-menu">
+                <li><a href="/home" class="nav-link">Home</a></li>
+                <li><a href="/livros" class="nav-link">Catálogo</a></li>
+                <li><a href="/livros/acervo" class="nav-link">Acervo</a></li>
+                <li><a href="/livros/adicionar" class="nav-link">Adicionar Livro</a></li>
+                <li><a href="#" class="nav-link active">Editar Livro</a></li>
+            </ul>
+            
+            <div class="user-menu">
+                <a class="user-avatar" href="/perfil">
+                    <%= user.nome.charAt(0).toUpperCase() %>
+                </a>
+                <span><%= user.nome %></span>
             </div>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="container text-center">
-            <h1 class="display-5 fw-bold">
-                <i class="bi bi-pencil"></i> Editar Livro
-            </h1>
-            <p class="lead">Atualize as informações do livro</p>
-        </div>
-    </div>
+    </header>
 
     <!-- Main Content -->
-    <div class="container mb-5">
-        <div class="form-container">
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Editar Livro</h1>
+                <p class="page-subtitle">Atualize as informações do livro</p>
+            </div>
+
             <!-- Alertas -->
             <% if (error) { %>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="bi bi-exclamation-triangle"></i> 
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-triangle alert-icon"></i>
                     <strong>Erro:</strong> <%= error %>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             <% } %>
 
             <!-- Informações do Livro -->
-            <div class="book-info mb-4">
-                <h5 class="mb-3">
-                    <i class="bi bi-info-circle"></i> Informações Atuais
-                </h5>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p><strong>ID:</strong> #<%= livro.id %></p>
-                        <p><strong>Status:</strong> 
-                            <span class="badge <%= livro.publicado ? 'bg-success' : 'bg-secondary' %>">
+            <div class="book-info">
+                <h3 class="info-title">
+                    <i class="fas fa-info-circle"></i> Informações Atuais
+                </h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">ID</span>
+                        <span class="info-value">#<%= livro.id %></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Status</span>
+                        <span class="info-value">
+                            <span class="badge <%= livro.publicado ? 'badge-success' : 'badge-secondary' %>">
                                 <%= livro.publicado ? 'Publicado' : 'No Acervo' %>
                             </span>
-                        </p>
+                        </span>
                     </div>
-                    <div class="col-md-6">
-                        <p><strong>Disponibilidade:</strong> 
-                            <span class="badge <%= livro.disponivel ? 'bg-success' : 'bg-danger' %>">
+                    <div class="info-item">
+                        <span class="info-label">Disponibilidade</span>
+                        <span class="info-value">
+                            <span class="badge <%= livro.disponivel ? 'badge-success' : 'badge-error' %>">
                                 <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
                             </span>
-                        </p>
-                        <p><strong>Última atualização:</strong> 
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Última atualização</span>
+                        <span class="info-value">
                             <%= livro.updatedAt ? new Date(livro.updatedAt).toLocaleDateString('pt-BR') : 'N/A' %>
-                        </p>
+                        </span>
                     </div>
                 </div>
             </div>
 
             <!-- Formulário -->
-            <div class="card">
-                <div class="card-body p-4">
-                    <form action="/livros/editar/<%= livro.id %>" method="POST">
-                        <!-- Título -->
-                        <div class="mb-3">
-                            <label for="titulo" class="form-label">
-                                <i class="bi bi-bookmark"></i> Título *
+            <div class="form-container">
+                <form action="/livros/editar/<%= livro.id %>" method="POST">
+                    <!-- Título -->
+                    <div class="form-group">
+                        <label for="titulo" class="form-label">
+                            <i class="fas fa-bookmark"></i> Título *
+                        </label>
+                        <input type="text" class="form-input" id="titulo" name="titulo" 
+                               value="<%= livro.titulo %>" required>
+                        <div class="form-text">Título completo do livro</div>
+                    </div>
+
+                    <!-- Autor -->
+                    <div class="form-group">
+                        <label for="autor" class="form-label">
+                            <i class="fas fa-user"></i> Autor *
+                        </label>
+                        <input type="text" class="form-input" id="autor" name="autor" 
+                               value="<%= livro.autor %>" required>
+                        <div class="form-text">Nome completo do autor</div>
+                    </div>
+
+                    <!-- Ano e Categoria -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ano" class="form-label">
+                                <i class="fas fa-calendar"></i> Ano de Publicação *
                             </label>
-                            <input type="text" class="form-control form-control-lg" id="titulo" name="titulo" 
-                                   value="<%= livro.titulo %>" required>
-                            <div class="form-text">Título completo do livro</div>
+                            <input type="number" class="form-input" id="ano" name="ano" 
+                                   value="<%= livro.ano %>" min="1450" max="<%= new Date().getFullYear() %>" required>
+                            <div class="form-text">Ano de publicação original</div>
                         </div>
-
-                        <!-- Autor -->
-                        <div class="mb-3">
-                            <label for="autor" class="form-label">
-                                <i class="bi bi-person"></i> Autor *
+                        
+                        <div class="form-group">
+                            <label for="categoria" class="form-label">
+                                <i class="fas fa-tag"></i> Categoria *
                             </label>
-                            <input type="text" class="form-control form-control-lg" id="autor" name="autor" 
-                                   value="<%= livro.autor %>" required>
-                            <div class="form-text">Nome completo do autor</div>
+                            <input type="text" class="form-input" id="categoria" name="categoria" 
+                                   value="<%= livro.categoria %>" required>
+                            <div class="form-text">Gênero literário</div>
                         </div>
+                    </div>
 
-                        <!-- Ano e Categoria em linha -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="ano" class="form-label">
-                                    <i class="bi bi-calendar"></i> Ano de Publicação *
-                                </label>
-                                <input type="number" class="form-control" id="ano" name="ano" 
-                                       value="<%= livro.ano %>" min="1450" max="<%= new Date().getFullYear() %>" required>
-                                <div class="form-text">Ano de publicação original</div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="categoria" class="form-label">
-                                    <i class="bi bi-tag"></i> Categoria *
-                                </label>
-                                <input type="text" class="form-control" id="categoria" name="categoria" 
-                                       value="<%= livro.categoria %>" required>
-                                <div class="form-text">Gênero literário</div>
-                            </div>
+                    <!-- Disponibilidade -->
+                    <div class="form-group">
+                        <div class="form-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="disponivel" name="disponivel" 
+                                       <%= livro.disponivel ? 'checked' : '' %>>
+                                <span class="slider"></span>
+                            </label>
+                            <label for="disponivel" class="form-label">
+                                <i class="fas fa-check-circle"></i> Disponível para empréstimo
+                            </label>
                         </div>
+                        <div class="form-text">Desmarque se o livro não estiver disponível para empréstimo</div>
+                    </div>
 
-                        <!-- Checkbox Disponibilidade -->
-                        <div class="mb-4">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="disponivel" 
-                                       name="disponivel" <%= livro.disponivel ? 'checked' : '' %>>
-                                <label class="form-check-label" for="disponivel">
-                                    <i class="bi bi-check-circle"></i> Disponível para empréstimo
-                                </label>
-                            </div>
-                            <div class="form-text">Desmarque se o livro não estiver disponível para empréstimo</div>
-                        </div>
-
-                        <!-- Botões -->
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="<%= livro.publicado ? '/livros' : '/livros/acervo' %>" class="btn btn-outline-secondary me-md-2">
-                                <i class="bi bi-arrow-left"></i> Voltar
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-check-circle"></i> Atualizar Livro
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    <!-- Botões -->
+                    <div class="btn-group">
+                        <a href="<%= livro.publicado ? '/livros' : '/livros/acervo' %>" class="btn btn-outline">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </a>
+                        <button type="submit" class="btn">
+                            <i class="fas fa-check-circle"></i> Atualizar Livro
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <!-- Ações Rápidas -->
             <% if (user && user.role === 'admin') { %>
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <i class="bi bi-lightning"></i> Ações Rápidas
-                    </h5>
-                    <div class="d-grid gap-2">
-                        <% if (!livro.publicado) { %>
-                            <form action="/livros/publicar/<%= livro.id %>" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-success w-100 mb-2">
-                                    <i class="bi bi-megaphone"></i> Publicar no Catálogo
-                                </button>
-                            </form>
-                        <% } else { %>
-                            <form action="/livros/despublicar/<%= livro.id %>" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-warning w-100 mb-2" 
-                                        onclick="return confirm('Tem certeza que deseja remover este livro do catálogo?')">
-                                    <i class="bi bi-arrow-left-circle"></i> Mover para Acervo
-                                </button>
-                            </form>
-                        <% } %>
-                        <form action="/livros/remover/<%= livro.id %>" method="POST" class="d-inline">
-                            <button type="submit" class="btn btn-danger w-100" 
-                                    onclick="return confirm('Tem certeza que deseja remover este livro permanentemente?')">
-                                <i class="bi bi-trash"></i> Excluir Permanentemente
+            <div class="quick-actions">
+                <h3 class="actions-title">
+                    <i class="fas fa-bolt"></i> Ações Rápidas
+                </h3>
+                <div class="actions-grid">
+                    <% if (!livro.publicado) { %>
+                        <form action="/livros/publicar/<%= livro.id %>" method="POST">
+                            <button type="submit" class="btn btn-success action-btn">
+                                <i class="fas fa-megaphone"></i> Publicar no Catálogo
                             </button>
                         </form>
-                    </div>
+                    <% } else { %>
+                        <form action="/livros/despublicar/<%= livro.id %>" method="POST">
+                            <button type="submit" class="btn btn-warning action-btn" 
+                                    onclick="return confirm('Tem certeza que deseja remover este livro do catálogo?')">
+                                <i class="fas fa-arrow-left"></i> Mover para Acervo
+                            </button>
+                        </form>
+                    <% } %>
+                    <form action="/livros/remover/<%= livro.id %>" method="POST">
+                        <button type="submit" class="btn btn-danger action-btn" 
+                                onclick="return confirm('Tem certeza que deseja remover este livro permanentemente?')">
+                            <i class="fas fa-trash"></i> Excluir Permanentemente
+                        </button>
+                    </form>
                 </div>
             </div>
             <% } %>
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer mt-5 py-3 bg-light">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-copyright">&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS e Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-    <!-- Validação do formulário -->
     <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-menu') && !e.target.closest('.mobile-menu-btn')) {
+                document.querySelector('.nav-menu').classList.remove('active');
+            }
+        });
+
+        // Form validation
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
             

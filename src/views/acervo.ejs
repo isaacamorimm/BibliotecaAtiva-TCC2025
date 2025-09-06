@@ -3,237 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acervo de Livros - Biblioteca Ativa</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            border-radius: 0 0 1rem 1rem;
-        }
-        .book-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        .badge-unpublished {
-            background-color: #6c757d;
-        }
-        .stats-card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            border-radius: 1rem;
-        }
-    </style>
+    <title>Acervo - Biblioteca Ativa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/acervo.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/home">
-                <i class="bi bi-book-half"></i> Biblioteca Ativa
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/home" class="logo">
+                <i class="fas fa-book-open"></i> Biblioteca Ativa
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">
-                            <i class="bi bi-house"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros">
-                            <i class="bi bi-book"></i> Catálogo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/livros/acervo">
-                            <i class="bi bi-archive"></i> Acervo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livros/adicionar">
-                            <i class="bi bi-plus-circle"></i> Adicionar Livro
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> <%= user.nome %>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><span class="dropdown-item-text">Tipo: <%= user.role %></span></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/logout">
-                                <i class="bi bi-box-arrow-right"></i> Sair
-                            </a></li>
-                        </ul>
-                    </li>
-                </ul>
+            
+            <ul class="nav-menu">
+                <li><a href="/home" class="nav-link">Home</a></li>
+                <li><a href="/livros" class="nav-link">Catálogo</a></li>
+                <li><a href="/livros/acervo" class="nav-link active">Acervo</a></li>
+                <li><a href="/livros/adicionar" class="nav-link">Adicionar Livro</a></li>
+            </ul>
+            
+            <div class="user-menu">
+                <a class="user-avatar" href="/perfil">
+                    <%= user.nome.charAt(0).toUpperCase() %>
+                </a>
+                <span><%= user.nome %></span>
             </div>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="container text-center">
-            <h1 class="display-5 fw-bold">
-                <i class="bi bi-archive"></i> Acervo de Livros
-            </h1>
-            <p class="lead">Gerencie os livros que ainda não foram publicados no catálogo</p>
-        </div>
-    </div>
+    </header>
 
     <!-- Main Content -->
-    <div class="container mb-5">
-        <!-- Estatísticas -->
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <div class="card stats-card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">
-                            <i class="bi bi-archive"></i> Total no Acervo
-                        </h5>
-                        <h2 class="display-4 fw-bold"><%= livros.length %></h2>
-                        <p class="card-text">livros aguardando publicação</p>
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Acervo de Livros</h1>
+                <p class="page-subtitle">Gerencie os livros que ainda não foram publicados no catálogo</p>
+            </div>
+
+            <!-- Stats and Info -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-archive"></i>
                     </div>
+                    <div class="stat-value"><%= livros.length %></div>
+                    <div class="stat-label">livros no acervo</div>
+                </div>
+                
+                <div class="info-card">
+                    <h3 class="info-title">
+                        <i class="fas fa-info-circle"></i> Sobre o Acervo
+                    </h3>
+                    <p class="info-text">
+                        O acervo contém livros que ainda não estão visíveis para os usuários no catálogo. 
+                        Após adicionar um livro aqui, você pode revisá-lo e publicá-lo quando estiver pronto.
+                    </p>
+                    <a href="/livros/adicionar" class="btn">
+                        <i class="fas fa-plus-circle"></i> Adicionar Novo Livro
+                    </a>
                 </div>
             </div>
-            <div class="col-md-8">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="bi bi-info-circle"></i> Sobre o Acervo
-                        </h5>
-                        <p class="card-text">
-                            O acervo contém livros que ainda não estão visíveis para os usuários no catálogo. 
-                            Após adicionar um livro aqui, você pode revisá-lo e publicá-lo quando estiver pronto.
-                        </p>
-                        <a href="/livros/adicionar" class="btn btn-primary">
-                            <i class="bi bi-plus-circle"></i> Adicionar Novo Livro
+
+            <!-- Books Grid -->
+            <div class="books-grid">
+                <% if (livros.length === 0) { %>
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-archive"></i>
+                        </div>
+                        <h3 class="empty-title">Acervo Vazio</h3>
+                        <p class="empty-text">Não há livros no acervo no momento.</p>
+                        <a href="/livros/adicionar" class="btn">
+                            <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
                         </a>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Alertas -->
-        <% if (success) { %>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle"></i> 
-                <strong>Sucesso!</strong> <%= success %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        <% } %>
-
-        <% if (error) { %>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-triangle"></i> 
-                <strong>Erro:</strong> <%= error %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        <% } %>
-
-        <!-- Grid de Livros -->
-        <div class="row" id="booksContainer">
-            <% if (livros.length === 0) { %>
-                <div class="col-12">
-                    <div class="alert alert-info text-center">
-                        <i class="bi bi-archive display-4 d-block mb-3"></i>
-                        <h4>Acervo Vazio</h4>
-                        <p class="mb-3">Não há livros no acervo no momento.</p>
-                        <a href="/livros/adicionar" class="btn btn-primary">
-                            <i class="bi bi-plus-circle"></i> Adicionar Primeiro Livro
-                        </a>
-                    </div>
-                </div>
-            <% } else { %>
-                <% livros.forEach(livro => { %>
-                    <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
-                        <div class="card book-card h-100">
-                            <div class="card-header">
-                                <span class="badge <%= livro.disponivel ? 'bg-success' : 'bg-danger' %>">
-                                    <i class="bi <%= livro.disponivel ? 'bi-check-circle' : 'bi-x-circle' %>"></i>
+                <% } else { %>
+                    <% livros.forEach(livro => { %>
+                        <div class="book-card">
+                            <div class="book-header">
+                                <span class="book-badge <%= livro.disponivel ? 'badge-available' : 'badge-unavailable' %>">
+                                    <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
                                     <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
                                 </span>
-                                <span class="badge badge-unpublished">
-                                    <i class="bi bi-eye-slash"></i> Não Publicado
+                                <span class="book-badge badge-unpublished">
+                                    <i class="fas fa-eye-slash"></i> Não Publicado
                                 </span>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title text-primary"><%= livro.titulo %></h5>
-                                <h6 class="card-subtitle mb-3 text-muted">
-                                    <i class="bi bi-person"></i> <%= livro.autor %>
-                                </h6>
+                            
+                            <div class="book-body">
+                                <h3 class="book-title"><%= livro.titulo %></h3>
+                                <div class="book-author">
+                                    <i class="fas fa-user"></i> <%= livro.autor %>
+                                </div>
+                                
                                 <div class="book-details">
-                                    <p class="card-text">
-                                        <strong><i class="bi bi-calendar"></i> Ano:</strong> <%= livro.ano %>
-                                    </p>
-                                    <p class="card-text">
-                                        <strong><i class="bi bi-tag"></i> Categoria:</strong> 
-                                        <span class="badge bg-secondary"><%= livro.categoria %></span>
-                                    </p>
-                                    <p class="card-text">
-                                        <strong><i class="bi bi-clock"></i> Adicionado em:</strong> 
-                                        <%= new Date(livro.createdAt).toLocaleDateString('pt-BR') %>
-                                    </p>
+                                    <div class="book-detail">
+                                        <i class="fas fa-calendar"></i> Ano: <%= livro.ano %>
+                                    </div>
+                                    <div class="book-detail">
+                                        <i class="fas fa-tag"></i> 
+                                        <span class="book-category"><%= livro.categoria %></span>
+                                    </div>
+                                    <div class="book-detail">
+                                        <i class="fas fa-clock"></i> 
+                                        Adicionado em: <%= new Date(livro.createdAt).toLocaleDateString('pt-BR') %>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <div class="d-grid gap-2">
-                                    <form action="/livros/publicar/<%= livro.id %>" method="POST" class="d-inline">
-                                        <button type="submit" class="btn btn-success btn-sm w-100 mb-2">
-                                            <i class="bi bi-megaphone"></i> Publicar no Catálogo
+                            
+                            <div class="book-footer">
+                                <div class="book-actions">
+                                    <form action="/livros/publicar/<%= livro.id %>" method="POST" class="book-action">
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            <i class="fas fa-megaphone"></i> Publicar
                                         </button>
                                     </form>
-                                    <div class="btn-group w-100" role="group">
-                                        <a href="/livros/editar/<%= livro.id %>" class="btn btn-outline-primary btn-sm">
-                                            <i class="bi bi-pencil"></i> Editar
+                                    
+                                    <div class="action-group">
+                                        <a href="/livros/editar/<%= livro.id %>" class="btn btn-outline btn-sm">
+                                            <i class="fas fa-edit"></i> Editar
                                         </a>
-                                        <form action="/livros/remover/<%= livro.id %>" method="POST" class="d-inline">
-                                            <button type="submit" class="btn btn-outline-danger btn-sm" 
+                                        <form action="/livros/remover/<%= livro.id %>" method="POST" class="book-action">
+                                            <button type="submit" class="btn btn-outline btn-sm" 
                                                     onclick="return confirm('Tem certeza que deseja remover este livro?')">
-                                                <i class="bi bi-trash"></i> Remover
+                                                <i class="fas fa-trash"></i> Remover
                                             </button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <% }); %>
-            <% } %>
+                    <% }); %>
+                <% } %>
+            </div>
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer mt-5 py-3 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="bi bi-book"></i> Biblioteca Ativa</h5>
-                    <p>Sistema de gerenciamento de acervo bibliográfico</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p>&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
-                </div>
-            </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">Biblioteca Ativa</div>
+            <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS e Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-menu') && !e.target.closest('.mobile-menu-btn')) {
+                document.querySelector('.nav-menu').classList.remove('active');
+            }
+        });
+
+        // Confirm delete action
+        document.querySelectorAll('form[action*="remover"]').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                if (!confirm('Tem certeza que deseja remover este livro?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
