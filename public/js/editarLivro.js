@@ -40,14 +40,14 @@ const btnBuscarCapa = document.getElementById('btnBuscarCapa');
                 return;
             }
 
-            resultadosDiv.innerHTML = '<div class="loader"></div>'; // Mostra um spinner de loading
+            resultadosDiv.innerHTML = '<div class="loader"></div>';
             const termoBusca = `${titulo} ${autor}`;
 
             try {
                 const response = await fetch(`/catalogo/api/buscar-capa?q=${encodeURIComponent(termoBusca)}`);
                 const livros = await response.json();
 
-                resultadosDiv.innerHTML = ''; // Limpa o loader
+                resultadosDiv.innerHTML = ''; 
 
                 if (livros.length === 0) {
                     resultadosDiv.innerHTML = '<p class="form-text">Nenhuma capa encontrada.</p>';
@@ -70,7 +70,7 @@ const btnBuscarCapa = document.getElementById('btnBuscarCapa');
                         // Adiciona a seleção a este container
                         imgContainer.classList.add('selected');
                         
-                        // Guarda a URL no campo oculto!
+                        // Guarda a URL no campo oculto
                         inputCapaUrl.value = livro.capaUrl;
                     });
 

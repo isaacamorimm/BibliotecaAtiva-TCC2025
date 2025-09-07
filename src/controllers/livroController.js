@@ -152,7 +152,7 @@ class LivroController {
             capaUrl: item.volumeInfo.imageLinks?.thumbnail
         })).filter(livro => livro.capaUrl); // Filtra apenas livros com capa
 
-        res.json(livros.slice(0,5)); // Retorna no máximo 5 resultados
+        res.json(livros.slice(0,8)); // Retorna no máximo 5 resultados
 
         } catch (error) {
             console.error('Erro ao buscar na Google Books API:', error);
