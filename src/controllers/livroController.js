@@ -4,14 +4,15 @@ import axios from "axios";
 class LivroController {
     async adicionarLivro(req, res) {
         try {
-            const { titulo, autor, ano, categoria, capa_url } = req.body;
+            const { titulo, autor, ano, categoria, capa_url, sinopse } = req.body;
            const disponivel = req.body.disponivel === 'true';
             
             // Novo livro é criado como não publicado por padrão
             const novoLivro = await livroRepository.create({
                 titulo, autor, ano, categoria, disponivel,
                 publicado: false,
-                capa_url: capa_url || null // Define como null se não fornecido
+                capa_url: capa_url || null, // Define como null se não fornecido
+                sinopse: sinopse || null // Define como null se não fornecido
             });
             
             res.redirect('/catalogo/acervo?success=Livro adicionado ao acervo com sucesso');
@@ -122,7 +123,7 @@ class LivroController {
             
             await livroRepository.update(id, {
                 titulo, autor, ano, categoria, disponivel,
-                capa_url: capa_url || null // Atualiza a capa ou define como null
+                capa_url: capa_url || null // Define como null se não fornecido
             });
             
             res.redirect('/catalogo/acervo?success=Livro atualizado com sucesso');
@@ -149,10 +150,10 @@ class LivroController {
         const livros = resposta.data.items.map(item => ({
             titulo: item.volumeInfo.title,
             autores: item.volumeInfo.authors ? item.volumeInfo.authors.join(', ') : 'Autor desconhecido',
-            capaUrl: item.volumeInfo.imageLinks?.thumbnail
-        })).filter(livro => livro.capaUrl); // Filtra apenas livros com capa
-
-        res.json(livros.slice(0,8)); // Retorna no máximo 5 resultados
+            capaUrl: item.volumeInfo.imageLinks?.thumbnail,
+            sinopse: item.volumeInfo.description || 'Sinopse não disponível'
+        })).filter(livro => livro.capaUrl); 
+        res.json(livros.slice(0,8)); // Retorna apenas os 8 primeiros resultados
 
         } catch (error) {
             console.error('Erro ao buscar na Google Books API:', error);

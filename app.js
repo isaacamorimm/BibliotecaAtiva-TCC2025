@@ -12,6 +12,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
 import livroRepository from "./src/repositories/livroRepository.js";
+import index from "./src/models/index.js";
 
 
 const app = express();
