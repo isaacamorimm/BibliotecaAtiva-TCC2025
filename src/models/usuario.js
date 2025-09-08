@@ -47,6 +47,20 @@ class Usuario extends Model {
         }
         );
     }
+    static associate(models) {
+        Usuario.hasMany(models.Livro, {
+            foreignKey: 'usuario_id',
+            as: 'livros'
+        });
+        Usuario.hasMany(models.Comentario, {
+            foreignKey: 'usuario_id',
+            as: 'comentarios'
+        });
+        Usuario.hasMany(models.Avaliacao, {
+            foreignKey: 'usuario_id',
+            as: 'avaliacoes'
+        });
+    }
 }
 
 Usuario.init(sequelize);

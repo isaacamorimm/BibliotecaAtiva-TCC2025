@@ -26,6 +26,13 @@ class Livro extends Model {
                     len: [1, 255],
                 }
             },
+            sinopse: {
+                type: DataTypes.TEXT,
+                allowNull: true,
+                validate: {
+                    notEmpty: true,
+                }
+            },
             ano: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -62,6 +69,16 @@ class Livro extends Model {
             tableName: 'livros'
         }
         );
+    }
+    static associate(models) {
+        Livro.hasMany(models.Comentario, {
+            foreignKey: 'livro_id',
+            as: 'comentarios'
+        });
+        Livro.hasMany(models.Avaliacao, {
+            foreignKey: 'livro_id',
+            as: 'avaliacoes'
+        });
     }
 }
 
