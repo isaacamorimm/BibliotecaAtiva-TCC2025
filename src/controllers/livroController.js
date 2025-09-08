@@ -1,5 +1,7 @@
 import livroRepository from "../repositories/livroRepository.js";
 import axios from "axios";
+import { Avaliacao, Comentario } from "../models/index.js";
+
 
 class LivroController {
     async adicionarLivro(req, res) {
@@ -158,6 +160,59 @@ class LivroController {
         } catch (error) {
             console.error('Erro ao buscar na Google Books API:', error);
             res.status(500).json({ error: 'Erro ao conectar com a API do Google Books.' });
+        }
+    }
+
+    async avaliarLivro(req, res) {
+        try {
+            const livroId = req.params.id;
+            const usuarioId = req.user.id;
+            const { nota } = req.body; // Pegamos apenas a nota
+
+            // 1. Validação da nota
+            if (!nota || nota < 1 || nota > 5) {
+                return res.status(400).json({ error: 'Uma nota válida de 1 a 5 é obrigatória.' });
+            }
+
+            // 2. Usando 'upsert' para criar ou atualizar a avaliação
+               const [avaliacao, foiCriado] = await Avaliacao.upsert({
+                livro_id: livroId,
+                usuario_id: usuarioId,
+                nota: nota
+            });
+
+            return res.status(foiCriado ? 201 : 200).json(avaliacao);
+
+        } catch (error) {
+            console.error('Erro ao avaliar livro:', error);
+            return res.status(500).json({ error: 'Ocorreu um erro ao processar sua avaliação.' });
+        }
+    }
+
+    async comentarLivro(req, res){
+        try {
+            const livroId = req.params.id;
+            const usuarioId = req.user.id;
+            const { texto } = req.body;
+
+            // 1. Validação
+            if (!texto || texto.trim() === '') {
+                return res.status(400).json({ error: 'O conteúdo do comentário não pode estar vazio.' });
+            }
+
+            // 2. Criação do comentário
+            const novoComentario = await Comentario.create({
+                livro_id: livroId,
+                usuario_id: usuarioId,
+                texto: texto
+            });
+            
+            // 3. Retorna o comentário criado com sucesso
+            return res.status(201).json(novoComentario);
+
+        } catch (error) {
+            console.error('Erro ao comentar livro:', error);
+            return res.status(500).json({ error: 'Ocorreu um erro ao salvar seu comentário.' });
         }
     }
 
