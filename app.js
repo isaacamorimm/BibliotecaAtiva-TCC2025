@@ -4,7 +4,6 @@ import pgSimple from "connect-pg-simple";
 import path from "path";
 import { fileURLToPath } from "url";
 import sequelize from "./src/config/database.js";
-import Usuario from "./src/models/usuario.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import livroRoutes from './src/routes/livroRoutes.js';
 import perfilRoutes from './src/routes/perfilRoutes.js';
