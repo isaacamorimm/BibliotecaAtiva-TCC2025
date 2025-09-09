@@ -44,6 +44,7 @@ class Avaliacao extends Model {
             }
         );
     }
+<<<<<<< HEAD
     static associate(models) {
         Avaliacao.belongsTo(models.Livro, {
             foreignKey: 'livro_id',
@@ -54,6 +55,8 @@ class Avaliacao extends Model {
             as: 'usuario'
         });
     }
+=======
+>>>>>>> d90929b6355d43985cdf0a38bc8c28ab2314a645
 }
 
 Avaliacao.init(sequelize);

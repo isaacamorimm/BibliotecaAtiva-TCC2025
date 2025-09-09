@@ -48,16 +48,6 @@ class Comentario extends Model {
             }
         );
     }
-    static associate(models) {
-        Comentario.belongsTo(models.Livro, {
-            foreignKey: 'livro_id',
-            as: 'livro'
-        });
-        Comentario.belongsTo(models.Usuario, {
-            foreignKey: 'usuario_id',
-            as: 'usuario'
-        });
-    }
 }
 
 Comentario.init(sequelize);
