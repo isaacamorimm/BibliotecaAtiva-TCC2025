@@ -44,7 +44,7 @@ class Avaliacao extends Model {
             }
         );
     }
-    static assossiate(models) {
+    static associate(models) {
         Avaliacao.belongsTo(models.Livro, {
             foreignKey: 'livro_id',
             as: 'livro'
