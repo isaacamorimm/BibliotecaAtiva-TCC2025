@@ -44,16 +44,6 @@ class Avaliacao extends Model {
             }
         );
     }
-    static assossiate(models) {
-        Avaliacao.belongsTo(models.Livro, {
-            foreignKey: 'livro_id',
-            as: 'livro'
-        });
-        Avaliacao.belongsTo(models.Usuario, {
-            foreignKey: 'usuario_id',
-            as: 'usuario'
-        });
-    }
 }
 
 Avaliacao.init(sequelize);
