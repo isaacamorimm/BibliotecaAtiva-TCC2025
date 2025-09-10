@@ -82,4 +82,12 @@
             }
         });
     }
+    
+    if (document.getElementById('btnAdicionarLivro')) {
+        document.getElementById('btnAdicionarLivro').addEventListener('click', function() {
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
+            this.form.submit();
+        });
+    }
 });
