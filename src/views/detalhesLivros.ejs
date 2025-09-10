@@ -583,7 +583,7 @@
                     <span class="total-avaliacoes">(<%= livro.avaliacoes ? livro.avaliacoes.length : 0 %> avaliações)</span>
                 </div>
 
-                <form action="/catalogo/avaliar/<%= livro.id %>" method="POST" class="form-avaliar">
+                <form action="/catalogo/avaliar/<%= livro.id %>" method="POST" class="form-avaliar" id=""formAvaliar">
                     <h3>Sua Avaliação:</h3>
                     <div class="rating-stars">
                         <input type="radio" id="nota5" name="nota" value="5"><label for="nota5" title="5 estrelas">★</label>
@@ -592,7 +592,7 @@
                         <input type="radio" id="nota2" name="nota" value="2"><label for="nota2" title="2 estrelas">★</label>
                         <input type="radio" id="nota1" name="nota" value="1"><label for="nota1" title="1 estrela">★</label>
                     </div>
-                    <button type="submit" class="btn">
+                    <button type="submit" class="btn" id="btnAvaliar">
                         <i class="fas fa-paper-plane"></i> Enviar Avaliação
                     </button>
                 </form>
@@ -639,28 +639,32 @@
         </div>
     </footer>
    <script>
-  // Garante que o script só rode depois que a página carregar completamente
   document.addEventListener('DOMContentLoaded', function() {
 
-    // Seleciona o formulário e o botão pelos IDs que adicionamos
     const formComentario = document.getElementById('form-comentario');
-    const btnComentar = document.getElementById('btn-comentar');
+    const btnComentar = document.getElementById('btnComentar');
+        const formAvaliar = document.getElementById('formAvaliar');
+        const btnAvaliar = document.getElementById('btnAvaliar');
 
-    // Verifica se o formulário realmente existe na página antes de continuar
     if (formComentario) {
 
-      // Adiciona um "ouvinte" para o evento de 'submit' do formulário
       formComentario.addEventListener('submit', function() {
 
-        // 1. Desabilita o botão para prevenir cliques múltiplos
         btnComentar.disabled = true;
-
-        // 2. Muda o conteúdo do botão para dar um feedback visual ao usuário
         btnComentar.innerHTML = `
-          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          Enviando...
+          <i class="fas fa-spinner fa-spin"></i> Enviando...
         `;
       });
+    }
+
+    if (formAvaliar) {
+    formAvaliar.addEventListener('submit', function() {
+
+        btnAvaliar.disabled = true;
+        btnAvaliar.innerHTML = `
+            <i class="fas fa-spinner fa-spin"></i> Enviando...
+        `;
+    });
     }
   });
 </script>
