@@ -196,7 +196,6 @@ class LivroController {
             const usuarioId = req.user.id;
             const { texto } = req.body;
 
-            // 1. Validação
             if (!texto || texto.trim() === '') {
                 return res.status(400).json({ error: 'O conteúdo do comentário não pode estar vazio.' });
             }
@@ -209,7 +208,7 @@ class LivroController {
             });
             
             // 3. Retorna o comentário criado com sucesso
-            return res.status(201).json(novoComentario);
+            return res.redirect('/catalogo/detalhes/id:?Sucess=Comentário adicionado com sucesso.');
 
         } catch (error) {
             console.error('Erro ao comentar livro:', error);
