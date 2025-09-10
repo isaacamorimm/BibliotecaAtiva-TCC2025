@@ -200,15 +200,13 @@ class LivroController {
                 return res.status(400).json({ error: 'O conteúdo do comentário não pode estar vazio.' });
             }
 
-            // 2. Criação do comentário
             const novoComentario = await Comentario.create({
                 livro_id: livroId,
                 usuario_id: usuarioId,
                 texto: texto
             });
             
-            // 3. Retorna o comentário criado com sucesso
-            return res.redirect('/catalogo/detalhes/id:?Sucess=Comentário adicionado com sucesso.');
+            return res.status(200)('/catalogo/detalhes/id:?Sucess=Comentário adicionado com sucesso.');
 
         } catch (error) {
             console.error('Erro ao comentar livro:', error);
