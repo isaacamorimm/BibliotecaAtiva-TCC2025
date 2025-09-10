@@ -18,7 +18,8 @@
 .form-avaliar .rating-stars input { display: none; }
 .form-avaliar .rating-stars label { font-size: 2rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
 .form-avaliar .rating-stars input:checked ~ label,
-.form-avaliar .rating-stars label:hover,
+.form-avaliar .rating-stars label:hover, 
+
 .form-avaliar .rating-stars label:hover ~ label { color: #ffc107; }
 .form-comentario textarea { width: 100%; min-height: 100px; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1rem; }
 .comentario-item { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem; }
