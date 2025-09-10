@@ -638,24 +638,31 @@
             <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
         </div>
     </footer>
-    <script>
-        document.addEventListener(DOMContentLoaded, function(){
-            
-            const formComentario = document.getElementById('form-comentario')
-            const btnComentar = document.getElementById('btnComentar');
+   <script>
+  // Garante que o script só rode depois que a página carregar completamente
+  document.addEventListener('DOMContentLoaded', function() {
 
-            if (formComentario) {
-                formComentario.addEventListener('submit', function() {
+    // Seleciona o formulário e o botão pelos IDs que adicionamos
+    const formComentario = document.getElementById('form-comentario');
+    const btnComentar = document.getElementById('btn-comentar');
 
-                    btnComentar.disabled = true;
+    // Verifica se o formulário realmente existe na página antes de continuar
+    if (formComentario) {
 
-                    btnComentar.innerHTML= `<span class="spinner-border spinner-border-sm" role="status"
-                    aria-hidden="true"></span>`;
-                });
-            }
+      // Adiciona um "ouvinte" para o evento de 'submit' do formulário
+      formComentario.addEventListener('submit', function() {
 
+        // 1. Desabilita o botão para prevenir cliques múltiplos
+        btnComentar.disabled = true;
 
-        });
-    </script>
+        // 2. Muda o conteúdo do botão para dar um feedback visual ao usuário
+        btnComentar.innerHTML = `
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Enviando...
+        `;
+      });
+    }
+  });
+</script>
 </body>
 </html>
