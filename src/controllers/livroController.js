@@ -182,7 +182,8 @@ class LivroController {
                 nota: nota
             });
 
-            return res.status(foiCriado ? 201 : 200).json(avaliacao);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Avaliacao adicionada ao livro com sucesso`);
+
 
         } catch (error) {
             console.error('Erro ao avaliar livro:', error);
@@ -196,20 +197,17 @@ class LivroController {
             const usuarioId = req.user.id;
             const { texto } = req.body;
 
-            // 1. Validação
             if (!texto || texto.trim() === '') {
                 return res.status(400).json({ error: 'O conteúdo do comentário não pode estar vazio.' });
             }
 
-            // 2. Criação do comentário
             const novoComentario = await Comentario.create({
                 livro_id: livroId,
                 usuario_id: usuarioId,
                 texto: texto
             });
             
-            // 3. Retorna o comentário criado com sucesso
-            return res.status(201).json(novoComentario);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Comentario adicionado ao acervo com sucesso`);
 
         } catch (error) {
             console.error('Erro ao comentar livro:', error);
