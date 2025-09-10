@@ -182,7 +182,8 @@ class LivroController {
                 nota: nota
             });
 
-            return res.redirect(`/${livroId}?sucess=Livro avaliado com sucesso`);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Avaliacao adicionada ao livro com sucesso`);
+
 
         } catch (error) {
             console.error('Erro ao avaliar livro:', error);
