@@ -206,7 +206,7 @@ class LivroController {
                 texto: texto
             });
             
-            return res.redirect('/catalogo/detalhes/{livroId}?success=Comentario adicionado ao acervo com sucesso');
+            return res.redirect(`/catalogo/detalhes/{livroId}?success=Comentario adicionado ao acervo com sucesso`);
 
         } catch (error) {
             console.error('Erro ao comentar livro:', error);
