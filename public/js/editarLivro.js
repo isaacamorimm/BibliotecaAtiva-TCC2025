@@ -83,4 +83,13 @@ const btnBuscarCapa = document.getElementById('btnBuscarCapa');
                 console.error(error);
             }
         });
+
+    if (document.getElementById('btnAtualizar')) {
+        document.getElementById('btnAtualizar').addEventListener('click', function() {
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Atualizando...';
+            this.form.submit();
+        });
+
+    }
 }
