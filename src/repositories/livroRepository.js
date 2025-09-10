@@ -92,6 +92,33 @@ class LivroRepository {
             throw new Error(`Erro ao despublicar livro: ${error.message}`);
         }
     }
+
+async findByIdComDetalhes(id) {
+    try {
+        // Importa os modelos necessários para a associação
+        const { Usuario, Avaliacao, Comentario } = await import('../models/index.js');
+
+        return await Livro.findByPk(id, {
+            include: [
+                {
+                    model: Avaliacao,
+                    as: 'avaliacoes'
+                },
+                {
+                    model: Comentario,
+                    as: 'comentarios', 
+                    include: { 
+                        model: Usuario,
+                        as: 'usuario',
+                        attributes: ['nome'] 
+                    }
+                }
+            ]
+        });
+    } catch (error) {
+        throw new Error(`Erro ao buscar livro com detalhes: ${error.message}`);
+    }
+}
 }
 
 export default new LivroRepository();

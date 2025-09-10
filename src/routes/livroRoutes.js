@@ -33,10 +33,13 @@ router.post('/despublicar/:id', isAuthenticated, isAdmin, livroController.despub
 // Remover livro (apenas admin) - remove completamente
 router.post('/remover/:id', isAuthenticated, isAdmin, livroController.removerLivro);
 
+router.get('/detalhes/:id', isAuthenticated, livroController.detalhesLivro);
+
 // Avaliar livro (usuários comuns)
 router.post('/avaliar/:id', isAuthenticated, livroController.avaliarLivro);
 
 // Comentar livro (usuários comuns)
 router.post('/comentar/:id', isAuthenticated, livroController.comentarLivro);
+
 
 export default router;

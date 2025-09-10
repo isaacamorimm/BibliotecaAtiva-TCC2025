@@ -323,14 +323,14 @@
             
             <ul class="nav-menu">
                 <li><a href="/home" class="nav-link">Início</a></li>
-                <li><a href="/livros" class="nav-link">Livros</a></li>
+                <li><a href="/catalogo" class="nav-link">Catalogo</a></li>
                 <li><a href="/emprestimos" class="nav-link">Empréstimos</a></li>
                 <li><a href="/perfil" class="nav-link active">Perfil</a></li>
             </ul>
             
             <div class="user-menu">
-                <div class="user-avatar">JS</div>
-                <span>João Silva</span>
+                <div class="user-avatar"><%= user.nome.charAt(0).toUpperCase() %></div>
+                <span><%= user.nome %></span>
             </div>
         </div>
     </header>
@@ -344,25 +344,25 @@
             
             <div class="profile-card">
                 <div class="profile-header">
-                    <div class="profile-avatar">JS</div>
+                    <div class="profile-avatar"><%= user.nome.charAt(0).toUpperCase() %></div>
                     <div class="profile-info">
-                        <h2>João Silva</h2>
-                        <span class="profile-role">Usuário</span>
+                        <h2><%= user.nome %></h2>
+                        <span class="profile-role"><%= user.role %></span>
                     </div>
                 </div>
                 
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <strong>Nome:</strong> João
+                        <strong>Nome:</strong> <%= user.nome %>
                     </li>
                     <li class="list-group-item">
-                        <strong>Sobrenome:</strong> Silva
+                        <strong>Sobrenome:</strong> <%= user.sobrenome %>
                     </li>
                     <li class="list-group-item">
-                        <strong>Email:</strong> joao.silva@exemplo.com
+                        <strong>Email:</strong> <%= user.email %>
                     </li>
                     <li class="list-group-item">
-                        <strong>Função:</strong> Usuário
+                        <strong>Função:</strong> <%= user.role %>
                     </li>
                 </ul>
                 
@@ -378,7 +378,7 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-brand">Biblioteca Online</div>
-            <div class="footer-copyright">© 2023 - Todos os direitos reservados</div>
+            <div class="footer-copyright">© 2025 - Todos os direitos reservados</div>
         </div>
     </footer>
 

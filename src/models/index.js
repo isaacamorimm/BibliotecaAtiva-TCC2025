@@ -1,7 +1,14 @@
+import sequelize from '../config/database.js';
+
 import Livro from './livro.js';
 import Usuario from './usuario.js';
 import Avaliacao from './avaliacao.js';
 import Comentario from './comentario.js';
+
+const models = [Livro, Usuario, Avaliacao, Comentario];
+
+models.forEach(model => model.init(sequelize));
+
 
 // 1. Associações de Avaliação
 // Uma avaliação pertence a um único livro e a um único usuário

@@ -163,6 +163,7 @@ class LivroController {
         }
     }
 
+
     async avaliarLivro(req, res) {
         try {
             const livroId = req.params.id;
@@ -213,6 +214,31 @@ class LivroController {
         } catch (error) {
             console.error('Erro ao comentar livro:', error);
             return res.status(500).json({ error: 'Ocorreu um erro ao salvar seu comentário.' });
+        }
+    }
+
+    async detalhesLivro(req, res) {
+        try {
+            const { id } = req.params;
+
+            const livro = await livroRepository.findByIdComDetalhes(id);
+
+            if (!livro) {
+                return res.redirect('/catalogo?error=Livro não encontrado');
+            }
+
+            livro.comentarios.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            res.render('detalhesLivros', { 
+                livro,
+                user: req.user,
+                success: req.query.success,
+                error: req.query.error
+            });
+
+        } catch (error) {
+            console.error("Erro ao buscar detalhes do livro:", error);
+            res.redirect('/catalogo?error=' + encodeURIComponent('Erro ao carregar detalhes do livro.'));
         }
     }
 
