@@ -206,7 +206,7 @@ class LivroController {
                 texto: texto
             });
             
-            return res.status(200)('/catalogo/detalhes/id:?Sucess=Comentário adicionado com sucesso.');
+            return res.status(200)('/catalogo/detalhes/id:success=Comentario adicionado ao acervo com sucesso');
 
         } catch (error) {
             console.error('Erro ao comentar livro:', error);
