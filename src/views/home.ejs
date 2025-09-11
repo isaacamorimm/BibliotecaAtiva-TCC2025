@@ -31,12 +31,13 @@
                 <% } %>
             </ul>
 
-            <div class="user-menu" href="/perfil">
-                <a class="user-avatar" href="/perfil">
-                    <%= user.nome.charAt(0).toUpperCase() %>
-                </a>
-                <span><%= user.nome %></span>
-            </div>
+            <a class="user-menu-link" href="/perfil">
+    <div class="user-avatar">
+        <%= user.nome.charAt(0).toUpperCase() %>
+    </div>
+    <span><%= user.nome %></span>
+</a>
+
         </div>
     </header>
 
