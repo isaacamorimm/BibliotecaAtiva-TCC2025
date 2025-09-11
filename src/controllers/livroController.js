@@ -172,7 +172,7 @@ class LivroController {
 
             // 1. Validação da nota
             if (!nota || nota < 1 || nota > 5) {
-                return res.status(400).json({ error: 'Uma nota válida de 1 a 5 é obrigatória.' });
+                return res.redirect(`/catalogo/detalhes/${livroId}?error=Nota inválida. Deve ser entre 1 e 5.`);
             }
 
             // 2. Usando 'upsert' para criar ou atualizar a avaliação
@@ -187,7 +187,7 @@ class LivroController {
 
         } catch (error) {
             console.error('Erro ao avaliar livro:', error);
-            return res.status(500).json({ error: 'Ocorreu um erro ao processar sua avaliação.' });
+            return res.redirect(`/catalogo/detalhes/${req.params.id}?error=Ocorreu um erro ao salvar sua avaliação.`);
         }
     }
 

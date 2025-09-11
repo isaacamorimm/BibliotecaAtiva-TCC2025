@@ -13,6 +13,7 @@ class Avaliacao extends Model {
                 livro_id: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
+                    unique: 'avaliacao_unica_usuario_livro',
                     references: {
                         model: 'livros',
                         key: 'id'
@@ -21,6 +22,7 @@ class Avaliacao extends Model {
                 usuario_id: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
+                    unique: 'avaliacao_unica_usuario_livro',
                     references: {
                         model: 'usuarios',
                         key: 'id'
