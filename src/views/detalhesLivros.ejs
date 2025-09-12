@@ -549,6 +549,21 @@
                             <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
                             <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
                         </span>
+                        <div class="favorito-card">
+                            <% if (usuarioJaFavoritou) { %>
+                                <form action="/catalogo/desfavoritar/<%= livro.id %>" method="POST" class="form-favoritar" id="formFavoritar">
+                                    <button type="submit" class="btn btn-danger" id="btnFavoritar">
+                                        <i class="fas fa-heart-broken"></i> Desfavoritar
+                                    </button>
+                                </form>
+                            <% } else { %>
+                                <form action="/catalogo/favoritar/<%= livro.id %>" method="POST" class="form-favoritar" id="formFavoritar">
+                                    <button type="submit" class="btn btn-primary" id="btnFavoritar">
+                                        <i class="fas fa-heart"></i> Favoritar
+                                    </button>
+                                </form>
+                            <% } %>
+                        </div>
                     </div>
                     
                     <p class="livro-sinopse"><%= livro.sinopse %></p>
@@ -638,35 +653,45 @@
             <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
         </div>
     </footer>
-   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Pega os formulários e botões pelos seus IDs
     const formComentario = document.getElementById('form-comentario');
     const btnComentar = document.getElementById('btnComentar');
-        const formAvaliar = document.getElementById('formAvaliar');
-        const btnAvaliar = document.getElementById('btnAvaliar');
+    const formAvaliar = document.getElementById('formAvaliar');
+    const btnAvaliar = document.getElementById('btnAvaliar');
+    const formFavoritar = document.getElementById('formFavoritar');
+    const btnFavoritar = document.getElementById('btnFavoritar');
 
+    // Função para desabilitar botão e mostrar loading
+    function desabilitarBotao(botao, texto = 'Enviando...') {
+        if (botao) {
+            botao.disabled = true;
+            botao.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${texto}`;
+        }
+    }
+
+    // Adiciona o evento de "submit" para cada formulário
     if (formComentario) {
-
-      formComentario.addEventListener('submit', function() {
-
-        btnComentar.disabled = true;
-        btnComentar.innerHTML = `
-          <i class="fas fa-spinner fa-spin"></i> Enviando...
-        `;
-      });
+        formComentario.addEventListener('submit', function() {
+            desabilitarBotao(btnComentar);
+        });
     }
 
     if (formAvaliar) {
-    formAvaliar.addEventListener('submit', function() {
-
-        btnAvaliar.disabled = true;
-        btnAvaliar.innerHTML = `
-            <i class="fas fa-spinner fa-spin"></i> Enviando...
-        `;
-    });
+        formAvaliar.addEventListener('submit', function() {
+            desabilitarBotao(btnAvaliar);
+        });
     }
-  });
+
+    if (formFavoritar) {
+        formFavoritar.addEventListener('submit', function() {
+            // Verifica se o texto do botão contém a palavra "Favoritar" para personalizar a mensagem
+            const acao = btnFavoritar.innerText.includes('Desfavoritar') ? 'Removendo...' : 'Adicionando...';
+            desabilitarBotao(btnFavoritar, acao);
+        });
+    }
+});
 </script>
 </body>
 </html>

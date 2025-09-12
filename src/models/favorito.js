@@ -14,7 +14,7 @@ class Favorito extends Model {
                     type: DataTypes.INTEGER,
                     allowNull: true,
                     references: {
-                        model: usuarios,
+                        model: 'usuarios',
                         key: 'id'
                     }
                 },
@@ -22,7 +22,7 @@ class Favorito extends Model {
                     type: DataTypes.INTEGER,
                     allowNull: false,
                     references: {
-                        model: livros,
+                        model: 'livros',
                         key: 'id'
                     }
                 },

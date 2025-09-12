@@ -1,6 +1,6 @@
 import livroRepository from "../repositories/livroRepository.js";
 import axios from "axios";
-import { Avaliacao, Comentario } from "../models/index.js";
+import { Avaliacao, Comentario, Favorito } from "../models/index.js";
 
 
 class LivroController {
@@ -198,7 +198,7 @@ class LivroController {
             const { texto } = req.body;
 
             if (!texto || texto.trim() === '') {
-                return res.status(400).json({ error: 'O conteúdo do comentário não pode estar vazio.' });
+                return res.redirect(`/catalogo/detalhes/${livroId}?error=O comentário não pode ser vazio.`);
             }
 
             const novoComentario = await Comentario.create({
@@ -225,11 +225,24 @@ class LivroController {
                 return res.redirect('/catalogo?error=Livro não encontrado');
             }
 
+            const livroData = livro.toJSON();
+            livroData.avaliacoes = livroData.avaliacoes || [];
+            livroData.comentarios = livroData.comentarios || [];
+
+            const favorito = await Favorito.findOne({
+                where: {
+                    livro_id: id,
+                    usuario_id: req.user.id
+                }
+            });
+            const usuarioJaFavoritou = !!favorito; // Converte para booleano
+
             livro.comentarios.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
             res.render('detalhesLivros', { 
                 livro,
                 user: req.user,
+                usuarioJaFavoritou: usuarioJaFavoritou,
                 success: req.query.success,
                 error: req.query.error
             });
@@ -237,6 +250,34 @@ class LivroController {
         } catch (error) {
             console.error("Erro ao buscar detalhes do livro:", error);
             res.redirect('/catalogo?error=' + encodeURIComponent('Erro ao carregar detalhes do livro.'));
+        }
+    }
+
+    async favoritarLivro(req, res) {
+        try {
+            const livroId = req.params.id;
+            const usuarioId = req.user.id;
+
+
+            await livroRepository.adicionarFavorito(livroId, usuarioId);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Livro adicionado aos favoritos`);
+        } catch (error) {
+            console.error('Erro ao favoritar livro:', error);
+            return res.redirect(`/catalogo/detalhes/${req.params.id}?error=Ocorreu um erro ao adicionar o livro aos favoritos.`);
+        }
+    }
+
+    async desfavoritarLivro(req, res) {
+        try {
+            const livroId = req.params.id;
+            const usuarioId = req.user.id;
+
+            await livroRepository.removerFavorito(livroId, usuarioId);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Livro removido dos favoritos`);
+        
+        } catch (error) {
+            console.error('Erro ao desfavoritar livro:', error);
+            return res.redirect(`/catalogo/detalhes/${req.params.id}?error=Ocorreu um erro ao remover o livro dos favoritos.`);
         }
     }
 
