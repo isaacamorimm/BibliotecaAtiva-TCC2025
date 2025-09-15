@@ -9,7 +9,7 @@
     <style>
         :root {
             --primary: #9e4a3c;
-            --primary-light: #d9ac8a;
+--primary-light: #d9ac8a;
             --primary-dark: #7a372b;
             --background: #faf7f4;
             --surface: #ffffff;
@@ -19,92 +19,92 @@
             --error: #e53935;
             --border: #e8e1d9;
             --radius: 12px;
-            --transition: all 0.2s ease;
+--transition: all 0.2s ease;
         }
 
         * {
             margin: 0;
-            padding: 0;
+padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Lora', serif; 
-            background: var(--background);
+            font-family: 'Lora', serif;
+background: var(--background);
             color: var(--text);
             line-height: 1.5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
+}
 
         h1, h2, h3, h4, .btn, .nav-link, .logo, .stat-title {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
+}
 
         /* Header */
         .header {
             background: var(--surface);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-        }
+}
 
         .header-container {
             max-width: 1200px;
-            margin: 0 auto;
+margin: 0 auto;
             padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
+}
 
         .logo {
             font-size: 1.5rem;
-            font-weight: 700;
+font-weight: 700;
             color: var(--primary);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
+}
 
         /* Navigation */
         .nav-menu {
             display: flex;
-            list-style: none;
+list-style: none;
             gap: 1.5rem;
             align-items: center;
         }
 
         .nav-link {
             color: var(--text);
-            text-decoration: none;
+text-decoration: none;
             font-weight: 500;
             padding: 0.5rem 0;
             position: relative;
             transition: var(--transition);
-        }
+}
 
         .nav-link:hover, .nav-link.active {
             color: var(--primary);
-        }
+}
 
         .nav-link.active::after {
             content: '';
-            position: absolute;
+position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 2px;
             background: var(--primary);
-        }
+}
 
         .user-menu {
             display: flex;
-            align-items: center;
+align-items: center;
             gap: 0.75rem;
             color: var(--text);
             font-weight: 500;
@@ -112,7 +112,7 @@
 
         .user-avatar {
             width: 40px;
-            height: 40px;
+height: 40px;
             border-radius: 50%;
             background: var(--primary-light);
             display: flex;
@@ -120,29 +120,29 @@
             justify-content: center;
             color: var(--primary);
             font-weight: 600;
-        }
+}
 
         /* Main Content */
         .main {
             flex: 1;
-            padding: 2rem 0;
+padding: 2rem 0;
         }
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
+margin: 0 auto;
             padding: 0 1.5rem;
         }
 
         /* Page Header */
         .page-header {
             text-align: center;
-            margin-bottom: 2rem;
+margin-bottom: 2rem;
         }
 
         .page-title {
             font-size: 2.5rem;
-            font-weight: 700;
+font-weight: 700;
             color: var(--primary);
             margin-bottom: 0.5rem;
         }
@@ -150,22 +150,22 @@
         /* Profile Card */
         .profile-card {
             background: var(--surface);
-            padding: 2.5rem;
+padding: 2.5rem;
             border-radius: var(--radius);
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             margin-bottom: 2rem;
-        }
+}
 
         .profile-header {
             display: flex;
-            align-items: center;
+align-items: center;
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
         .profile-avatar {
             width: 100px;
-            height: 100px;
+height: 100px;
             border-radius: 50%;
             background: var(--primary-light);
             display: flex;
@@ -174,63 +174,63 @@
             color: var(--primary);
             font-size: 2.5rem;
             font-weight: 700;
-        }
+}
 
         .profile-info h2 {
             font-size: 1.8rem;
-            color: var(--primary);
+color: var(--primary);
             margin-bottom: 0.25rem;
         }
 
         .profile-role {
             display: inline-block;
-            padding: 0.35rem 1rem;
+padding: 0.35rem 1rem;
             background: var(--primary-light);
             color: var(--primary);
             border-radius: 20px;
             font-weight: 600;
             font-size: 0.9rem;
-        }
+}
 
         /* List Group Customization */
         .list-group {
             border-radius: var(--radius);
-            overflow: hidden;
+overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .list-group-item {
             background: var(--background);
-            border: 1px solid var(--border);
+border: 1px solid var(--border);
             padding: 1.25rem 1.5rem;
             display: flex;
         }
 
         .list-group-item:first-child {
             border-top-left-radius: var(--radius);
-            border-top-right-radius: var(--radius);
+border-top-right-radius: var(--radius);
         }
 
         .list-group-item:last-child {
             border-bottom-left-radius: var(--radius);
-            border-bottom-right-radius: var(--radius);
+border-bottom-right-radius: var(--radius);
         }
 
         .list-group-item strong {
             min-width: 120px;
-            color: var(--primary);
+color: var(--primary);
         }
 
         /* Buttons */
         .btn-group {
             display: flex;
-            gap: 1rem;
+gap: 1rem;
             margin-top: 1.5rem;
         }
 
         .btn {
             padding: 0.75rem 1.5rem;
-            background: var(--primary);
+background: var(--primary);
             color: white;
             text-decoration: none;
             border-radius: var(--radius);
@@ -240,145 +240,170 @@
             align-items: center;
             gap: 0.5rem;
             border: none;
-            cursor: pointer;
+cursor: pointer;
         }
 
         .btn:hover {
             background: var(--primary-dark);
-            transform: translateY(-2px);
+transform: translateY(-2px);
         }
 
         .btn-secondary {
             background: var(--text-light);
-        }
+}
 
         .btn-secondary:hover {
             background: #666;
-        }
+}
 
         .btn-danger {
             background: var(--error);
-        }
+}
 
         .btn-danger:hover {
             background: #c62828;
-        }
+}
 
         /* Footer */
         .footer {
             background: var(--surface);
-            border-top: 1px solid var(--border);
+border-top: 1px solid var(--border);
             padding: 2rem 0;
             margin-top: auto;
         }
 
         .footer-container {
             max-width: 1200px;
-            margin: 0 auto;
+margin: 0 auto;
             padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
+}
 
         .footer-brand {
             font-size: 1.25rem;
-            font-weight: 700;
+font-weight: 700;
             color: var(--primary);
         }
 
         .footer-copyright {
             color: var(--text-light);
-        }
+}
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .profile-header {
                 flex-direction: column;
-                text-align: center;
+text-align: center;
             }
             
             .btn-group {
                 flex-direction: column;
-            }
+}
             
             .list-group-item {
                 flex-direction: column;
-                gap: 0.5rem;
+gap: 0.5rem;
             }
             
             .list-group-item strong {
                 min-width: auto;
-            }
+}
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-container">
             <a href="/home" class="logo">
                 <span>📚</span> Biblioteca Online
             </a>
             
-            <ul class="nav-menu">
+            
+<ul class="nav-menu">
                 <li><a href="/home" class="nav-link">Início</a></li>
                 <li><a href="/catalogo" class="nav-link">Catalogo</a></li>
                 <li><a href="/emprestimos" class="nav-link">Empréstimos</a></li>
                 <li><a href="/perfil" class="nav-link active">Perfil</a></li>
             </ul>
             
-            <div class="user-menu">
+  
+          <div class="user-menu">
                 <div class="user-avatar"><%= user.nome.charAt(0).toUpperCase() %></div>
                 <span><%= user.nome %></span>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="main">
         <div class="container">
-            <div class="page-header">
+       
+     <div class="page-header">
                 <h1 class="page-title">Meu Perfil</h1>
             </div>
             
             <div class="profile-card">
                 <div class="profile-header">
-                    <div class="profile-avatar"><%= user.nome.charAt(0).toUpperCase() %></div>
+                    <div class="profile-avatar"><%= 
+user.nome.charAt(0).toUpperCase() %></div>
                     <div class="profile-info">
                         <h2><%= user.nome %></h2>
                         <span class="profile-role"><%= user.role %></span>
                     </div>
-                </div>
+     
+           </div>
                 
                 <ul class="list-group">
                     <li class="list-group-item">
                         <strong>Nome:</strong> <%= user.nome %>
-                    </li>
+        
+            </li>
                     <li class="list-group-item">
                         <strong>Sobrenome:</strong> <%= user.sobrenome %>
                     </li>
-                    <li class="list-group-item">
+                    
+<li class="list-group-item">
                         <strong>Email:</strong> <%= user.email %>
                     </li>
                     <li class="list-group-item">
                         <strong>Função:</strong> <%= user.role %>
-                    </li>
+    
+                </li>
                 </ul>
                 
                 <div class="btn-group">
                     <a href="/home" class="btn btn-secondary">Voltar</a>
-                    <a href="/logout" class="btn btn-danger">Sair</a>
+            
+        <a href="/logout" class="btn btn-danger">Sair</a>
                 </div>
             </div>
+            <div class="profile-card">
+                <h2>Meus Livros Favoritos</h2>
+                <% if (favoritos && favoritos.length > 0) { %>
+                <ul class="list-group">
+                    <% favoritos.forEach(favorito => { %>
+                    <li class="list-group-item">
+                        <a href="/catalogo/detalhes/<%= favorito.livro.id %>">
+                                <%= favorito.livro.titulo %>
+                                <%= favorito.livro.autor %>
+                            </a>
+                    </li>
+                    <% }); %>
+                </ul>
+                <% } else { %>
+                <p>Você ainda não favoritou nenhum livro.</p>
+                <% } %>
+            </div>
+
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-brand">Biblioteca Online</div>
-            <div class="footer-copyright">© 2025 - Todos os direitos reservados</div>
+            <div class="footer-copyright">© 2025 
+- Todos os direitos reservados</div>
         </div>
     </footer>
 

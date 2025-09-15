@@ -124,8 +124,6 @@ class LivroRepository {
 
     async findByIdComFavoritos(id) {
         try {
-        // Importa os modelos necessários para a associação
-        const { Usuario, Favorito } = await import('../models/index.js');
 
         return await Livro.findByPk(id, {
                 include: [
