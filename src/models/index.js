@@ -27,7 +27,7 @@ Favorito.belongsTo(Livro, { foreignKey: 'livro_id', as: 'livro' });
 Favorito.belongsTo(Usuario, { foreignKey: 'usuario_id', as: 'usuario' });
 
 // 4. Associações de Livro
-// Um livro pode ter muitas avaliações, muitos comentários e muitos favoritatos
+// Um livro pode ter muitas avaliações, muitos comentários e muitos favoritados
 Livro.hasMany(Avaliacao, { foreignKey: 'livro_id', as: 'avaliacoes' });
 Livro.hasMany(Comentario, { foreignKey: 'livro_id', as: 'comentarios' });
 Livro.hasMany(Favorito, {foreignKey: 'livro_id', as: 'favoritos' });

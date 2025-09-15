@@ -14,16 +14,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TCC-262/BibliotecaAtiva-TCC2025.git"
+    "url": "git+https://github.com/isaacamorimm/BibliotecaAtiva-TCC2025.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/TCC-262/BibliotecaAtiva-TCC2025/issues"
+    "url": "https://github.com/isaacamorimm/BibliotecaAtiva-TCC2025/issues"
   },
-  "homepage": "https://github.com/TCC-262/BibliotecaAtiva-TCC2025#readme",
+  "homepage": "https://github.com/isaacamorimm/BibliotecaAtiva-TCC2025#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.56.1",
     "axios": "^1.11.0",
