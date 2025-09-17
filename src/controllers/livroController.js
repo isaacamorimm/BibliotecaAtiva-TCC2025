@@ -281,6 +281,53 @@ class LivroController {
         }
     }
 
+    async editarLivro (req, res) {
+        try {
+            const comentarioId = req.params.id;
+            const usuarioId = req.user.id;
+            const { texto, livroId } = req.body;
+
+            const comentario = await Comentario.findById('comentarioId');
+
+            if(!comentario) {
+                return res.redirect(`/catalogo/detalhes/${livroId}error=Comentário não encontrado.`);
+            }
+
+            // Apenas o dono do comentário pode alterá-lo
+            if(comentario.usuario_id !== comentarioId){
+                return res.redirect(`/catalogo/detalhes/${livroId}error=Você não têm permissão para editar esse comentário.`)
+            }
+
+            comentario.texto = texto;
+            await comentario.save();
+
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Comentário atualizado com sucesso.`)
+        } catch (error) {
+            console.error('Erro ao editar comentário:', error);
+            return res.redirect(`/catalogo/detalhes/${req.body.livroId}error=Erro ao editar comentário`)
+        }
+    }
+
+    async removerComentario (req, res) {
+        try {
+            const comentarioId = req.params.id;
+            const { livroId } = req.body;
+
+            const comentario = await Comentario.findById('comentarioId');
+
+            if (comentario){
+                await comentario.destroy();
+                return res.redirect(`/catalogo/detalhes/${livroId}success=Comentario excluído com sucesso`)
+            }
+
+            return res.redirect(`/catalogo/detalhes/${livroId}error=Erro ao excluir comentário`)
+            
+        } catch (error) {
+            console.error('Erro ao excluir livro', error)
+            return res.redirect(`/catalogo/detalhes/${livroId}error=Erro ao excluir comentário`)
+        }
+    }
+
 }
 
 export default new LivroController();
