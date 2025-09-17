@@ -17,6 +17,8 @@ class UsuarioRepository {
             throw new Error(`Erro ao buscar usuário com favoritos: ${error.message}`);
         }
     }
+
+    
 }
 
 export default new UsuarioRepository();

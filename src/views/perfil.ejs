@@ -343,41 +343,49 @@ gap: 0.5rem;
                 <h1 class="page-title">Meu Perfil</h1>
             </div>
             
-            <div class="profile-card">
+  <div class="profile-card">
                 <div class="profile-header">
-                    <div class="profile-avatar"><%= 
-user.nome.charAt(0).toUpperCase() %></div>
+                    <div class="profile-avatar"><%= user.nome.charAt(0).toUpperCase() %></div>
                     <div class="profile-info">
-                        <h2><%= user.nome %></h2>
+                        <h2><%= user.nome %> <%= user.sobrenome %></h2>
                         <span class="profile-role"><%= user.role %></span>
                     </div>
-     
-           </div>
-                
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <strong>Nome:</strong> <%= user.nome %>
-        
-            </li>
-                    <li class="list-group-item">
-                        <strong>Sobrenome:</strong> <%= user.sobrenome %>
-                    </li>
-                    
-<li class="list-group-item">
-                        <strong>Email:</strong> <%= user.email %>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Função:</strong> <%= user.role %>
-    
-                </li>
-                </ul>
-                
-                <div class="btn-group">
-                    <a href="/home" class="btn btn-secondary">Voltar</a>
-            
-        <a href="/logout" class="btn btn-danger">Sair</a>
                 </div>
-            </div>
+
+                <div id="display-info">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Nome:</strong> <%= user.nome %></li>
+                        <li class="list-group-item"><strong>Sobrenome:</strong> <%= user.sobrenome %></li>
+                        <li class="list-group-item"><strong>Email:</strong> <%= user.email %></li>
+                        <li class="list-group-item"><strong>Função:</strong> <%= user.role %></li>
+                    </ul>
+                    <div class="btn-group mt-3">
+                        <a href="/home" class="btn btn-secondary">Voltar</a>
+                        <button class="btn" onclick="toggleEditForm()">Editar Perfil</button>
+                        <a href="/logout" class="btn btn-danger">Sair</a>
+                    </div>
+                </div>
+
+                <div id="edit-form" style="display: none;">
+                    <form action="/perfil/editar" method="POST">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label"><strong>Nome:</strong></label>
+                            <input type="text" class="form-control" id="nome" name="nome" value="<%= user.nome %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sobrenome" class="form-label"><strong>Sobrenome:</strong></label>
+                            <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="<%= user.sobrenome %>" required>
+                        </div>
+                         <div class="mb-3">
+                            <label class="form-label"><strong>Email:</strong></label>
+                            <input type="email" class="form-control" value="<%= user.email %>" disabled>
+                        </div>
+                        <div class="btn-group mt-3">
+                            <button type="submit" class="btn btn-success">Salvar Alterações</button>
+                            <button type="button" class="btn btn-secondary" onclick="toggleEditForm()">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
             <div class="profile-card">
                 <h2>Meus Livros Favoritos</h2>
                 <% if (favoritos && favoritos.length > 0) { %>
