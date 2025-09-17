@@ -27,4 +27,8 @@ router.post('/comentar/:id', isAuthenticated, livroController.comentarLivro);
 router.post('/favoritar/:id', isAuthenticated, livroController.favoritarLivro);
 router.post('/desfavoritar/:id', isAuthenticated, livroController.desfavoritarLivro);
 
+// Rotas para favoritar e desfavoritar livros
+router.post('/favoritar/:id', isAuthenticated, livroController.favoritarLivro);
+router.post('/desfavoritar/:id', isAuthenticated, livroController.desfavoritarLivro);
+
 export default router;
