@@ -1,0 +1,12 @@
+# Ignorar dependências, pois elas serão instaladas dentro do container
+node_modules
+
+# Ignorar arquivos de ambiente, pois eles serão injetados de forma segura
+.env
+
+# Ignorar arquivos do Git
+.git
+.gitignore
+
+# Ignorar arquivos de configuração do Vercel
+.vercel
