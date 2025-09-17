@@ -24,8 +24,8 @@ router.post('/avaliar/:id', isAuthenticated, livroController.avaliarLivro);
 router.post('/comentar/:id', isAuthenticated, livroController.comentarLivro);
 
 // Rotas para favoritar e desfavoritar livros
-router.post('/favoritar/:id', isAuthenticated, livroController.favoritarLivro);
-router.post('/desfavoritar/:id', isAuthenticated, livroController.desfavoritarLivro);
+router.post('/comentario/editar/:id', isAuthenticated, livroController.editarComentario);
+router.post('/comentario/remover/:id', isAuthenticated, isAdmin, livroController.removerComentario);
 
 // Rotas para favoritar e desfavoritar livros
 router.post('/favoritar/:id', isAuthenticated, livroController.favoritarLivro);
