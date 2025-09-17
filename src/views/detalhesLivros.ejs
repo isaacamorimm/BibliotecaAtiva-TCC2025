@@ -411,6 +411,57 @@
             color: var(--text-light);
         }
 
+        .comentario-acoes {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+.btn-editar-comentario, .btn-remover-comentario {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+.btn-editar-comentario {
+    color: var(--primary);
+}
+.btn-remover-comentario {
+    color: var(--error);
+}
+.btn-editar-comentario:hover {
+    background-color: #f0e9e4;
+}
+.btn-remover-comentario:hover {
+    background-color: #ffebee;
+}
+.form-editar-comentario textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+.botoes-edicao {
+    display: flex;
+    gap: 10px;
+}
+.btn-cancelar {
+    background-color: var(--text-light);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+}
+
         /* Footer */
         .footer {
             background: var(--surface);
@@ -626,13 +677,42 @@
                 <div class="lista-comentarios">
                     <% if (livro.comentarios && livro.comentarios.length > 0) { %>
                         <% livro.comentarios.forEach(comentario => { %>
-                            <div class="comentario-item">
+                            <div class="comentario-item" id="comentario-<%= comentario.id %>">
                                 <div class="comentario-autor">
                                     <i class="fas fa-user"></i> <%= comentario.usuario.nome %>
                                 </div>
-                                <div class="comentario-texto"><%= comentario.texto %></div>
+                                <div class="comentario-texto" id="texto-comentario-<%= comentario.id %>">
+                                    <%= comentario.texto %>
+                                </div>
                                 <div class="comentario-data">
                                     <i class="fas fa-clock"></i> <%= new Date(comentario.criado_em).toLocaleDateString('pt-BR') %>
+                                </div>
+                
+                                <div class="comentario-acoes">
+                                    <% if (user && user.id === comentario.usuario_id) { %>
+                                        <button class="btn-editar-comentario" onclick="mostrarFormularioEdicao('<%= comentario.id %>')">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                    <% } %>
+                                    <% if (user && user.role === 'admin') { %>
+                                        <form action="/catalogo/comentario/remover/<%= comentario.id %>" method="POST" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja remover este comentário?');">
+                                            <input type="hidden" name="livroId" value="<%= livro.id %>">
+                                            <button type="submit" class="btn-remover-comentario">
+                                                <i class="fas fa-trash"></i> Remover
+                                            </button>
+                                        </form>
+                                    <% } %>
+                                </div>
+                
+                                <div class="form-editar-comentario" id="form-editar-<%= comentario.id %>" style="display:none;">
+                                    <form action="/catalogo/comentario/editar/<%= comentario.id %>" method="POST">
+                                        <textarea name="texto" required><%= comentario.texto %></textarea>
+                                        <input type="hidden" name="livroId" value="<%= livro.id %>">
+                                        <div class="botoes-edicao">
+                                            <button type="submit" class="btn">Salvar</button>
+                                            <button type="button" class="btn-cancelar" onclick="cancelarEdicao('<%= comentario.id %>')">Cancelar</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         <% }) %>
@@ -654,6 +734,16 @@
         </div>
     </footer>
 <script>
+
+function mostrarFormularioEdicao(comentarioId) {
+        document.getElementById('texto-comentario-' + comentarioId).style.display = 'none';
+        document.getElementById('form-editar-' + comentarioId).style.display = 'block';
+    }
+
+    function cancelarEdicao(comentarioId) {
+        document.getElementById('texto-comentario-' + comentarioId).style.display = 'block';
+        document.getElementById('form-editar-' + comentarioId).style.display = 'none';
+    }
 document.addEventListener('DOMContentLoaded', function() {
     // Pega os formulários e botões pelos seus IDs
     const formComentario = document.getElementById('form-comentario');
@@ -691,6 +781,9 @@ document.addEventListener('DOMContentLoaded', function() {
             desabilitarBotao(btnFavoritar, acao);
         });
     }
+
+
+
 });
 </script>
 </body>
