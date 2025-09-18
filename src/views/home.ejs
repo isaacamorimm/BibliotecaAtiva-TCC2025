@@ -1,194 +1,137 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Biblioteca Ativa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/home.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <a href="/home" class="logo">
-                <i class="fas fa-book-open"></i> Biblioteca Ativa
-            </a>
-            
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <ul class="nav-menu">
-                <li><a href="/home" class="nav-link active">Home</a></li>
-                <li><a href="/catalogo" class="nav-link">Catálogo</a></li>
-                <% if (user && user.role === 'admin') { %>
-                <li><a href="/catalogo/acervo" class="nav-link">Acervo</a></li>
-                <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
-                <% } %>
-            </ul>
+<%- include('partials/header', { 
+    title: 'Home - Biblioteca Ativa', 
+    activePage: 'home',
+    cssFile: 'home.css',
+    jsFile: 'layout.js'
+}) %>
 
-            <a class="user-menu" href="/perfil">
-                <div class="user-avatar">
-                    <%= user.nome.charAt(0).toUpperCase() %>
-                </div>
-                <span class="user-name"><%= user.nome %></span>
-            </a>
+<div class="page-header">
+    <h1 class="page-title">Biblioteca Ativa</h1>
+    <p class="page-subtitle">Sistema de gerenciamento bibliográfico completo</p>
+</div>
+
+<div class="welcome-card">
+    <div class="welcome-icon">
+        <i class="fas fa-smile"></i>
+    </div>
+    <h2 class="welcome-title">Bem-vindo, <%= user.nome %>!</h2>
+    <p>Você está logado como: <span class="user-role"><%= user.role %></span></p>
+</div>
+
+<% if (user.role === 'admin') { %>
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-book"></i>
         </div>
-    </header>
+        <h3 class="stat-title">Gestão Completa</h3>
+        <p class="stat-description">Administre todos os aspectos da biblioteca</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-users"></i>
+        </div>
+        <h3 class="stat-title">Controle Total</h3>
+        <p class="stat-description">Gerencie livros, usuários e empréstimos</p>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <h3 class="stat-title">Relatórios</h3>
+        <p class="stat-description">Acesse estatísticas e relatórios detalhados</p>
+    </div>
+</div>
 
-    <!-- Main Content -->
-    <main class="main">
-        <div class="container">
-            <!-- Page Header -->
-            <div class="page-header">
-                <h1 class="page-title">Biblioteca Ativa</h1>
-                <p class="page-subtitle">Sistema de gerenciamento bibliográfico completo</p>
-            </div>
+<div class="action-card">
+    <h3 class="action-title">
+        <i class="fas fa-tools"></i> Painel Administrativo
+    </h3>
+    <p class="action-description">Gerencie todos os aspectos do sistema bibliotecário</p>
+    <div class="action-buttons">
+        <a href="/catalogo" class="btn">
+            <i class="fas fa-book"></i> Ver Todos os Livros
+        </a>
+        <a href="/catalogo/adicionar" class="btn">
+            <i class="fas fa-plus-circle"></i> Adicionar Livro
+        </a>
+        <a href="/catalogo/acervo" class="btn btn-outline">
+            <i class="fas fa-archive"></i> Gerenciar Acervo
+        </a>
+    </div>
+</div>
+<% } else { %>
+<div class="action-card">
+    <h3 class="action-title">
+        <i class="fas fa-search"></i> Explorar Biblioteca
+    </h3>
+    <p class="action-description">Descubra nosso acervo de livros disponíveis para empréstimo</p>
+    <div class="action-buttons">
+        <a href="/livros" class="btn">
+            <i class="fas fa-book"></i> Explorar Catálogo
+        </a>
+    </div>
+</div>
+<% } %>
 
-            <!-- Welcome Message -->
-            <div class="welcome-card">
-                <div class="welcome-icon">
-                    <i class="fas fa-smile"></i>
-                </div>
-                <h2 class="welcome-title">Bem-vindo, <%= user.nome %>!</h2>
-                <p>Você está logado como: <span class="user-role"><%= user.role %></span></p>
-            </div>
+<div class="books-section">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-star"></i> Livros em Destaque
+        </h2>
+        <% if (livros && livros.length > 6) { %>
+        <a href="/livros" class="view-all">
+            Ver todos <i class="fas fa-arrow-right"></i>
+        </a>
+        <% } %>
+    </div>
 
-            <!-- Role Specific Content -->
-            <% if (user.role === 'admin') { %>
-            <!-- Admin Stats -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h3 class="stat-title">Gestão Completa</h3>
-                    <p class="stat-description">Administre todos os aspectos da biblioteca</p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 class="stat-title">Controle Total</h3>
-                    <p class="stat-description">Gerencie livros, usuários e empréstimos</p>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="stat-title">Relatórios</h3>
-                    <p class="stat-description">Acesse estatísticas e relatórios detalhados</p>
-                </div>
+    <div class="books-grid">
+        <% if (livros && livros.length === 0) { %>
+        <div class="empty-state">
+            <div class="empty-icon">
+                <i class="fas fa-book-open"></i>
             </div>
-
-            <!-- Admin Actions -->
-            <div class="action-card">
-                <h3 class="action-title">
-                    <i class="fas fa-tools"></i> Painel Administrativo
-                </h3>
-                <p class="action-description">Gerencie todos os aspectos do sistema bibliotecário</p>
-                <div class="action-buttons">
-                    <a href="/catalogo" class="btn">
-                        <i class="fas fa-book"></i> Ver Todos os Livros
-                    </a>
-                    <a href="/catalogo/adicionar" class="btn">
-                        <i class="fas fa-plus-circle"></i> Adicionar Livro
-                    </a>
-                    <a href="/catalogo/acervo" class="btn btn-outline">
-                        <i class="fas fa-archive"></i> Gerenciar Acervo
-                    </a>
-                </div>
-            </div>
-            <% } else { %>
-            <!-- User Actions -->
-            <div class="action-card">
-                <h3 class="action-title">
-                    <i class="fas fa-search"></i> Explorar Biblioteca
-                </h3>
-                <p class="action-description">Descubra nosso acervo de livros disponíveis para empréstimo</p>
-                <div class="action-buttons">
-                    <a href="/livros" class="btn">
-                        <i class="fas fa-book"></i> Explorar Catálogo
-                    </a>
-                </div>
-            </div>
+            <h3 class="empty-title">Nenhum livro cadastrado</h3>
+            <p class="empty-text">Aguardando novos livros serem adicionados ao acervo.</p>
+            <% if (user && user.role === 'admin') { %>
+            <a href="/catalogo/adicionar" class="btn">
+                <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
+            </a>
             <% } %>
-
-            <!-- Featured Books -->
-            <div class="books-section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-star"></i> Livros em Destaque
-                    </h2>
-                    <% if (livros && livros.length > 6) { %>
-                    <a href="/livros" class="view-all">
-                        Ver todos <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <% } %>
+        </div>
+        <% } else { %>
+        <% (livros || []).slice(0, 6).forEach(livro => { %>
+        <div class="book-card">
+            <div class="book-cover">
+                <img src="<%= livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa do Livro">
+            </div>
+            <div class="book-header">
+                <div>
+                    <h3 class="book-title"><%= livro.titulo %></h3>
+                    <div class="book-author">
+                        <i class="fas fa-user"></i> <%= livro.autor %>
+                    </div>
                 </div>
-
-                <div class="books-grid">
-                    <% if (livros && livros.length === 0) { %>
-                    <div class="empty-state">
-                        <div class="empty-icon">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                        <h3 class="empty-title">Nenhum livro cadastrado</h3>
-                        <p class="empty-text">Aguardando novos livros serem adicionados ao acervo.</p>
-                        <% if (user && user.role === 'admin') { %>
-                        <a href="/catalogo/adicionar" class="btn">
-                            <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
-                        </a>
-                        <% } %>
-                    </div>
-                    <% } else { %>
-                    <% (livros || []).slice(0, 6).forEach(livro => { %>
-                    <div class="book-card">
-                        <div class="book-cover">
-                            <img src="<%= livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa do Livro">
-                        </div>
-                        <div class="book-header">
-                            <div>
-                                <h3 class="book-title"><%= livro.titulo %></h3>
-                                <div class="book-author">
-                                    <i class="fas fa-user"></i> <%= livro.autor %>
-                                </div>
-                            </div>
-                            <span class="book-badge <%= livro.disponivel ? 'badge-available' : 'badge-unavailable' %>">
-                                <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
-                            </span>
-                        </div>
-                        <div class="book-details">
-                            <div class="book-detail">
-                                <i class="fas fa-calendar"></i> Ano: <%= livro.ano %>
-                            </div>
-                            <div class="book-detail">
-                                <i class="fas fa-tag"></i> 
-                                <span class="book-category"><%= livro.categoria %></span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <% }); %>
-                    <% } %>
+                <span class="book-badge <%= livro.disponivel ? 'badge-available' : 'badge-unavailable' %>">
+                    <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
+                </span>
+            </div>
+            <div class="book-details">
+                <div class="book-detail">
+                    <i class="fas fa-calendar"></i> Ano: <%= livro.ano %>
+                </div>
+                <div class="book-detail">
+                    <i class="fas fa-tag"></i> 
+                    <span class="book-category"><%= livro.categoria %></span>
                 </div>
             </div>
         </div>
-    </main>
+        <% }); %>
+        <% } %>
+    </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-brand">Biblioteca Ativa</div>
-            <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
-        </div>
-    </footer>
-    <script src="/js/home.js"></script>
-</body>
-</html>
+<%- include('partials/footer') %>

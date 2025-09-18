@@ -1,44 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Livro - Biblioteca Ativa</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/editarLivro.css">
-</head>
-</body>
-    <header class="header">
-        <div class="header-container">
-            <a href="/home" class="logo">
-                <i class="fas fa-book-open"></i> Biblioteca Ativa
-            </a>
-            
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <ul class="nav-menu">
-                <li><a href="/home" class="nav-link">Home</a></li>
-                <li><a href="/catalogo" class="nav-link">Catálogo</a></li>
-                <li><a href="/catalogo/acervo" class="nav-link">Acervo</a></li>
-                <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
-                <li><a href="#" class="nav-link active">Editar Livro</a></li>
-            </ul>
-            
-            <div class="user-menu">
-                <a class="user-avatar" href="/perfil">
-                    <%= user.nome.charAt(0).toUpperCase() %>
-                </a>
-                <span><%= user.nome %></span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main">
-        <div class="container">
-            <!-- Page Header -->
+<%- include('partials/header', { 
+    title: 'Editar Livro - Biblioteca Ativa', 
+    activePage: 'editarLivro',
+    cssFile: 'editarLivro.css',
+    jsFile: 'editarLivro.js'
+}) %>
             <div class="page-header">
                 <h1 class="page-title">Editar Livro</h1>
                 <p class="page-subtitle">Atualize as informações do livro</p>
@@ -215,14 +180,4 @@
             </div>
             <% } %>
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-copyright">&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</div>
-        </div>
-    </footer>
-    <script src="/js/editarLivro.js"></script>
-</body>
-</html>
+    <%- include('partials/footer') %>

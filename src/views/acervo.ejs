@@ -1,46 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acervo - Biblioteca Ativa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/acervo.css">
-</head>
-<body>
-    <header class="header">
-        <div class="header-container">
-            <a href="/home" class="logo">
-                <i class="fas fa-book-open"></i> Biblioteca Ativa
-            </a>
-            
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <ul class="nav-menu">
-                <li><a href="/home" class="nav-link">Home</a></li>
-                <li><a href="/catalogo" class="nav-link">Catálogo</a></li>
-                <li><a href="/catalogo/acervo" class="nav-link active">Acervo</a></li>
-                <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
-            </ul>
-            
-            <a class="user-menu" href="/perfil">
-                <div class="user-avatar">
-                    <%= user.nome.charAt(0).toUpperCase() %>
-                </div>
-                <span class="user-name"><%= user.nome %></span>
-            </a>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main">
-        <div class="container">
-            <!-- Page Header -->
+<%- include('partials/header', { 
+    title: 'Acervo - Biblioteca Ativa', 
+    activePage: 'acervo',
+    cssFile: 'acervo.css',
+    jsFile: 'acervo.js'
+}) %>
             <div class="page-header">
                 <h1 class="page-title">Acervo de Livros</h1>
                 <p class="page-subtitle">Gerencie os livros que ainda não foram publicados no catálogo</p>
@@ -146,15 +109,4 @@
                 <% } %>
             </div>
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-brand">Biblioteca Ativa</div>
-            <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
-        </div>
-    </footer>
-    <script src="/js/acervo.js"></script>
-</body>
-</html>
+ <%- include('partials/footer') %>

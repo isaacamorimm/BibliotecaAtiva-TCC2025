@@ -1,0 +1,226 @@
+:root {
+    --primary: #9e4a3c;
+    --primary-light: #d9ac8a;
+    --primary-dark: #7a372b;
+    --background: #faf7f4;
+    --surface: #ffffff;
+    --text: #333333;
+    --text-light: #777777;
+    --success: #43a047;
+    --error: #e53935;
+    --border: #e8e1d9;
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --transition: all 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- HEADER --- */
+.header {
+    background: var(--surface);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+/* --- NAVEGAÇÃO --- */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-link {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text);
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.user-menu:hover {
+    color: var(--primary);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.user-name {
+    display: none;
+}
+
+/* --- MAIN CONTENT --- */
+.main {
+    flex: 1;
+    padding: 2rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* --- FOOTER --- */
+.footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.footer-copyright {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* --- MENU MOBILE --- */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (min-width: 640px) {
+    .user-name {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .nav-menu {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-wrap: wrap;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        order: 1;
+    }
+    
+    .nav-menu {
+        display: none;
+        width: 100%;
+        order: 3;
+        flex-direction: column;
+        padding: 1rem 0;
+        gap: 1rem;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+    }
+    
+    .user-menu {
+        order: 2;
+        margin-left: auto;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
