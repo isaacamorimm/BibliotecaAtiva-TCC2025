@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+
 
 class Livro extends Model {
     static init(sequelize) {
@@ -70,17 +70,6 @@ class Livro extends Model {
         }
         );
     }
-    static associate(models) {
-        Livro.hasMany(models.Comentario, {
-            foreignKey: 'livro_id',
-            as: 'comentarios'
-        });
-        Livro.hasMany(models.Avaliacao, {
-            foreignKey: 'livro_id',
-            as: 'avaliacoes'
-        });
-    }
 }
 
-Livro.init(sequelize);
 export default Livro;

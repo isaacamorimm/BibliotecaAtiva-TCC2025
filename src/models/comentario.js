@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database.js";
+
 
 class Comentario extends Model {
     static init(sequelize) {
@@ -33,22 +33,18 @@ class Comentario extends Model {
                         notEmpty: true,
                     }
                 },
-                criado_em: {
-                    type: DataTypes.DATE,
-                    defaultValue: DataTypes.NOW,
-                    timestamps: true, 
-                    createdAt: 'criado_em',
-                    updatedAt: 'atualizado_em'
-                }
             },
             {
                 sequelize,
                 modelName: 'Comentario',
-                tableName: 'comentarios'
+                tableName: 'comentarios',
+                timestamps: true, 
+                createdAt: 'criado_em',
+                updatedAt: 'atualizado_em'
             }
         );
     }
 }
 
-Comentario.init(sequelize);
+
 export default Comentario;  

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes de <%= livro.titulo %> - Biblioteca Ativa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #9e4a3c;
+            --primary-light: #d9ac8a;
+            --primary-dark: #7a372b;
+            --background: #faf7f4;
+            --surface: #ffffff;
+            --text: #333333;
+            --text-light: #777777;
+            --success: #43a047;
+            --error: #e53935;
+            --border: #e8e1d9;
+            --radius: 12px;
+            --transition: all 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif; 
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, .btn, .nav-link, .logo {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        /* Header */
+        .header {
+            background: var(--surface);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Navigation */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Book Details Card */
+        .livro-detalhes-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .livro-detalhes-card {
+                flex-direction: row;
+            }
+        }
+
+        .livro-capa {
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .livro-capa img {
+            max-width: 250px;
+            border-radius: var(--radius);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .livro-info {
+            flex: 1;
+        }
+
+        .livro-titulo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .livro-autor {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .livro-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .livro-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--background);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+        }
+
+        .livro-sinopse {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .livro-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-disponivel {
+            background: #e8f5e9;
+            color: var(--success);
+        }
+
+        .status-indisponivel {
+            background: #ffebee;
+            color: var(--error);
+        }
+
+        /* Cards Section */
+        .avaliacoes-card, .comentarios-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .avaliacoes-card h2, .comentarios-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Rating Summary */
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--background);
+            border-radius: var(--radius);
+        }
+
+        .media-nota {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .estrelas-media {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .estrelas-media i {
+            font-size: 1.5rem;
+            color: #ffc107;
+        }
+
+        .total-avaliacoes {
+            color: var(--text-light);
+            margin-left: auto;
+        }
+
+        /* Rating Form */
+        .form-avaliar {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--background);
+            border-radius: var(--radius);
+        }
+
+        .form-avaliar h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .rating-stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .rating-stars input {
+            display: none;
+        }
+
+        .rating-stars label {
+            font-size: 2rem;
+            color: #ccc;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0 0.1rem;
+        }
+
+        .rating-stars input:checked ~ label,
+        .rating-stars label:hover,
+        .rating-stars label:hover ~ label {
+            color: #ffc107;
+        }
+
+        /* Comment Form */
+        .form-comentario {
+            margin-bottom: 2rem;
+        }
+
+        .form-comentario textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            resize: vertical;
+            font-family: inherit;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-comentario textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(158, 74, 60, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Comments List */
+        .lista-comentarios {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .comentario-item {
+            padding: 1.5rem;
+            background: var(--background);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary-light);
+        }
+
+        .comentario-autor {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .comentario-texto {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .comentario-data {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .comentario-acoes {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+.btn-editar-comentario, .btn-remover-comentario {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+.btn-editar-comentario {
+    color: var(--primary);
+}
+.btn-remover-comentario {
+    color: var(--error);
+}
+.btn-editar-comentario:hover {
+    background-color: #f0e9e4;
+}
+.btn-remover-comentario:hover {
+    background-color: #ffebee;
+}
+.form-editar-comentario textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+.botoes-edicao {
+    display: flex;
+    gap: 10px;
+}
+.btn-cancelar {
+    background-color: var(--text-light);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+}
+
+        /* Footer */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .footer-copyright {
+            color: var(--text-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .livro-detalhes-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .livro-meta {
+                justify-content: center;
+            }
+            
+            .rating-summary {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .total-avaliacoes {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .livro-titulo {
+                font-size: 1.5rem;
+            }
+            
+            .livro-autor {
+                font-size: 1rem;
+            }
+            
+            .avaliacoes-card, .comentarios-card, .livro-detalhes-card {
+                padding: 1.5rem;
+            }
+            
+            .media-nota {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="/home" class="logo">
+                <i class="fas fa-book-open"></i> Biblioteca Ativa
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="/home" class="nav-link">Home</a></li>
+                <li><a href="/catalogo" class="nav-link active">Catálogo</a></li>
+                <% if (user && user.role === 'admin') { %>
+                <li><a href="/catalogo/acervo" class="nav-link">Acervo</a></li>
+                <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
+                <% } %>
+            </ul>
+
+            <div class="user-menu">
+                <a class="user-avatar" href="/perfil">
+                    <%= user.nome.charAt(0).toUpperCase() %>
+                </a>
+                <span><%= user.nome %></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/home">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="/catalogo">Catálogo</a>
+                <i class="fas fa-chevron-right"></i>
+                <span><%= livro.titulo %></span>
+            </div>
+
+            <div class="livro-detalhes-card">
+                <div class="livro-capa">
+                    <img src="<%= livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa de <%= livro.titulo %>">
+                </div>
+                <div class="livro-info">
+                    <h1 class="livro-titulo"><%= livro.titulo %></h1>
+                    <p class="livro-autor">
+                        <i class="fas fa-user-pen"></i> por <%= livro.autor %>
+                    </p>
+                    
+                    <div class="livro-meta">
+                        <span><i class="fas fa-calendar"></i> <%= livro.ano %></span>
+                        <span><i class="fas fa-tag"></i> <%= livro.categoria %></span>
+                        <span class="livro-status <%= livro.disponivel ? 'status-disponivel' : 'status-indisponivel' %>">
+                            <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
+                            <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
+                        </span>
+                        <div class="favorito-card">
+                            <% if (usuarioJaFavoritou) { %>
+                                <form action="/catalogo/desfavoritar/<%= livro.id %>" method="POST" class="form-favoritar" id="formFavoritar">
+                                    <button type="submit" class="btn btn-danger" id="btnFavoritar">
+                                        <i class="fas fa-heart-broken"></i> Desfavoritar
+                                    </button>
+                                </form>
+                            <% } else { %>
+                                <form action="/catalogo/favoritar/<%= livro.id %>" method="POST" class="form-favoritar" id="formFavoritar">
+                                    <button type="submit" class="btn btn-primary" id="btnFavoritar">
+                                        <i class="fas fa-heart"></i> Favoritar
+                                    </button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                    
+                    <p class="livro-sinopse"><%= livro.sinopse %></p>
+                    
+                    <% if (user.role === 'admin') { %>
+                    <div class="action-buttons">
+                        <a href="/catalogo/editar/<%= livro.id %>" class="btn">
+                            <i class="fas fa-edit"></i> Editar Livro
+                        </a>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="avaliacoes-card">
+                <h2><i class="fas fa-star"></i> Avaliações</h2>
+                
+                <div class="rating-summary">
+                    <% 
+                        let media = 0;
+                        if (livro.avaliacoes && livro.avaliacoes.length > 0) {
+                            const soma = livro.avaliacoes.reduce((acc, ava) => acc + ava.nota, 0);
+                            media = (soma / livro.avaliacoes.length).toFixed(1);
+                        }
+                    %>
+                    <span class="media-nota"><%= media %></span>
+                    <div class="estrelas-media">
+                        <% for(let i = 1; i <= 5; i++) { %>
+                            <i class="fa-star <%= i <= media ? 'fas' : 'far' %>"></i>
+                        <% } %>
+                    </div>
+                    <span class="total-avaliacoes">(<%= livro.avaliacoes ? livro.avaliacoes.length : 0 %> avaliações)</span>
+                </div>
+
+                <form action="/catalogo/avaliar/<%= livro.id %>" method="POST" class="form-avaliar" id="formAvaliar">
+                    <h3>Sua Avaliação:</h3>
+                    <div class="rating-stars">
+                        <input type="radio" id="nota5" name="nota" value="5"><label for="nota5" title="5 estrelas">★</label>
+                        <input type="radio" id="nota4" name="nota" value="4"><label for="nota4" title="4 estrelas">★</label>
+                        <input type="radio" id="nota3" name="nota" value="3"><label for="nota3" title="3 estrelas">★</label>
+                        <input type="radio" id="nota2" name="nota" value="2"><label for="nota2" title="2 estrelas">★</label>
+                        <input type="radio" id="nota1" name="nota" value="1"><label for="nota1" title="1 estrela">★</label>
+                    </div>
+                    <button type="submit" class="btn" id="btnAvaliar">
+                        <i class="fas fa-paper-plane"></i> Enviar Avaliação
+                    </button>
+                </form>
+            </div>
+
+            <div class="comentarios-card">
+                <h2><i class="fas fa-comments"></i> Comentários</h2>
+                
+                <form action="/catalogo/comentar/<%= livro.id %>" method="POST" class="form-comentario" id="form-comentario">
+                    <textarea name="texto" placeholder="Deixe seu comentário..." required></textarea>
+                    <button type="submit" class="btn" id="btnComentar">
+                        <i class="fas fa-comment"></i> Comentar
+                    </button>
+                </form>
+
+                <div class="lista-comentarios">
+                    <% if (livro.comentarios && livro.comentarios.length > 0) { %>
+                        <% livro.comentarios.forEach(comentario => { %>
+                            <div class="comentario-item" id="comentario-<%= comentario.id %>">
+                                <div class="comentario-autor">
+                                    <i class="fas fa-user"></i> <%= comentario.usuario.nome %>
+                                </div>
+                                <div class="comentario-texto" id="texto-comentario-<%= comentario.id %>">
+                                    <%= comentario.texto %>
+                                </div>
+                                <div class="comentario-data">
+                                    <i class="fas fa-clock"></i> <%= new Date(comentario.criado_em).toLocaleDateString('pt-BR') %>
+                                </div>
+                
+                                <div class="comentario-acoes">
+                                    <% if (user && user.id === comentario.usuario_id) { %>
+                                        <button class="btn-editar-comentario" onclick="mostrarFormularioEdicao('<%= comentario.id %>')">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </button>
+                                    <% } %>
+                                    <% if (user && user.role === 'admin') { %>
+                                        <form action="/catalogo/comentario/remover/<%= comentario.id %>" method="POST" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja remover este comentário?');">
+                                            <input type="hidden" name="livroId" value="<%= livro.id %>">
+                                            <button type="submit" class="btn-remover-comentario">
+                                                <i class="fas fa-trash"></i> Remover
+                                            </button>
+                                        </form>
+                                    <% } %>
+                                </div>
+                
+                                <div class="form-editar-comentario" id="form-editar-<%= comentario.id %>" style="display:none;">
+                                    <form action="/catalogo/comentario/editar/<%= comentario.id %>" method="POST">
+                                        <textarea name="texto" required><%= comentario.texto %></textarea>
+                                        <input type="hidden" name="livroId" value="<%= livro.id %>">
+                                        <div class="botoes-edicao">
+                                            <button type="submit" class="btn">Salvar</button>
+                                            <button type="button" class="btn-cancelar" onclick="cancelarEdicao('<%= comentario.id %>')">Cancelar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="comentario-item">
+                            <p>Seja o primeiro a comentar sobre este livro!</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">Biblioteca Ativa</div>
+            <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
+        </div>
+    </footer>
+<script>
+
+function mostrarFormularioEdicao(comentarioId) {
+        document.getElementById('texto-comentario-' + comentarioId).style.display = 'none';
+        document.getElementById('form-editar-' + comentarioId).style.display = 'block';
+    }
+
+    function cancelarEdicao(comentarioId) {
+        document.getElementById('texto-comentario-' + comentarioId).style.display = 'block';
+        document.getElementById('form-editar-' + comentarioId).style.display = 'none';
+    }
+document.addEventListener('DOMContentLoaded', function() {
+    // Pega os formulários e botões pelos seus IDs
+    const formComentario = document.getElementById('form-comentario');
+    const btnComentar = document.getElementById('btnComentar');
+    const formAvaliar = document.getElementById('formAvaliar');
+    const btnAvaliar = document.getElementById('btnAvaliar');
+    const formFavoritar = document.getElementById('formFavoritar');
+    const btnFavoritar = document.getElementById('btnFavoritar');
+
+    // Função para desabilitar botão e mostrar loading
+    function desabilitarBotao(botao, texto = 'Enviando...') {
+        if (botao) {
+            botao.disabled = true;
+            botao.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${texto}`;
+        }
+    }
+
+    // Adiciona o evento de "submit" para cada formulário
+    if (formComentario) {
+        formComentario.addEventListener('submit', function() {
+            desabilitarBotao(btnComentar);
+        });
+    }
+
+    if (formAvaliar) {
+        formAvaliar.addEventListener('submit', function() {
+            desabilitarBotao(btnAvaliar);
+        });
+    }
+
+    if (formFavoritar) {
+        formFavoritar.addEventListener('submit', function() {
+            // Verifica se o texto do botão contém a palavra "Favoritar" para personalizar a mensagem
+            const acao = btnFavoritar.innerText.includes('Desfavoritar') ? 'Removendo...' : 'Adicionando...';
+            desabilitarBotao(btnFavoritar, acao);
+        });
+    }
+
+
+
+});
+</script>
+</body>
+</html>

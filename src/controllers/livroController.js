@@ -1,6 +1,6 @@
 import livroRepository from "../repositories/livroRepository.js";
 import axios from "axios";
-import { Avaliacao, Comentario } from "../models/index.js";
+import { Avaliacao, Comentario, Favorito } from "../models/index.js";
 
 
 class LivroController {
@@ -163,6 +163,7 @@ class LivroController {
         }
     }
 
+
     async avaliarLivro(req, res) {
         try {
             const livroId = req.params.id;
@@ -171,7 +172,7 @@ class LivroController {
 
             // 1. Validação da nota
             if (!nota || nota < 1 || nota > 5) {
-                return res.status(400).json({ error: 'Uma nota válida de 1 a 5 é obrigatória.' });
+                return res.redirect(`/catalogo/detalhes/${livroId}?error=Nota inválida. Deve ser entre 1 e 5.`);
             }
 
             // 2. Usando 'upsert' para criar ou atualizar a avaliação
@@ -181,11 +182,12 @@ class LivroController {
                 nota: nota
             });
 
-            return res.status(foiCriado ? 201 : 200).json(avaliacao);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Avaliacao adicionada ao livro com sucesso`);
+
 
         } catch (error) {
             console.error('Erro ao avaliar livro:', error);
-            return res.status(500).json({ error: 'Ocorreu um erro ao processar sua avaliação.' });
+            return res.redirect(`/catalogo/detalhes/${req.params.id}?error=Ocorreu um erro ao salvar sua avaliação.`);
         }
     }
 
@@ -195,24 +197,138 @@ class LivroController {
             const usuarioId = req.user.id;
             const { texto } = req.body;
 
-            // 1. Validação
             if (!texto || texto.trim() === '') {
-                return res.status(400).json({ error: 'O conteúdo do comentário não pode estar vazio.' });
+                return res.redirect(`/catalogo/detalhes/${livroId}?error=O comentário não pode ser vazio.`);
             }
 
-            // 2. Criação do comentário
             const novoComentario = await Comentario.create({
                 livro_id: livroId,
                 usuario_id: usuarioId,
                 texto: texto
             });
             
-            // 3. Retorna o comentário criado com sucesso
-            return res.status(201).json(novoComentario);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Comentario adicionado ao acervo com sucesso`);
 
         } catch (error) {
             console.error('Erro ao comentar livro:', error);
             return res.status(500).json({ error: 'Ocorreu um erro ao salvar seu comentário.' });
+        }
+    }
+
+    async detalhesLivro(req, res) {
+        try {
+            const { id } = req.params;
+
+            const livro = await livroRepository.findByIdComDetalhes(id);
+
+            if (!livro) {
+                return res.redirect('/catalogo?error=Livro não encontrado');
+            }
+
+            const livroData = livro.toJSON();
+            livroData.avaliacoes = livroData.avaliacoes || [];
+            livroData.comentarios = livroData.comentarios || [];
+
+            const favorito = await Favorito.findOne({
+                where: {
+                    livro_id: id,
+                    usuario_id: req.user.id
+                }
+            });
+            const usuarioJaFavoritou = !!favorito; // Converte para booleano
+
+            livro.comentarios.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            res.render('detalhesLivros', { 
+                livro,
+                user: req.user,
+                usuarioJaFavoritou: usuarioJaFavoritou,
+                success: req.query.success,
+                error: req.query.error
+            });
+
+        } catch (error) {
+            console.error("Erro ao buscar detalhes do livro:", error);
+            res.redirect('/catalogo?error=' + encodeURIComponent('Erro ao carregar detalhes do livro.'));
+        }
+    }
+
+    async favoritarLivro(req, res) {
+        try {
+            const livroId = req.params.id;
+            const usuarioId = req.user.id;
+
+
+            await livroRepository.adicionarFavorito(livroId, usuarioId);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Livro adicionado aos favoritos`);
+        } catch (error) {
+            console.error('Erro ao favoritar livro:', error);
+            return res.redirect(`/catalogo/detalhes/${req.params.id}?error=Ocorreu um erro ao adicionar o livro aos favoritos.`);
+        }
+    }
+
+    async desfavoritarLivro(req, res) {
+        try {
+            const livroId = req.params.id;
+            const usuarioId = req.user.id;
+
+            await livroRepository.removerFavorito(livroId, usuarioId);
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Livro removido dos favoritos`);
+        
+        } catch (error) {
+            console.error('Erro ao desfavoritar livro:', error);
+            return res.redirect(`/catalogo/detalhes/${req.params.id}?error=Ocorreu um erro ao remover o livro dos favoritos.`);
+        }
+    }
+
+   // (Dentro da classe LivroController, depois do método desfavoritarLivro)
+
+    async editarComentario(req, res) {
+        try {
+            const comentarioId = req.params.id;
+            const usuarioId = req.user.id;
+            const { texto, livroId } = req.body;
+
+            const comentario = await Comentario.findByPk(comentarioId);
+
+            if (!comentario) {
+                return res.redirect(`/catalogo/detalhes/${livroId}?error=Comentário não encontrado.`);
+            }
+
+            // Apenas o dono do comentário pode editar
+            if (comentario.usuario_id !== usuarioId) {
+                return res.redirect(`/catalogo/detalhes/${livroId}?error=Você não tem permissão para editar este comentário.`);
+            }
+
+            comentario.texto = texto;
+            await comentario.save();
+
+            return res.redirect(`/catalogo/detalhes/${livroId}?success=Comentário atualizado com sucesso.`);
+
+        } catch (error) {
+            console.error('Erro ao editar comentário:', error);
+            // É importante ter o livroId no corpo do formulário para o redirecionamento em caso de erro
+            return res.redirect(`/catalogo/detalhes/${req.body.livroId}?error=Ocorreu um erro ao editar seu comentário.`);
+        }
+    }
+
+    async removerComentario(req, res) {
+        try {
+            const comentarioId = req.params.id;
+            const { livroId } = req.body; // Precisamos saber para qual livro voltar
+
+            const comentario = await Comentario.findByPk(comentarioId);
+
+            if (comentario) {
+                await comentario.destroy();
+                return res.redirect(`/catalogo/detalhes/${livroId}?success=Comentário removido com sucesso.`);
+            }
+
+            return res.redirect(`/catalogo/detalhes/${livroId}?error=Comentário não encontrado.`);
+
+        } catch (error) {
+            console.error('Erro ao remover comentário:', error);
+            return res.redirect(`/catalogo/detalhes/${req.body.livroId}?error=Ocorreu um erro ao remover o comentário.`);
         }
     }
 

@@ -4,39 +4,31 @@ import { isAuthenticated, isAdmin } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-// Listar livros PUBLICADOS (acesso para todos os usuários autenticados)
+// Rota para listar livros (página inicial)
 router.get('/', isAuthenticated, livroController.listarLivros);
 
-// Listar acervo (NÃO PUBLICADOS - apenas admin)
+// Rotas protegidas para administradores
 router.get('/acervo', isAuthenticated, isAdmin, livroController.listarAcervo);
-
-// Exibir formulário para adicionar livro (apenas admin)
 router.get('/adicionar', isAuthenticated, isAdmin, livroController.exibirFormularioAdicionar);
-
 router.get('/api/buscar-capa', isAuthenticated, isAdmin, livroController.buscarCapa);
-
-// Adicionar livro (apenas admin) - vai para o acervo (não publicado)
 router.post('/adicionar', isAuthenticated, isAdmin, livroController.adicionarLivro);
-
-// Exibir formulário para editar livro (apenas admin)
 router.get('/editar/:id', isAuthenticated, isAdmin, livroController.exibirFormularioEditar);
-
-// Atualizar livro (apenas admin)
 router.post('/editar/:id', isAuthenticated, isAdmin, livroController.atualizarLivro);
-
-// Publicar livro (apenas admin) - move do acervo para o catálogo
 router.post('/publicar/:id', isAuthenticated, isAdmin, livroController.publicarLivro);
-
-// Despublicar livro (apenas admin) - remove do catálogo
 router.post('/despublicar/:id', isAuthenticated, isAdmin, livroController.despublicarLivro);
-
-// Remover livro (apenas admin) - remove completamente
 router.post('/remover/:id', isAuthenticated, isAdmin, livroController.removerLivro);
 
-// Avaliar livro (usuários comuns)
+// Rotas acessíveis para todos os usuários autenticados
+router.get('/detalhes/:id', isAuthenticated, livroController.detalhesLivro);
 router.post('/avaliar/:id', isAuthenticated, livroController.avaliarLivro);
-
-// Comentar livro (usuários comuns)
 router.post('/comentar/:id', isAuthenticated, livroController.comentarLivro);
+
+// Rotas para favoritar e desfavoritar livros
+router.post('/comentario/editar/:id', isAuthenticated, livroController.editarComentario);
+router.post('/comentario/remover/:id', isAuthenticated, isAdmin, livroController.removerComentario);
+
+// Rotas para favoritar e desfavoritar livros
+router.post('/favoritar/:id', isAuthenticated, livroController.favoritarLivro);
+router.post('/desfavoritar/:id', isAuthenticated, livroController.desfavoritarLivro);
 
 export default router;

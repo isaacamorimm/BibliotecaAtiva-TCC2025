@@ -1,4 +1,4 @@
-import Livro from "../models/livro.js";
+import { Livro, Usuario, Avaliacao, Comentario, Favorito } from "../models/index.js";
 
 class LivroRepository {
     async create(livroData) {
@@ -92,6 +92,83 @@ class LivroRepository {
             throw new Error(`Erro ao despublicar livro: ${error.message}`);
         }
     }
+
+    async findByIdComDetalhes(id) {
+        try {
+
+        return await Livro.findByPk(id, {
+                include: [
+                    {
+                        model: Avaliacao,
+                        as: 'avaliacoes'
+                    },
+                    {
+                        model: Comentario,
+                        as: 'comentarios', 
+                        include: { 
+                            model: Usuario,
+                            as: 'usuario',
+                            attributes: ['nome'] 
+                        }
+                    },
+                    {
+                        model: Favorito,
+                        as: 'favoritos'
+                    }
+                ]
+            });
+        } catch (error) {
+            throw new Error(`Erro ao buscar livro com detalhes: ${error.message}`);
+        }
+    }
+
+    async findByIdComFavoritos(id) {
+        try {
+
+        return await Livro.findByPk(id, {
+                include: [
+                    {
+                        model: Favorito,
+                        as: 'favoritos',
+                        include: {
+                            model: Usuario,
+                            as: 'usuario',
+                            attributes: ['nome', 'email']
+                        }
+                    }
+                ]
+        })
+        } catch (error) {
+            throw new Error(`Erro ao buscar livro com favoritos: ${error.message}`);
+        }
+    }
+
+    async adicionarFavorito(livroId, usuarioId) {
+        try {
+            return await Favorito.findOrCreate({
+                where: {
+                    livro_id: livroId,
+                    usuario_id: usuarioId
+                }
+            });
+        } catch (error) {
+            throw new Error(`Erro ao adicionar favorito: ${error.message}`);
+        }
+    }
+
+    async removerFavorito(livroId, usuarioId) {
+        try {
+            return await Favorito.destroy({
+                where: {
+                    livro_id: livroId,
+                    usuario_id: usuarioId
+                }
+            });
+        } catch (error) {
+            throw new Error(`Erro ao remover favorito: ${error.message}`);
+        }
+    }
+
 }
 
 export default new LivroRepository();

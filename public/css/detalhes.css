@@ -1,0 +1,26 @@
+/* Adicione estilos básicos para a página de detalhes */
+.livro-detalhes-card, .avaliacoes-card, .comentarios-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.livro-detalhes-card { display: flex; gap: 2rem; }
+.livro-capa img { max-width: 200px; border-radius: 8px; }
+.livro-titulo { color: var(--primary); }
+.livro-autor { color: var(--text-light); margin-bottom: 1rem; }
+.livro-meta { display: flex; gap: 1rem; margin-bottom: 1rem; color: var(--text-light); }
+.rating-summary { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.media-nota { font-size: 2rem; font-weight: bold; color: var(--primary); }
+.fa-star { color: #ffc107; }
+.form-avaliar .rating-stars { display: flex; flex-direction: row-reverse; justify-content: flex-end; }
+.form-avaliar .rating-stars input { display: none; }
+.form-avaliar .rating-stars label { font-size: 2rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
+.form-avaliar .rating-stars input:checked ~ label,
+.form-avaliar .rating-stars label:hover, 
+.form-avaliar .rating-stars label:hover ~ label { color: #ffc107; }
+.form-comentario textarea { width: 100%; min-height: 100px; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1rem; }
+.comentario-item { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem; }
+.comentario-autor { font-weight: bold; color: var(--primary); }
+.comentario-data { font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem; }

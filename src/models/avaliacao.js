@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/database.js';
+import { Model, DataTypes } from 'sequelize';
+
 
 class Avaliacao extends Model {
     static init(sequelize) {
@@ -13,6 +13,7 @@ class Avaliacao extends Model {
                 livro_id: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
+                    unique: 'avaliacao_unica_usuario_livro',
                     references: {
                         model: 'livros',
                         key: 'id'
@@ -21,6 +22,7 @@ class Avaliacao extends Model {
                 usuario_id: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
+                    unique: 'avaliacao_unica_usuario_livro',
                     references: {
                         model: 'usuarios',
                         key: 'id'
@@ -44,20 +46,7 @@ class Avaliacao extends Model {
             }
         );
     }
-<<<<<<< HEAD
-    static associate(models) {
-        Avaliacao.belongsTo(models.Livro, {
-            foreignKey: 'livro_id',
-            as: 'livro'
-        });
-        Avaliacao.belongsTo(models.Usuario, {
-            foreignKey: 'usuario_id',
-            as: 'usuario'
-        });
-    }
-=======
->>>>>>> d90929b6355d43985cdf0a38bc8c28ab2314a645
 }
 
-Avaliacao.init(sequelize);
+
 export default Avaliacao;
