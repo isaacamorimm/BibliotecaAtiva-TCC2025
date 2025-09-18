@@ -9,5 +9,9 @@
     </footer>
     
     <script src="/js/layout.js"></script>
+    
+    <% if (locals.jsFile) { %>
+        <script src="/js/<%= locals.jsFile %>"></script>
+    <% } %>
 </body>
 </html>
