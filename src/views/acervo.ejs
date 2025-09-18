@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acervo - Biblioteca Ativa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/acervo.css">
 </head>
-</body>
+<body>
     <header class="header">
         <div class="header-container">
             <a href="/home" class="logo">
@@ -25,12 +28,12 @@
                 <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
             </ul>
             
-            <div class="user-menu">
-                <a class="user-avatar" href="/perfil">
+            <a class="user-menu" href="/perfil">
+                <div class="user-avatar">
                     <%= user.nome.charAt(0).toUpperCase() %>
-                </a>
-                <span><%= user.nome %></span>
-            </div>
+                </div>
+                <span class="user-name"><%= user.nome %></span>
+            </a>
         </div>
     </header>
 
@@ -45,7 +48,7 @@
 
             <!-- Stats and Info -->
             <div class="stats-grid">
-                <div class="stat-card">
+                <div class="stat-card card">
                     <div class="stat-icon">
                         <i class="fas fa-archive"></i>
                     </div>
@@ -53,7 +56,7 @@
                     <div class="stat-label">livros no acervo</div>
                 </div>
                 
-                <div class="info-card">
+                <div class="info-card card">
                     <h3 class="info-title">
                         <i class="fas fa-info-circle"></i> Sobre o Acervo
                     </h3>
@@ -61,7 +64,7 @@
                         O acervo contém livros que ainda não estão visíveis para os usuários no catálogo. 
                         Após adicionar um livro aqui, você pode revisá-lo e publicá-lo quando estiver pronto.
                     </p>
-                    <a href="/catalogo/adicionar" class="btn">
+                    <a href="/catalogo/adicionar" class="btn btn-primary">
                         <i class="fas fa-plus-circle"></i> Adicionar Novo Livro
                     </a>
                 </div>
@@ -76,7 +79,7 @@
                         </div>
                         <h3 class="empty-title">Acervo Vazio</h3>
                         <p class="empty-text">Não há livros no acervo no momento.</p>
-                        <a href="/catalogo/adicionar" class="btn">
+                        <a href="/catalogo/adicionar" class="btn btn-primary">
                             <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
                         </a>
                     </div>
@@ -120,17 +123,17 @@
                             <div class="book-footer">
                                 <div class="book-actions">
                                     <form action="/catalogo/publicar/<%= livro.id %>" method="POST" class="book-action">
-                                        <button type="submit" class="btn btn-success btn-sm">
+                                        <button type="submit" class="btn btn-success">
                                             <i class="fas fa-megaphone"></i> Publicar
                                         </button>
                                     </form>
                                     
                                     <div class="action-group">
-                                        <a href="/catalogo/editar/<%= livro.id %>" class="btn btn-outline btn-sm">
+                                        <a href="/catalogo/editar/<%= livro.id %>" class="btn btn-secondary">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
                                         <form action="/catalogo/remover/<%= livro.id %>" method="POST" class="book-action">
-                                            <button type="submit" class="btn btn-outline btn-sm" 
+                                            <button type="submit" class="btn btn-danger" 
                                                     onclick="return confirm('Tem certeza que deseja remover este livro?')">
                                                 <i class="fas fa-trash"></i> Remover
                                             </button>

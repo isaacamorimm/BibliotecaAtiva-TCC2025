@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - Biblioteca Ativa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/catalogo.css">
 </head>
-</body>
+<body>
     <header class="header">
         <div class="header-container">
             <a href="/home" class="logo">
@@ -27,12 +30,12 @@
                 <% } %>
             </ul>
             
-            <div class="user-menu">
-                <a class="user-avatar" href="/perfil">
+            <a class="user-menu" href="/perfil">
+                <div class="user-avatar">
                     <%= user.nome.charAt(0).toUpperCase() %>
-                </a>
-                <span><%= user.nome %></span>
-            </div>
+                </div>
+                <span class="user-name"><%= user.nome %></span>
+            </a>
         </div>
     </header>
 
@@ -47,13 +50,13 @@
 
             <!-- Stats and Search -->
             <div class="tools-grid">
-                <div class="stat-card">
+                <div class="stat-card card">
                     <h3>Total de Livros</h3>
                     <div class="stat-value"><%= livros.length %></div>
                     <p>Disponíveis no acervo</p>
                 </div>
                 
-                <div class="search-card">
+                <div class="search-card card">
                     <h3>Buscar Livros</h3>
                     <div class="search-form">
                         <input type="text" class="search-input" placeholder="Título, autor ou categoria..." id="searchInput">
@@ -74,7 +77,7 @@
                         <h3 class="empty-title">Nenhum livro encontrado</h3>
                         <p class="empty-text">Aguardando novos livros serem adicionados ao acervo.</p>
                         <% if (user && user.role === 'admin') { %>
-                            <a href="/catalogo/adicionar" class="btn-edit">
+                            <a href="/catalogo/adicionar" class="btn btn-primary">
                                 <i class="fas fa-plus"></i> Adicionar Primeiro Livro
                             </a>
                         <% } %>
@@ -107,17 +110,16 @@
                                 </div>
                             </div>
                             
-                            
-                                <div class="book-footer">
-                                    <a href="/catalogo/detalhes/<%= livro.id %>" class="btn-view">
-                                        <i class="fas fa-eye"></i> Ver Detalhes
-                                    </a>
-                                    <% if (user && user.role === 'admin') { %>
-                                    <a href="/catalogo/editar/<%= livro.id %>" class="btn-edit">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-                                </div>
-                            <% } %>
+                            <div class="book-footer">
+                                <a href="/catalogo/detalhes/<%= livro.id %>" class="btn btn-primary">
+                                    <i class="fas fa-eye"></i> Ver Detalhes
+                                </a>
+                                <% if (user && user.role === 'admin') { %>
+                                <a href="/catalogo/editar/<%= livro.id %>" class="btn btn-secondary">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <% } %>
+                            </div>
                         </div>
                     <% }); %>
                 <% } %>
@@ -129,7 +131,7 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-brand">Biblioteca Ativa</div>
-            <div class="footer-copyright">&copy; 2024 - Todos os direitos reservados</div>
+            <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
         </div>
     </footer>
     <script src="/js/catalogo.js"></script>
