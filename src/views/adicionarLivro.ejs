@@ -126,24 +126,15 @@
                                    placeholder="2023" required>
                             <div class="form-text">Ano de publicação original</div>
                         </div>
-                        
                         <div class="form-group">
                             <label for="categoria" class="form-label">
                                 <i class="fas fa-tag"></i> Categoria *
                             </label>
-                            <select class="form-input" id="categoria" name="categoria" required>
-                                <option value="">Selecione uma categoria</option>
-                                <%
-                                const categorias = ['Ficção', 'Não-Ficção', 'Romance', 'Técnico', 'Didático', 'Infantil', 'Biografia', 'Poesia', 'Outro'];
-                                const currentCategoria = typeof categoria !== 'undefined' ? categoria : '';
-                                %>
-                                <% categorias.forEach(cat => { %>
-                                    <option value="<%= cat %>" <%= currentCategoria === cat ? 'selected' : '' %>>
-                                        <%= cat %>
-                                    </option>
-                                <% }); %>
-                            </select>
-                            <div class="form-text">Gênero literário</div>
+                            <input type="text" class="form-input" id="categoria" name="categoria" 
+                                value="<%= typeof categoria !== 'undefined' ? categoria : '' %>" 
+                                placeholder="Ex: Romance, Ficção Científica, Biografia..." 
+                                required>
+                            <div class="form-text">Digite a categoria do livro</div>
                         </div>
                     </div>
 
