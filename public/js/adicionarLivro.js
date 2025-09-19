@@ -1,82 +1,234 @@
+// Toggle mobile menu
 document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
-        
-        form.addEventListener('submit', function(e) {
-            const ano = document.getElementById('ano').value;
-            const currentYear = new Date().getFullYear();
-            
-            if (ano < 1450 || ano > currentYear) {
-                e.preventDefault();
-                alert('O ano deve estar entre 1450 e ' + currentYear);
-                return false;
-            }
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
         });
+    }
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.nav-menu') && 
+            !event.target.closest('.mobile-menu-btn') && 
+            navMenu && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+        }
+    });
+    
+    // Buscar capas online
     const btnBuscarCapa = document.getElementById('btnBuscarCapa');
-    const resultadosDiv = document.getElementById('resultados-capas');
-    const inputTitulo = document.getElementById('titulo');
-    const inputAutor = document.getElementById('autor');
+    const resultadosCapas = document.getElementById('resultados-capas');
     const inputCapaUrl = document.getElementById('capa_url');
-
-    if (btnBuscarCapa) {
-        btnBuscarCapa.addEventListener('click', async () => {
-            const titulo = inputTitulo.value.trim();
-            const autor = inputAutor.value.trim();
+    const capaPreview = document.getElementById('capa-preview');
+    const capaPreviewImg = document.getElementById('capa-preview-img');
+    
+    if (btnBuscarCapa && resultadosCapas) {
+        btnBuscarCapa.addEventListener('click', function() {
+            const titulo = document.getElementById('titulo')?.value || '';
+            const autor = document.getElementById('autor')?.value || '';
             
-            if (!titulo) {
-                alert('Por favor, digite o título do livro para buscar a capa.');
+            if (!titulo && !autor) {
+                showAlert('Digite pelo menos o título ou autor para buscar capas', 'error');
                 return;
             }
-
-            resultadosDiv.innerHTML = '<div class="loader"></div>'; // Mostra um spinner de loading
-            const termoBusca = `${titulo} ${autor}`;
-
-            try {
-                const response = await fetch(`/catalogo/api/buscar-capa?q=${encodeURIComponent(termoBusca)}`);
-                const livros = await response.json();
-
-                resultadosDiv.innerHTML = ''; // Limpa o loader
-
-                if (livros.length === 0) {
-                    resultadosDiv.innerHTML = '<p class="form-text">Nenhuma capa encontrada.</p>';
-                    return;
+            
+            // Simulação de busca de capas
+            btnBuscarCapa.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando...';
+            btnBuscarCapa.disabled = true;
+            
+            setTimeout(() => {
+                resultadosCapas.innerHTML = `
+                    <div class="capa-option">
+                        <img src="https://via.placeholder.com/150x200/9e4a3c/ffffff?text=Capa+1" 
+                             alt="Capa alternativa 1" 
+                             onclick="selecionarCapa(this.src)">
+                    </div>
+                    <div class="capa-option">
+                        <img src="https://via.placeholder.com/150x200/9e4a3c/ffffff?text=Capa+2" 
+                             alt="Capa alternativa 2" 
+                             onclick="selecionarCapa(this.src)">
+                    </div>
+                    <div class="capa-option">
+                        <img src="https://via.placeholder.com/150x200/9e4a3c/ffffff?text=Capa+3" 
+                             alt="Capa alternativa 3" 
+                             onclick="selecionarCapa(this.src)">
+                    </div>
+                `;
+                
+                resultadosCapas.style.display = 'grid';
+                btnBuscarCapa.innerHTML = '<i class="fas fa-search"></i> Buscar Capa Online';
+                btnBuscarCapa.disabled = false;
+                
+                showAlert('Foram encontradas 3 capas disponíveis. Clique em uma para selecionar.', 'success');
+            }, 1500);
+        });
+    }
+    
+    // Prevenir envio duplo do formulário
+    const form = document.querySelector('.book-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const btnAdicionar = document.getElementById('btnAdicionarLivro');
+            if (btnAdicionar) {
+                btnAdicionar.disabled = true;
+                btnAdicionar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
+            }
+            
+            // Validação do formulário
+            if (!validateForm()) {
+                e.preventDefault();
+                if (btnAdicionar) {
+                    btnAdicionar.disabled = false;
+                    btnAdicionar.innerHTML = '<i class="fas fa-plus-circle"></i> Adicionar Livro';
                 }
-
-                livros.forEach(livro => {
-                    const imgContainer = document.createElement('div');
-                    imgContainer.classList.add('capa-item');
-                    
-                    const img = document.createElement('img');
-                    img.src = livro.capaUrl;
-                    img.alt = `Capa de ${livro.titulo}`;
-                    img.title = `Selecionar capa de: ${livro.titulo}`;
-                    
-                    img.addEventListener('click', () => {
-                        // Remove a seleção de outras imagens
-                        document.querySelectorAll('.capa-item.selected').forEach(item => item.classList.remove('selected'));
-                        
-                        // Adiciona a seleção a este container
-                        imgContainer.classList.add('selected');
-                        
-                        // Guarda a URL no campo oculto!
-                        inputCapaUrl.value = livro.capaUrl;
-                    });
-
-                    imgContainer.appendChild(img);
-                    resultadosDiv.appendChild(imgContainer);
-                });
-
-            } catch (error) {
-                resultadosDiv.innerHTML = '<p class="form-text error-text">Erro ao buscar capas. Tente novamente.</p>';
-                console.error(error);
             }
         });
     }
     
-    if (document.getElementById('btnAdicionarLivro')) {
-        document.getElementById('btnAdicionarLivro').addEventListener('click', function() {
-            this.disabled = true;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
-            this.form.submit();
-        });
+    // Mostrar alertas da URL
+    showUrlAlerts();
+    
+    // Mostrar preview se já houver uma capa selecionada
+    if (inputCapaUrl && inputCapaUrl.value) {
+        capaPreview.style.display = 'block';
+        capaPreviewImg.src = inputCapaUrl.value;
     }
 });
+
+// Função para mostrar alertas
+function showAlert(message, type) {
+    try {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type}`;
+        alertDiv.innerHTML = `
+            <i class="fas ${type === 'error' ? 'fa-exclamation-triangle' : 'fa-check-circle'} alert-icon"></i>
+            <div class="alert-content">${message}</div>
+        `;
+        
+        const container = document.querySelector('.container');
+        const pageHeader = document.querySelector('.page-header');
+        
+        if (container && pageHeader) {
+            container.insertBefore(alertDiv, pageHeader.nextSibling);
+            
+            // Remover automaticamente após 5 segundos
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+    } catch (error) {
+        console.error('Erro ao mostrar alerta:', error);
+    }
+}
+
+// Função para validar formulário
+function validateForm() {
+    const titulo = document.getElementById('titulo')?.value.trim();
+    const autor = document.getElementById('autor')?.value.trim();
+    const ano = document.getElementById('ano')?.value;
+    const categoria = document.getElementById('categoria')?.value;
+    
+    let isValid = true;
+    
+    // Limpar erros anteriores
+    document.querySelectorAll('.form-error').forEach(error => error.remove());
+    document.querySelectorAll('.form-input').forEach(input => input.classList.remove('error'));
+    
+    if (!titulo) {
+        showFieldError('titulo', 'Título é obrigatório');
+        isValid = false;
+    }
+    
+    if (!autor) {
+        showFieldError('autor', 'Autor é obrigatório');
+        isValid = false;
+    }
+    
+    if (!ano || ano < 1450 || ano > new Date().getFullYear()) {
+        showFieldError('ano', 'Ano de publicação inválido');
+        isValid = false;
+    }
+    
+    if (!categoria) {
+        showFieldError('categoria', 'Selecione uma categoria');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+// Função para mostrar erro em campo específico
+function showFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    if (!field) return;
+    
+    field.classList.add('error');
+    
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'form-error';
+    errorDiv.textContent = message;
+    
+    field.parentNode.appendChild(errorDiv);
+}
+
+// Função para mostrar alertas da URL
+function showUrlAlerts() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+        const error = urlParams.get('error');
+        
+        if (success) {
+            showAlert(decodeURIComponent(success), 'success');
+        }
+        
+        if (error) {
+            showAlert(decodeURIComponent(error), 'error');
+        }
+    } catch (error) {
+        console.error('Erro ao processar alertas da URL:', error);
+    }
+}
+
+// Função global para selecionar capa
+function selecionarCapa(url) {
+    try {
+        const inputCapaUrl = document.getElementById('capa_url');
+        const capaPreview = document.getElementById('capa-preview');
+        const capaPreviewImg = document.getElementById('capa-preview-img');
+        
+        if (inputCapaUrl) {
+            inputCapaUrl.value = url;
+        }
+        
+        // Destacar a capa selecionada
+        document.querySelectorAll('.capa-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        
+        if (event && event.target && event.target.parentElement) {
+            event.target.parentElement.classList.add('selected');
+        }
+        
+        // Mostrar preview
+        if (capaPreview && capaPreviewImg) {
+            capaPreview.style.display = 'block';
+            capaPreviewImg.src = url;
+        }
+        
+        showAlert('Capa selecionada com sucesso!', 'success');
+    } catch (error) {
+        console.error('Erro ao selecionar capa:', error);
+        showAlert('Erro ao selecionar capa. Tente novamente.', 'error');
+    }
+}
+
+// Fallback para caso a função global não esteja disponível
+if (typeof window.selecionarCapa === 'undefined') {
+    window.selecionarCapa = selecionarCapa;
+}

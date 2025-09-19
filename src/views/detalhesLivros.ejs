@@ -1,10 +1,41 @@
-<%- include('partials/header', { 
-    title: 'Detalhes - Biblioteca Ativa', 
-    activePage: 'detalhesLivros',
-    cssFile: 'detalhes.css',
-    jsFile: 'detalhes.js'
-
-}) %>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes - Biblioteca Ativa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/detalhes.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="/home" class="logo">
+                <i class="fas fa-book-open"></i> Biblioteca Ativa
+            </a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="/home" class="nav-link">Home</a></li>
+                <li><a href="/catalogo" class="nav-link">Catálogo</a></li>
+                <li><a href="/catalogo/acervo" class="nav-link">Acervo</a></li>
+                <li><a href="/catalogo/adicionar" class="nav-link">Adicionar Livro</a></li>
+            </ul>
+            
+            <a class="user-menu" href="/perfil">
+                <div class="user-avatar">
+                    <%= user.nome.charAt(0).toUpperCase() %>
+                </div>
+                <span class="user-name"><%= user.nome %></span>
+            </a>
+        </div>
+    </header>
 
     <main class="main">
         <div class="container">
@@ -16,7 +47,7 @@
                 <span><%= livro.titulo %></span>
             </div>
 
-            <div class="livro-detalhes-card">
+            <div class="livro-detalhes-card card">
                 <div class="livro-capa">
                     <img src="<%= livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa de <%= livro.titulo %>">
                 </div>
@@ -27,34 +58,44 @@
                     </p>
                     
                     <div class="livro-meta">
-                        <span><i class="fas fa-calendar"></i> <%= livro.ano %></span>
-                        <span><i class="fas fa-tag"></i> <%= livro.categoria %></span>
+                        <span class="meta-item">
+                            <i class="fas fa-calendar"></i> <%= livro.ano %>
+                        </span>
+                        <span class="meta-item">
+                            <i class="fas fa-tag"></i> <%= livro.categoria %>
+                        </span>
                         <span class="livro-status <%= livro.disponivel ? 'status-disponivel' : 'status-indisponivel' %>">
                             <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
                             <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
                         </span>
-                        <div class="favorito-card">
-                            <% if (usuarioJaFavoritou) { %>
-                                <form action="/catalogo/desfavoritar/<%= livro.id %>" method="POST" class="form-favoritar" id="formFavoritar">
-                                    <button type="submit" class="btn btn-danger" id="btnFavoritar">
-                                        <i class="fas fa-heart-broken"></i> Desfavoritar
-                                    </button>
-                                </form>
-                            <% } else { %>
-                                <form action="/catalogo/favoritar/<%= livro.id %>" method="POST" class="form-favoritar" id="formFavoritar">
-                                    <button type="submit" class="btn btn-primary" id="btnFavoritar">
-                                        <i class="fas fa-heart"></i> Favoritar
-                                    </button>
-                                </form>
-                            <% } %>
-                        </div>
+                    </div>
+
+                    <div class="favorito-section">
+                        <% if (usuarioJaFavoritou) { %>
+                            <form action="/catalogo/desfavoritar/<%= livro.id %>" method="POST" class="form-favoritar">
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="fas fa-heart"></i> Remover dos Favoritos
+                                </button>
+                            </form>
+                        <% } else { %>
+                            <form action="/catalogo/favoritar/<%= livro.id %>" method="POST" class="form-favoritar">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-heart"></i> Adicionar aos Favoritos
+                                </button>
+                            </form>
+                        <% } %>
                     </div>
                     
-                    <p class="livro-sinopse"><%= livro.sinopse %></p>
+                    <% if (livro.sinopse) { %>
+                    <div class="livro-sinopse">
+                        <h3>Sinopse</h3>
+                        <p><%= livro.sinopse %></p>
+                    </div>
+                    <% } %>
                     
-                    <% if (user.role === 'admin') { %>
-                    <div class="action-buttons">
-                        <a href="/catalogo/editar/<%= livro.id %>" class="btn">
+                    <% if (user && user.role === 'admin') { %>
+                    <div class="admin-actions">
+                        <a href="/catalogo/editar/<%= livro.id %>" class="btn btn-outline">
                             <i class="fas fa-edit"></i> Editar Livro
                         </a>
                     </div>
@@ -62,63 +103,89 @@
                 </div>
             </div>
 
-            <div class="avaliacoes-card">
-                <h2><i class="fas fa-star"></i> Avaliações</h2>
+            <div class="avaliacoes-card card">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i> Avaliações
+                </h2>
                 
                 <div class="rating-summary">
                     <% 
                         let media = 0;
+                        let totalAvaliacoes = 0;
                         if (livro.avaliacoes && livro.avaliacoes.length > 0) {
                             const soma = livro.avaliacoes.reduce((acc, ava) => acc + ava.nota, 0);
                             media = (soma / livro.avaliacoes.length).toFixed(1);
+                            totalAvaliacoes = livro.avaliacoes.length;
                         }
                     %>
-                    <span class="media-nota"><%= media %></span>
-                    <div class="estrelas-media">
-                        <% for(let i = 1; i <= 5; i++) { %>
-                            <i class="fa-star <%= i <= media ? 'fas' : 'far' %>"></i>
-                        <% } %>
+                    <div class="media-container">
+                        <span class="media-nota"><%= media %></span>
+                        <div class="estrelas-media">
+                            <% for(let i = 1; i <= 5; i++) { %>
+                                <i class="fas fa-star <%= i <= media ? 'active' : 'inactive' %>"></i>
+                            <% } %>
+                        </div>
+                        <span class="total-avaliacoes">(<%= totalAvaliacoes %> avaliações)</span>
                     </div>
-                    <span class="total-avaliacoes">(<%= livro.avaliacoes ? livro.avaliacoes.length : 0 %> avaliações)</span>
                 </div>
 
-                <form action="/catalogo/avaliar/<%= livro.id %>" method="POST" class="form-avaliar" id="formAvaliar">
-                    <h3>Sua Avaliação:</h3>
-                    <div class="rating-stars">
-                        <input type="radio" id="nota5" name="nota" value="5"><label for="nota5" title="5 estrelas">★</label>
-                        <input type="radio" id="nota4" name="nota" value="4"><label for="nota4" title="4 estrelas">★</label>
-                        <input type="radio" id="nota3" name="nota" value="3"><label for="nota3" title="3 estrelas">★</label>
-                        <input type="radio" id="nota2" name="nota" value="2"><label for="nota2" title="2 estrelas">★</label>
-                        <input type="radio" id="nota1" name="nota" value="1"><label for="nota1" title="1 estrela">★</label>
+                <% if (user) { %>
+                <form action="/catalogo/avaliar/<%= livro.id %>" method="POST" class="form-avaliar">
+                    <h3>Sua Avaliação</h3>
+                    <div class="rating-input">
+                        <div class="rating-stars">
+                            <% for(let i = 5; i >= 1; i--) { %>
+                                <input type="radio" id="nota<%= i %>" name="nota" value="<%= i %>">
+                                <label for="nota<%= i %>" title="<%= i %> estrelas">
+                                    <i class="fas fa-star"></i>
+                                </label>
+                            <% } %>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Enviar Avaliação
+                        </button>
                     </div>
-                    <button type="submit" class="btn" id="btnAvaliar">
-                        <i class="fas fa-paper-plane"></i> Enviar Avaliação
-                    </button>
                 </form>
+                <% } else { %>
+                <div class="login-prompt">
+                    <p><a href="/login">Faça login</a> para avaliar este livro.</p>
+                </div>
+                <% } %>
             </div>
 
-            <div class="comentarios-card">
-                <h2><i class="fas fa-comments"></i> Comentários</h2>
+            <div class="comentarios-card card">
+                <h2 class="section-title">
+                    <i class="fas fa-comments"></i> Comentários
+                </h2>
                 
-                <form action="/catalogo/comentar/<%= livro.id %>" method="POST" class="form-comentario" id="form-comentario">
+                <% if (user) { %>
+                <form action="/catalogo/comentar/<%= livro.id %>" method="POST" class="form-comentario">
                     <textarea name="texto" placeholder="Deixe seu comentário..." required></textarea>
-                    <button type="submit" class="btn" id="btnComentar">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fas fa-comment"></i> Comentar
                     </button>
                 </form>
+                <% } else { %>
+                <div class="login-prompt">
+                    <p><a href="/login">Faça login</a> para comentar sobre este livro.</p>
+                </div>
+                <% } %>
 
                 <div class="lista-comentarios">
                     <% if (livro.comentarios && livro.comentarios.length > 0) { %>
                         <% livro.comentarios.forEach(comentario => { %>
                             <div class="comentario-item" id="comentario-<%= comentario.id %>">
-                                <div class="comentario-autor">
-                                    <i class="fas fa-user"></i> <%= comentario.usuario.nome %>
+                                <div class="comentario-header">
+                                    <div class="comentario-autor">
+                                        <i class="fas fa-user"></i> <%= comentario.usuario.nome %>
+                                    </div>
+                                    <div class="comentario-data">
+                                        <i class="fas fa-clock"></i> <%= new Date(comentario.criado_em).toLocaleDateString('pt-BR') %>
+                                    </div>
                                 </div>
+                                
                                 <div class="comentario-texto" id="texto-comentario-<%= comentario.id %>">
                                     <%= comentario.texto %>
-                                </div>
-                                <div class="comentario-data">
-                                    <i class="fas fa-clock"></i> <%= new Date(comentario.criado_em).toLocaleDateString('pt-BR') %>
                                 </div>
                 
                                 <div class="comentario-acoes">
@@ -128,9 +195,9 @@
                                         </button>
                                     <% } %>
                                     <% if (user && user.role === 'admin') { %>
-                                        <form action="/catalogo/comentario/remover/<%= comentario.id %>" method="POST" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja remover este comentário?');">
+                                        <form action="/catalogo/comentario/remover/<%= comentario.id %>" method="POST" class="form-remover-comentario">
                                             <input type="hidden" name="livroId" value="<%= livro.id %>">
-                                            <button type="submit" class="btn-remover-comentario">
+                                            <button type="submit" class="btn-remover-comentario" onclick="return confirm('Tem certeza que deseja remover este comentário?')">
                                                 <i class="fas fa-trash"></i> Remover
                                             </button>
                                         </form>
@@ -142,15 +209,15 @@
                                         <textarea name="texto" required><%= comentario.texto %></textarea>
                                         <input type="hidden" name="livroId" value="<%= livro.id %>">
                                         <div class="botoes-edicao">
-                                            <button type="submit" class="btn">Salvar</button>
-                                            <button type="button" class="btn-cancelar" onclick="cancelarEdicao('<%= comentario.id %>')">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">Salvar</button>
+                                            <button type="button" class="btn btn-outline" onclick="cancelarEdicao('<%= comentario.id %>')">Cancelar</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         <% }) %>
                     <% } else { %>
-                        <div class="comentario-item">
+                        <div class="comentario-vazio">
                             <p>Seja o primeiro a comentar sobre este livro!</p>
                         </div>
                     <% } %>
@@ -158,4 +225,13 @@
             </div>
         </div>
     </main>
-   <%- include('partials/footer') %>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">Biblioteca Ativa</div>
+            <div class="footer-copyright">&copy; 2025 - Todos os direitos reservados</div>
+        </div>
+    </footer>
+    <script src="/js/detalhes.js"></script>
+</body>
+</html>

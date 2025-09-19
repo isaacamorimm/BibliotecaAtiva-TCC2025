@@ -4,70 +4,192 @@
     cssFile: 'perfil.css',
     jsFile: 'perfil.js'
 }) %>
-     <div class="page-header">
-                <h1 class="page-title">Meu Perfil</h1>
+
+<div class="page-header">
+    <h1 class="page-title">Meu Perfil</h1>
+    <p class="page-subtitle">Gerencie suas informações pessoais</p>
+</div>
+
+<div class="profile-container">
+    <!-- Card de perfil principal -->
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <span><%= user.nome.charAt(0).toUpperCase() %></span>
             </div>
-            
-  <div class="profile-card">
-                <div class="profile-header">
-                    <div class="profile-avatar"><%= user.nome.charAt(0).toUpperCase() %></div>
-                    <div class="profile-info">
-                        <h2><%= user.nome %> <%= user.sobrenome %></h2>
-                        <span class="profile-role"><%= user.role %></span>
+            <div class="profile-info">
+                <h2 class="profile-name"><%= user.nome %> <%= user.sobrenome %></h2>
+                <span class="user-role"><%= user.role %></span>
+            </div>
+        </div>
+        
+        <!-- Abas de navegação -->
+        <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="info">Informações</button>
+            <button class="tab-btn" data-tab="favorites">Favoritos</button>
+        </div>
+
+        <!-- Conteúdo das abas -->
+        <div class="tab-content">
+            <!-- Aba de Informações -->
+            <div id="tab-info" class="tab-pane active">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Nome completo</span>
+                            <p class="info-text"><%= user.nome %> <%= user.sobrenome %></p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Email</span>
+                            <p class="info-text"><%= user.email %></p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-user-tag"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Função</span>
+                            <p class="info-text"><%= user.role %></p>
+                        </div>
                     </div>
                 </div>
 
-                <div id="display-info">
-                    <ul class="list-group">
-                        <li class="list-group-item"><strong>Nome:</strong> <%= user.nome %></li>
-                        <li class="list-group-item"><strong>Sobrenome:</strong> <%= user.sobrenome %></li>
-                        <li class="list-group-item"><strong>Email:</strong> <%= user.email %></li>
-                        <li class="list-group-item"><strong>Função:</strong> <%= user.role %></li>
-                    </ul>
-                    <div class="btn-group mt-3">
-                        <a href="/home" class="btn btn-secondary">Voltar</a>
-                        <button class="btn" onclick="toggleEditForm()">Editar Perfil</button>
-                        <a href="/logout" class="btn btn-danger">Sair</a>
+                <div class="action-buttons">
+                    <a href="/home" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </a>
+                    <button class="btn btn-primary" id="edit-profile-btn">
+                        <i class="fas fa-edit"></i> Editar Perfil
+                    </button>
+                    <a href="/logout" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </a>
+                </div>
+            </div>
+
+            <!-- Aba de Favoritos -->
+            <div id="tab-favorites" class="tab-pane">
+                <div class="favorites-header">
+                    <h3><i class="fas fa-heart"></i> Meus Livros Favoritos</h3>
+                    <div class="favorites-actions">
+                        <button class="btn btn-sm btn-outline" id="sort-favorites">
+                            <i class="fas fa-sort"></i> Ordenar
+                        </button>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Buscar favoritos..." id="search-favorites">
+                        </div>
                     </div>
                 </div>
-
-                <div id="edit-form" style="display: none;">
-                    <form action="/perfil/editar" method="POST">
-                        <div class="mb-3">
-                            <label for="nome" class="form-label"><strong>Nome:</strong></label>
-                            <input type="text" class="form-control" id="nome" name="nome" value="<%= user.nome %>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="sobrenome" class="form-label"><strong>Sobrenome:</strong></label>
-                            <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="<%= user.sobrenome %>" required>
-                        </div>
-                         <div class="mb-3">
-                            <label class="form-label"><strong>Email:</strong></label>
-                            <input type="email" class="form-control" value="<%= user.email %>" disabled>
-                        </div>
-                        <div class="btn-group mt-3">
-                            <button type="submit" class="btn btn-success">Salvar Alterações</button>
-                            <button type="button" class="btn btn-secondary" onclick="toggleEditForm()">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-            <div class="profile-card">
-                <h2>Meus Livros Favoritos</h2>
+                
                 <% if (favoritos && favoritos.length > 0) { %>
-                <ul class="list-group">
-                    <% favoritos.forEach(favorito => { %>
-                    <li class="list-group-item">
-                        <a href="/catalogo/detalhes/<%= favorito.livro.id %>">
-                                <%= favorito.livro.titulo %>
-                                <%= favorito.livro.autor %>
-                            </a>
-                    </li>
-                    <% }); %>
-                </ul>
+                    <div class="favorites-grid">
+                        <% favoritos.forEach(favorito => { %>
+                        <div class="favorite-item" data-title="<%= favorito.livro.titulo.toLowerCase() %>" data-author="<%= favorito.livro.autor.toLowerCase() %>">
+                            <div class="favorite-cover">
+                                <img src="<%= favorito.livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa de <%= favorito.livro.titulo %>">
+                                <button class="favorite-remove" data-book-id="<%= favorito.livro.id %>">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="favorite-info">
+                                <h4><%= favorito.livro.titulo %></h4>
+                                <p class="favorite-author">
+                                    <i class="fas fa-user"></i> <%= favorito.livro.autor %>
+                                </p>
+                                <div class="favorite-meta">
+                                    <span class="favorite-year">
+                                        <i class="fas fa-calendar"></i> <%= favorito.livro.ano || 'N/A' %>
+                                    </span>
+                                    <span class="favorite-category">
+                                        <i class="fas fa-tag"></i> <%= favorito.livro.categoria || 'Geral' %>
+                                    </span>
+                                </div>
+                                <div class="favorite-actions">
+                                    <a href="/catalogo/detalhes/<%= favorito.livro.id %>" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-info-circle"></i> Ver detalhes
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                    
+                    <div class="favorites-footer">
+                        <p><%= favoritos.length %> livro(s) favoritado(s)</p>
+                        <button class="btn btn-sm btn-outline" id="clear-favorites">
+                            <i class="fas fa-trash"></i> Limpar todos
+                        </button>
+                    </div>
                 <% } else { %>
-                <p>Você ainda não favoritou nenhum livro.</p>
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Nenhum livro favoritado</h3>
+                        <p>Você ainda não favoritou nenhum livro. Explore nosso catálogo e adicione seus favoritos!</p>
+                        <a href="/catalogo" class="btn btn-primary">
+                            <i class="fas fa-book"></i> Explorar Catálogo
+                        </a>
+                    </div>
                 <% } %>
             </div>
-
         </div>
+    </div>
+
+    <!-- Formulário de edição (inicialmente oculto) -->
+    <div id="edit-form" class="profile-card" style="display: none;">
+        <div class="form-header">
+            <h3><i class="fas fa-edit"></i> Editar Perfil</h3>
+            <p>Atualize suas informações pessoais</p>
+        </div>
+
+        <form id="profile-form" action="/perfil/editar" method="POST" class="profile-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nome" class="form-label">
+                        <i class="fas fa-user"></i> Nome
+                    </label>
+                    <input type="text" class="form-control" id="nome" name="nome" value="<%= user.nome %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sobrenome" class="form-label">
+                        <i class="fas fa-user"></i> Sobrenome
+                    </label>
+                    <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="<%= user.sobrenome %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input type="email" class="form-control" value="<%= user.email %>" disabled>
+                    <small>O email não pode ser alterado</small>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i> Salvar Alterações
+                </button>
+                <button type="button" class="btn btn-secondary" id="cancel-edit-btn">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <%- include('partials/footer') %>
