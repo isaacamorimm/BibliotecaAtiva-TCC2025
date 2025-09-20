@@ -1,106 +1,50 @@
-// Toggle mobile menu
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (mobileMenuBtn && navMenu) {
-        mobileMenuBtn.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-        });
-    }
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.nav-menu') && 
-            !event.target.closest('.mobile-menu-btn') && 
-            navMenu && navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-        }
-    });
-    
-    // Prevenir envio duplo dos formulários
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            const submitBtn = this.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-                
-                // Restaurar após 5 segundos (caso haja erro)
-                setTimeout(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                }, 5000);
-            }
-        });
-    });
-});
-
-// Funções para edição de comentários
 function mostrarFormularioEdicao(comentarioId) {
-    const textoComentario = document.getElementById(`texto-comentario-${comentarioId}`);
-    const formEdicao = document.getElementById(`form-editar-${comentarioId}`);
-    
-    if (textoComentario && formEdicao) {
-        textoComentario.style.display = 'none';
-        formEdicao.style.display = 'block';
+        document.getElementById('texto-comentario-' + comentarioId).style.display = 'none';
+        document.getElementById('form-editar-' + comentarioId).style.display = 'block';
     }
-}
 
-function cancelarEdicao(comentarioId) {
-    const textoComentario = document.getElementById(`texto-comentario-${comentarioId}`);
-    const formEdicao = document.getElementById(`form-editar-${comentarioId}`);
-    
-    if (textoComentario && formEdicao) {
-        textoComentario.style.display = 'block';
-        formEdicao.style.display = 'none';
+    function cancelarEdicao(comentarioId) {
+        document.getElementById('texto-comentario-' + comentarioId).style.display = 'block';
+        document.getElementById('form-editar-' + comentarioId).style.display = 'none';
     }
-}
-
-// Função para mostrar alertas
-function showAlert(message, type) {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type}`;
-    alertDiv.innerHTML = `
-        <i class="fas ${type === 'error' ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
-        <span>${message}</span>
-    `;
-    
-    const container = document.querySelector('.container');
-    if (container) {
-        container.insertBefore(alertDiv, container.firstChild);
-        
-        // Remover automaticamente após 5 segundos
-        setTimeout(() => {
-            alertDiv.remove();
-        }, 5000);
-    }
-}
-
-// Mostrar alertas da URL
-function showUrlAlerts() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const success = urlParams.get('success');
-    const error = urlParams.get('error');
-    
-    if (success) {
-        showAlert(decodeURIComponent(success), 'success');
-    }
-    
-    if (error) {
-        showAlert(decodeURIComponent(error), 'error');
-    }
-}
-
-// Inicializar
 document.addEventListener('DOMContentLoaded', function() {
-    showUrlAlerts();
-});
+    // Pega os formulários e botões pelos seus IDs
+    const formComentario = document.getElementById('form-comentario');
+    const btnComentar = document.getElementById('btnComentar');
+    const formAvaliar = document.getElementById('formAvaliar');
+    const btnAvaliar = document.getElementById('btnAvaliar');
+    const formFavoritar = document.getElementById('formFavoritar');
+    const btnFavoritar = document.getElementById('btnFavoritar');
 
-// Fallback para funções globais
-if (typeof window.mostrarFormularioEdicao === 'undefined') {
-    window.mostrarFormularioEdicao = mostrarFormularioEdicao;
-    window.cancelarEdicao = cancelarEdicao;
-}
+    // Função para desabilitar botão e mostrar loading
+    function desabilitarBotao(botao, texto = 'Enviando...') {
+        if (botao) {
+            botao.disabled = true;
+            botao.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${texto}`;
+        }
+    }
+
+    // Adiciona o evento de "submit" para cada formulário
+    if (formComentario) {
+        formComentario.addEventListener('submit', function() {
+            desabilitarBotao(btnComentar);
+        });
+    }
+
+    if (formAvaliar) {
+        formAvaliar.addEventListener('submit', function() {
+            desabilitarBotao(btnAvaliar);
+        });
+    }
+
+    if (formFavoritar) {
+        formFavoritar.addEventListener('submit', function() {
+            // Verifica se o texto do botão contém a palavra "Favoritar" para personalizar a mensagem
+            const acao = btnFavoritar.innerText.includes('Desfavoritar') ? 'Removendo...' : 'Adicionando...';
+            desabilitarBotao(btnFavoritar, acao);
+        });
+    }
+
+
+
+});
