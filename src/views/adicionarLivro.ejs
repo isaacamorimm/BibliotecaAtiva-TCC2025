@@ -1,7 +1,8 @@
 <%- include('partials/header', { 
     title: 'Adicionar Livro - Biblioteca Ativa', 
-    activePage: 'adicionar', // <-- CORRIGIDO
-    cssFile: 'adicionarLivro.css'
+    activePage: 'adicionar',
+    cssFile: 'adicionarLivro.css',
+    jsFile: 'adicionarLivro.js'
 }) %>
 
 <div class="page-header">
@@ -126,4 +127,4 @@
     </ul>
 </div>
 
-<%- include('partials/footer', { jsFile: 'adicionarLivro.js' }) %>
+<%- include('partials/footer') %>
