@@ -71,4 +71,35 @@
     <% } %>
 </div>
 
+<div class="profile-card">
+    <h2>Meus Empréstimos</h2>
+    <% if (emprestimos && emprestimos.length > 0) { %>
+        <ul class="list-group">
+            <% emprestimos.forEach(emp => { %>
+                <li class="list-group-item">
+                    <div class="emprestimo-info">
+                        <a href="/catalogo/detalhes/<%= emp.livro.id %>"><%= emp.livro.titulo %></a>
+                        
+                        <% if (emp.status === 'devolvido') { %>
+                            <span class="status-badge status-devolvido">Devolvido em <%= new Date(emp.data_devolvido).toLocaleDateString('pt-BR') %></span>
+                        <% } else if (emp.status === 'emprestado') { %>
+                            <span class="status-badge status-emprestado">Emprestado</span>
+                            <span>Devolver até: <%= new Date(emp.data_devolucao_prevista).toLocaleDateString('pt-BR') %></span>
+                        <% } else if (emp.status === 'solicitado') { %>
+                            <span class="status-badge status-solicitado">Solicitado</span>
+                        <% } else if (emp.status === 'atrasado') { %>
+                            <span class="status-badge status-atrasado">Atrasado</span>
+                            <span>Devolução era para: <%= new Date(emp.data_devolucao_prevista).toLocaleDateString('pt-BR') %></span>
+                        <% } %>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>Você não possui empréstimos ativos ou histórico.</p>
+    <% } %>
+</div>
+
+
+
 <%- include('partials/footer') %>

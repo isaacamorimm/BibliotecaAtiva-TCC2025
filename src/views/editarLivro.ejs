@@ -124,18 +124,17 @@
 
                     <!-- Disponibilidade -->
                     <div class="form-group">
-                        <div class="form-switch">
-                            <label class="switch">
-                                <input type="checkbox" id="disponivel" name="disponivel" 
-                                       <%= livro.disponivel ? 'checked' : '' %>>
-                                <span class="slider"></span>
-                            </label>
-                            <label for="disponivel" class="form-label">
-                                <i class="fas fa-check-circle"></i> Disponível para empréstimo
-                            </label>
+                        <label for="quantidade_total" class="form-label">
+                            <i class="fas fa-hashtag"></i> Quantidade Total de Cópias *
+                        </label>
+                        <input type="number" class="form-input" id="quantidade_total" name="quantidade_total" 
+                            value="<%= livro.quantidade_total %>" min="0" required>
+                        <div class="form-text">
+                            Total de cópias físicas deste livro. Atualmente, 
+                            <strong><%= livro.quantidade_disponivel %></strong> estão disponíveis.
                         </div>
-                        <div class="form-text">Desmarque se o livro não estiver disponível para empréstimo</div>
                     </div>
+
 
                     <!-- Botões -->
                     <div class="btn-group">

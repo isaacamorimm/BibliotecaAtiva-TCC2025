@@ -7,6 +7,7 @@ import sequelize from "./src/config/database.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import livroRoutes from './src/routes/livroRoutes.js';
 import perfilRoutes from './src/routes/perfilRoutes.js';
+import emprestimoRoutes from './src/routes/emprestimoRoutes.js';
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
@@ -134,11 +135,14 @@ app.get("/home", isAuthenticated, async (req, res) => {
 // Rota para livros com autenticação
 app.use('/catalogo', isAuthenticated, livroRoutes);
 
+// Rota para empréstimos com autenticação
+app.use('/emprestimo', isAuthenticated, emprestimoRoutes);
+
 // Rota para perfil com autenticação
 app.use(perfilRoutes);
 
 // Sincroniza models com o banco
-sequelize.sync()
+sequelize.sync() // alter:true para atualizar sem perder dados
   .then(() => console.log("Banco sincronizado!"))
   .catch(err => console.error("Erro ao sincronizar o banco:", err));
 

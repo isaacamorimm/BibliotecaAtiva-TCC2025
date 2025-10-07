@@ -1,20 +1,21 @@
 import livroRepository from "../repositories/livroRepository.js";
 import axios from "axios";
-import { Avaliacao, Comentario, Favorito } from "../models/index.js";
+import { Avaliacao, Comentario, Favorito, Emprestimo } from "../models/index.js";
+import { Op } from "sequelize";
 
 
 class LivroController {
     async adicionarLivro(req, res) {
         try {
-            const { titulo, autor, ano, categoria, capa_url, sinopse } = req.body;
-           const disponivel = req.body.disponivel === 'true';
+            const { titulo, autor, ano, categoria, capa_url, sinopse, quantidade_total } = req.body;
             
-            // Novo livro é criado como não publicado por padrão
             const novoLivro = await livroRepository.create({
-                titulo, autor, ano, categoria, disponivel,
+                titulo, autor, ano, categoria, 
                 publicado: false,
-                capa_url: capa_url || null, // Define como null se não fornecido
-                sinopse: sinopse || null // Define como null se não fornecido
+                capa_url: capa_url || null,
+                sinopse: sinopse || null,
+                quantidade_total: quantidade_total,
+                quantidade_disponivel: quantidade_total // A quantidade disponível começa igual à total
             });
             
             res.redirect('/catalogo/acervo?success=Livro adicionado ao acervo com sucesso');
@@ -117,15 +118,29 @@ class LivroController {
         }
     }
 
-    async atualizarLivro(req, res) {
+       async atualizarLivro(req, res) {
         try {
             const { id } = req.params;
-            const { titulo, autor, ano, categoria, capa_url } = req.body;
-            const disponivel = req.body.disponivel === 'on';
+            const { titulo, autor, ano, categoria, capa_url, quantidade_total } = req.body;
             
+            const livro = await livroRepository.findById(id);
+            if (!livro) {
+                return res.redirect('/catalogo/acervo?error=Livro não encontrado');
+            }
+
+            // Lógica para ajustar a quantidade disponível baseada na mudança da total
+            const diferenca = quantidade_total - livro.quantidade_total;
+            const novaQuantidadeDisponivel = livro.quantidade_disponivel + diferenca;
+
             await livroRepository.update(id, {
-                titulo, autor, ano, categoria, disponivel,
-                capa_url: capa_url || null // Define como null se não fornecido
+                titulo, 
+                autor, 
+                ano, 
+                categoria, 
+                capa_url: capa_url || null,
+                quantidade_total: quantidade_total,
+                // Garante que a quantidade disponível não seja negativa
+                quantidade_disponivel: Math.max(0, novaQuantidadeDisponivel) 
             });
             
             res.redirect('/catalogo/acervo?success=Livro atualizado com sucesso');
@@ -133,6 +148,7 @@ class LivroController {
             res.redirect('/catalogo/editar/' + req.params.id + '?error=' + encodeURIComponent(error.message));
         }
     }
+
 
     async buscarCapa(req, res) {
         const termoBusca = req.query.q;
@@ -218,6 +234,7 @@ class LivroController {
     async detalhesLivro(req, res) {
         try {
             const { id } = req.params;
+            const usuarioId = req.user.id;
 
             const livro = await livroRepository.findByIdComDetalhes(id);
 
@@ -225,24 +242,26 @@ class LivroController {
                 return res.redirect('/catalogo?error=Livro não encontrado');
             }
 
-            const livroData = livro.toJSON();
-            livroData.avaliacoes = livroData.avaliacoes || [];
-            livroData.comentarios = livroData.comentarios || [];
-
-            const favorito = await Favorito.findOne({
+            // Procura um empréstimo ativo (solicitado ou emprestado) para este livro e usuário
+            const emprestimoUsuario = await Emprestimo.findOne({
                 where: {
                     livro_id: id,
-                    usuario_id: req.user.id
+                    usuario_id: usuarioId,
+                    status: { [Op.in]: ['solicitado', 'emprestado', 'atrasado'] }
                 }
             });
-            const usuarioJaFavoritou = !!favorito; // Converte para booleano
+
+            const favorito = await Favorito.findOne({
+                where: { livro_id: id, usuario_id: usuarioId }
+            });
 
             livro.comentarios.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-            res.render('detalhesLivros', { 
+            res.render('detalhesLivros', {
                 livro,
                 user: req.user,
-                usuarioJaFavoritou: usuarioJaFavoritou,
+                usuarioJaFavoritou: !!favorito,
+                emprestimoUsuario: emprestimoUsuario, // Passa o empréstimo para a view
                 success: req.query.success,
                 error: req.query.error
             });

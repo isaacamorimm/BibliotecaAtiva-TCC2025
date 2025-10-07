@@ -42,9 +42,21 @@ class Livro extends Model {
                     max: new Date().getFullYear(),
                 }
             },
-            disponivel: {
-                type: DataTypes.BOOLEAN,
-                defaultValue: true,
+            quantidade_total: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 1,
+                validate: {
+                    min: 0
+                }
+            },
+            quantidade_disponivel: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 1,
+                validate: {
+                    min: 0
+                }
             },
             categoria: {
                 type: DataTypes.STRING,

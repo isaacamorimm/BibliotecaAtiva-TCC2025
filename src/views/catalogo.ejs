@@ -47,7 +47,8 @@
                         <div class="book-card book-item">
                             <div class="book-header">
                                 <span class="book-badge <%= livro.disponivel ? 'badge-available' : 'badge-unavailable' %>">
-                                    <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
+                                    <i class="bi <%= livro.quantidade_disponivel > 0 ? 'bi-check-circle' : 'bi-x-circle' %>"></i>
+                                    <%= livro.quantidade_disponivel > 0 ? 'Disponível' : 'Indisponível' %>
                                 </span>
                             </div>
                             

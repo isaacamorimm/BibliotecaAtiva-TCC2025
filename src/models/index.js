@@ -5,8 +5,9 @@ import Usuario from './usuario.js';
 import Avaliacao from './avaliacao.js';
 import Comentario from './comentario.js';
 import Favorito from './favorito.js';
+import Emprestimo from './emprestimo.js';
 
-const models = [Livro, Usuario, Avaliacao, Comentario, Favorito];
+const models = [Livro, Usuario, Avaliacao, Comentario, Favorito, Emprestimo];
 
 models.forEach(model => model.init(sequelize));
 
@@ -38,6 +39,11 @@ Usuario.hasMany(Avaliacao, { foreignKey: 'usuario_id', as: 'avaliacoes' });
 Usuario.hasMany(Comentario, { foreignKey: 'usuario_id', as: 'comentarios' });
 Usuario.hasMany(Favorito, {foreignKey: 'usuario_id', as: 'favoritos' });
 
+// 6. Associações de Empréstimo
+Emprestimo.belongsTo(Livro, {foreignKey: 'livro_id', as: 'livro'});
+Emprestimo.belongsTo(Usuario, {foreignKey: 'usuario_id', as: 'usuario'});
 
+Livro.hasMany(Emprestimo, {foreignKey: 'livro_id', as: 'emprestimos'});
+Usuario.hasMany(Emprestimo, {foreignKey: 'usuario_id', as: 'emprestimos'});
 
-export { Livro, Usuario, Avaliacao, Comentario, Favorito };
+export { Livro, Usuario, Avaliacao, Comentario, Favorito, Emprestimo };

@@ -48,14 +48,13 @@
                     </div>
                 <% } else { %>
                     <% livros.forEach(livro => { %>
-                        <div class="book-card">
                             <div class="book-header">
-                                <span class="book-badge <%= livro.disponivel ? 'badge-available' : 'badge-unavailable' %>">
-                                    <i class="fas <%= livro.disponivel ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
-                                    <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
+                                <span class="badge <%= livro.quantidade_disponivel > 0 ? 'bg-success' : 'bg-danger' %>">
+                                    <i class="bi <%= livro.quantidade_disponivel > 0 ? 'bi-check-circle' : 'bi-x-circle' %>"></i>
+                                    <%= livro.quantidade_disponivel > 0 ? `${livro.quantidade_disponivel} em estoque` : 'Sem estoque' %>
                                 </span>
-                                <span class="book-badge badge-unpublished">
-                                    <i class="fas fa-eye-slash"></i> Não Publicado
+                                <span class="badge badge-unpublished">
+                                    <i class="bi bi-eye-slash"></i> Não Publicado
                                 </span>
                             </div>
                             
