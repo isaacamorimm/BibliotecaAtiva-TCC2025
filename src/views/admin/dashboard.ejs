@@ -1,86 +1,105 @@
 <%- include('../partials/header', { 
     title: 'Dashboard - Biblioteca Ativa', 
     activePage: 'dashboard',
-    cssFile: 'dashboard.css' // Sugestão: Crie este CSS para estilizar a página
+    cssFile: 'dashboard.css'
 }) %>
 
-<div class="page-header">
-    <h1 class="page-title">Dashboard de Empréstimos</h1>
-    <p class="page-subtitle">Gerencie as solicitações e devoluções de livros</p>
-</div>
+<div class="profile-container">
+    <div class="page-header">
+        <h1 class="page-title">Dashboard de Empréstimos</h1>
+        <p class="page-subtitle">Gerencie as solicitações e devoluções de livros</p>
+    </div>
 
-<% if (error) { %><div class="alert alert-danger"><%= error %></div><% } %>
-<% if (success) { %><div class="alert alert-success"><%= success %></div><% } %>
-
-<div class="dashboard-section">
-    <h2><i class="fas fa-clock"></i> Solicitações Pendentes</h2>
-    <% const solicitacoes = emprestimos.filter(e => e.status === 'solicitado') %>
-    <% if (solicitacoes.length > 0) { %>
-        <table class="dashboard-table">
-            <thead>
-                <tr>
-                    <th>Aluno</th>
-                    <th>Livro</th>
-                    <th>Data da Solicitação</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% solicitacoes.forEach(emp => { %>
-                    <tr>
-                        <td><%= emp.usuario.nome %></td>
-                        <td><%= emp.livro.titulo %></td>
-                        <td><%= new Date(emp.data_solicitacao).toLocaleDateString('pt-BR') %></td>
-                        <td class="actions">
-                            <form action="/emprestimo/confirmar/<%= emp.id %>" method="POST">
-                                <button type="submit" class="btn btn-success">Confirmar</button>
-                            </form>
-                            <form action="/emprestimo/cancelar/<%= emp.id %>" method="POST">
-                                <button type="submit" class="btn btn-danger">Cancelar</button>
-                            </form>
-                        </td>
-                    </tr>
-                <% }); %>
-            </tbody>
-        </table>
-    <% } else { %>
-        <p>Nenhuma solicitação pendente.</p>
+    <% if (error) { %>
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle"></i>
+            <%= error %>
+        </div>
     <% } %>
-</div>
-
-<div class="dashboard-section">
-    <h2><i class="fas fa-book-reader"></i> Livros Emprestados</h2>
-    <% const emprestados = emprestimos.filter(e => e.status === 'emprestado' || e.status === 'atrasado') %>
-    <% if (emprestados.length > 0) { %>
-        <table class="dashboard-table">
-            <thead>
-                <tr>
-                    <th>Aluno</th>
-                    <th>Livro</th>
-                    <th>Data do Empréstimo</th>
-                    <th>Devolução Prevista</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% emprestados.forEach(emp => { %>
-                    <tr>
-                        <td><%= emp.usuario.nome %></td>
-                        <td><%= emp.livro.titulo %></td>
-                        <td><%= new Date(emp.data_emprestimo).toLocaleDateString('pt-BR') %></td>
-                        <td><%= new Date(emp.data_devolucao_prevista).toLocaleDateString('pt-BR') %></td>
-                        <td class="actions">
-                            <form action="/emprestimo/devolver/<%= emp.id %>" method="POST">
-                                <button type="submit" class="btn btn-primary">Registrar Devolução</button>
-                            </form>
-                        </td>
-                    </tr>
-                <% }); %>
-            </tbody>
-        </table>
-    <% } else { %>
-        <p>Nenhum livro emprestado no momento.</p>
+    
+    <% if (success) { %>
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i>
+            <%= success %>
+        </div>
     <% } %>
+
+    <div class="dashboard-section">
+        <h2><i class="fas fa-clock"></i> Solicitações Pendentes</h2>
+        <% const solicitacoes = emprestimos.filter(e => e.status === 'solicitado') %>
+        <% if (solicitacoes.length > 0) { %>
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Livro</th>
+                        <th>Data da Solicitação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% solicitacoes.forEach(emp => { %>
+                        <tr>
+                            <td data-label="Aluno"><%= emp.usuario.nome %></td>
+                            <td data-label="Livro"><%= emp.livro.titulo %></td>
+                            <td data-label="Data Solicitação"><%= new Date(emp.data_solicitacao).toLocaleDateString('pt-BR') %></td>
+                            <td data-label="Ações" class="actions">
+                                <form action="/emprestimo/confirmar/<%= emp.id %>" method="POST">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-check"></i> Confirmar
+                                    </button>
+                                </form>
+                                <form action="/emprestimo/cancelar/<%= emp.id %>" method="POST">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>Nenhuma solicitação pendente.</p>
+        <% } %>
+    </div>
+
+    <div class="dashboard-section">
+        <h2><i class="fas fa-book-reader"></i> Livros Emprestados</h2>
+        <% const emprestados = emprestimos.filter(e => e.status === 'emprestado' || e.status === 'atrasado') %>
+        <% if (emprestados.length > 0) { %>
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Livro</th>
+                        <th>Data do Empréstimo</th>
+                        <th>Devolução Prevista</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% emprestados.forEach(emp => { %>
+                        <tr>
+                            <td data-label="Aluno"><%= emp.usuario.nome %></td>
+                            <td data-label="Livro"><%= emp.livro.titulo %></td>
+                            <td data-label="Data Empréstimo"><%= new Date(emp.data_emprestimo).toLocaleDateString('pt-BR') %></td>
+                            <td data-label="Devolução Prevista"><%= new Date(emp.data_devolucao_prevista).toLocaleDateString('pt-BR') %></td>
+                            <td data-label="Ações" class="actions">
+                                <form action="/emprestimo/devolver/<%= emp.id %>" method="POST">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-undo"></i> Registrar Devolução
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>Nenhum livro emprestado no momento.</p>
+        <% } %>
+    </div>
 </div>
 
 <%- include('../partials/footer') %>

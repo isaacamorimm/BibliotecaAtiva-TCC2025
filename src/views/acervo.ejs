@@ -4,108 +4,114 @@
     cssFile: 'acervo.css',
     jsFile: 'acervo.js'
 }) %>
-            <div class="page-header">
-                <h1 class="page-title">Acervo de Livros</h1>
-                <p class="page-subtitle">Gerencie os livros que ainda não foram publicados no catálogo</p>
-            </div>
 
-            <!-- Stats and Info -->
-            <div class="stats-grid">
-                <div class="stat-card card">
-                    <div class="stat-icon">
-                        <i class="fas fa-archive"></i>
-                    </div>
-                    <div class="stat-value"><%= livros.length %></div>
-                    <div class="stat-label">livros no acervo</div>
-                </div>
-                
-                <div class="info-card card">
-                    <h3 class="info-title">
-                        <i class="fas fa-info-circle"></i> Sobre o Acervo
-                    </h3>
-                    <p class="info-text">
-                        O acervo contém livros que ainda não estão visíveis para os usuários no catálogo. 
-                        Após adicionar um livro aqui, você pode revisá-lo e publicá-lo quando estiver pronto.
-                    </p>
-                    <a href="/catalogo/adicionar" class="btn btn-primary">
-                        <i class="fas fa-plus-circle"></i> Adicionar Novo Livro
-                    </a>
-                </div>
-            </div>
+<div class="page-header">
+    <h1 class="page-title">Acervo de Livros</h1>
+    <p class="page-subtitle">Gerencie os livros que ainda não foram publicados no catálogo</p>
+</div>
 
-            <!-- Books Grid -->
-            <div class="books-grid">
-                <% if (livros.length === 0) { %>
-                    <div class="empty-state">
-                        <div class="empty-icon">
-                            <i class="fas fa-archive"></i>
-                        </div>
-                        <h3 class="empty-title">Acervo Vazio</h3>
-                        <p class="empty-text">Não há livros no acervo no momento.</p>
-                        <a href="/catalogo/adicionar" class="btn btn-primary">
-                            <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
-                        </a>
-                    </div>
-                <% } else { %>
-                    <% livros.forEach(livro => { %>
-                            <div class="book-header">
-                                <span class="badge <%= livro.quantidade_disponivel > 0 ? 'bg-success' : 'bg-danger' %>">
-                                    <i class="bi <%= livro.quantidade_disponivel > 0 ? 'bi-check-circle' : 'bi-x-circle' %>"></i>
-                                    <%= livro.quantidade_disponivel > 0 ? `${livro.quantidade_disponivel} em estoque` : 'Sem estoque' %>
-                                </span>
-                                <span class="badge badge-unpublished">
-                                    <i class="bi bi-eye-slash"></i> Não Publicado
-                                </span>
-                            </div>
-                            
-                            <div class="book-body">
-                                <div class="book-cover">
-                                    <img src="<%= livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa do Livro">
-                                </div>
-                                <h3 class="book-title"><%= livro.titulo %></h3>
-                                <div class="book-author">
-                                    <i class="fas fa-user"></i> <%= livro.autor %>
-                                </div>
-                                
-                                <div class="book-details">
-                                    <div class="book-detail">
-                                        <i class="fas fa-calendar"></i> Ano: <%= livro.ano %>
-                                    </div>
-                                    <div class="book-detail">
-                                        <i class="fas fa-tag"></i> 
-                                        <span class="book-category"><%= livro.categoria %></span>
-                                    </div>
-                                    <div class="book-detail">
-                                        <i class="fas fa-clock"></i> 
-                                        Adicionado em: <%= new Date(livro.createdAt).toLocaleDateString('pt-BR') %>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="book-footer">
-                                <div class="book-actions">
-                                    <form action="/catalogo/publicar/<%= livro.id %>" method="POST" class="book-action">
-                                        <button type="submit" class="btn btn-success">
-                                            <i class="fas fa-megaphone"></i> Publicar
-                                        </button>
-                                    </form>
-                                    
-                                    <div class="action-group">
-                                        <a href="/catalogo/editar/<%= livro.id %>" class="btn btn-secondary">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </a>
-                                        <form action="/catalogo/remover/<%= livro.id %>" method="POST" class="book-action">
-                                            <button type="submit" class="btn btn-danger" 
-                                                    onclick="return confirm('Tem certeza que deseja remover este livro?')">
-                                                <i class="fas fa-trash"></i> Remover
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <% }); %>
-                <% } %>
+<div class="profile-container">
+    <!-- Stats and Info -->
+    <div class="stats-grid">
+        <div class="profile-card">
+            <div class="stat-content">
+                <div class="stat-icon">
+                    <i class="fas fa-archive"></i>
+                </div>
+                <div class="stat-value"><%= livros.length %></div>
+                <div class="stat-label">livros no acervo</div>
             </div>
         </div>
- <%- include('partials/footer') %>
+        
+        <div class="profile-card">
+            <h3 class="info-title">
+                <i class="fas fa-info-circle"></i> Sobre o Acervo
+            </h3>
+            <p class="info-text">
+                O acervo contém livros que ainda não estão visíveis para os usuários no catálogo. 
+                Após adicionar um livro aqui, você pode revisá-lo e publicá-lo quando estiver pronto.
+            </p>
+            <a href="/catalogo/adicionar" class="btn btn-primary">
+                <i class="fas fa-plus-circle"></i> Adicionar Novo Livro
+            </a>
+        </div>
+    </div>
+
+    <!-- Books Grid -->
+    <div class="books-grid">
+        <% if (livros.length === 0) { %>
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-archive"></i>
+                </div>
+                <h3 class="empty-title">Acervo Vazio</h3>
+                <p class="empty-text">Não há livros no acervo no momento.</p>
+                <a href="/catalogo/adicionar" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Adicionar Primeiro Livro
+                </a>
+            </div>
+        <% } else { %>
+            <% livros.forEach(livro => { %>
+                <div class="profile-card book-card">
+                    <div class="book-header">
+                        <div class="badge-group">
+                            <span class="badge <%= livro.quantidade_disponivel > 0 ? 'badge-success' : 'badge-error' %>">
+                                <i class="fas <%= livro.quantidade_disponivel > 0 ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
+                                <%= livro.quantidade_disponivel > 0 ? `${livro.quantidade_disponivel} em estoque` : 'Sem estoque' %>
+                            </span>
+                            <span class="badge badge-warning">
+                                <i class="fas fa-eye-slash"></i> Não Publicado
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="book-body">
+                        <div class="book-cover">
+                            <img src="<%= livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa de <%= livro.titulo %>">
+                        </div>
+                        <h3 class="book-title"><%= livro.titulo %></h3>
+                        <div class="book-author">
+                            <i class="fas fa-user"></i> <%= livro.autor %>
+                        </div>
+                        
+                        <div class="book-details">
+                            <div class="book-detail">
+                                <i class="fas fa-calendar"></i> Ano: <%= livro.ano %>
+                            </div>
+                            <div class="book-detail">
+                                <i class="fas fa-tag"></i> 
+                                <span class="book-category"><%= livro.categoria %></span>
+                            </div>
+                            <div class="book-detail">
+                                <i class="fas fa-clock"></i> 
+                                Adicionado em: <%= new Date(livro.createdAt).toLocaleDateString('pt-BR') %>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="book-actions">
+                        <form action="/catalogo/publicar/<%= livro.id %>" method="POST" class="book-action">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-megaphone"></i> Publicar
+                            </button>
+                        </form>
+                        
+                        <div class="action-group">
+                            <a href="/catalogo/editar/<%= livro.id %>" class="btn btn-outline">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <form action="/catalogo/remover/<%= livro.id %>" method="POST" class="book-action">
+                                <button type="submit" class="btn btn-danger" 
+                                        onclick="return confirm('Tem certeza que deseja remover este livro?')">
+                                    <i class="fas fa-trash"></i> Remover
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

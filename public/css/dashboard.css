@@ -1,0 +1,345 @@
+/* Dashboard CSS - Mantendo consistência com as variáveis fornecidas */
+:root {
+    --primary: #9e4a3c;
+    --primary-light: #d9ac8a;
+    --primary-dark: #7a372b;
+    --background: #faf7f4;
+    --surface: #ffffff;
+    --text: #333333;
+    --text-light: #777777;
+    --success: #43a047;
+    --error: #e53935;
+    --warning: #ff9800;
+    --border: #e8e1d9;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.05);
+    --transition: all 0.2s ease;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Page Header */
+.page-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.page-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.dashboard-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--background);
+}
+
+/* Tables */
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.dashboard-table thead {
+    background: var(--background);
+    border-bottom: 2px solid var(--border);
+}
+
+.dashboard-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dashboard-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
+
+.dashboard-table tr:last-child td {
+    border-bottom: none;
+}
+
+.dashboard-table tr:hover {
+    background: var(--background);
+}
+
+/* Actions Column */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.actions form {
+    display: inline;
+}
+
+/* Botões PADRONIZADOS */
+.btn {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: var(--radius);
+    font-weight: 500;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+    min-width: 120px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover {
+    background: #388e3c;
+}
+
+.btn-danger {
+    background: var(--error);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c62828;
+}
+
+/* Alertas */
+.alert {
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-left: 4px solid transparent;
+}
+
+.alert-danger {
+    background: #ffebee;
+    color: var(--error);
+    border-left-color: var(--error);
+}
+
+.alert-success {
+    background: #e8f5e9;
+    color: var(--success);
+    border-left-color: var(--success);
+}
+
+/* Estados vazios */
+.dashboard-section > p {
+    text-align: center;
+    color: var(--text-light);
+    padding: 2rem;
+    font-style: italic;
+    background: var(--background);
+    border-radius: var(--radius);
+    margin: 0;
+}
+
+/* RESPONSIVIDADE FUNCIONAL */
+@media (max-width: 1024px) {
+    .dashboard-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .actions {
+        flex-direction: column;
+        min-width: 140px;
+    }
+    
+    .btn {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 0 1rem;
+    }
+    
+    .dashboard-section {
+        padding: 1.5rem;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .dashboard-section h2 {
+        font-size: 1.3rem;
+    }
+    
+    .dashboard-table {
+        display: block;
+    }
+    
+    .dashboard-table thead {
+        display: none;
+    }
+    
+    .dashboard-table tbody,
+    .dashboard-table tr,
+    .dashboard-table td {
+        display: block;
+        width: 100%;
+    }
+    
+    .dashboard-table tr {
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: var(--surface);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+    }
+    
+    .dashboard-table td {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .dashboard-table td:last-child {
+        border-bottom: none;
+    }
+    
+    .dashboard-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--primary);
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+    
+    .actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn {
+        min-width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.8rem;
+    }
+    
+    .page-subtitle {
+        font-size: 1rem;
+    }
+    
+    .dashboard-section {
+        padding: 1.25rem;
+    }
+    
+    .dashboard-section h2 {
+        font-size: 1.2rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .dashboard-table td {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .dashboard-table td::before {
+        margin-right: 0;
+        margin-bottom: 0.25rem;
+    }
+    
+    .alert {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+}
+
+/* Melhorias de acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none;
+    }
+}
+
+/* Estados de foco para acessibilidade */
+.btn:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Loading states */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
