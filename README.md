@@ -1,7 +1,3 @@
-Claro, aqui está uma proposta de `README.md` completo e bem estruturado para o projeto "Biblioteca Ativa", desenvolvido com base na análise de todos os arquivos do repositório.
-
------
-
 # 📚 Biblioteca Ativa
 
 ## Sobre o Projeto
