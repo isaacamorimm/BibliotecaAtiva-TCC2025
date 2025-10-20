@@ -114,9 +114,9 @@
                         <i class="fas fa-user"></i> <%= livro.autor %>
                     </div>
                 </div>
-                <span class="book-badge <%= livro.disponivel ? 'badge-available' : 'badge-unavailable' %>">
-                    <%= livro.disponivel ? 'Disponível' : 'Indisponível' %>
-                </span>
+            <span class="book-badge <%= livro.quantidade_disponivel > 0 ? 'badge-available' : 'badge-unavailable' %>">
+                <%= livro.quantidade_disponivel > 0 ? 'Disponível' : 'Indisponível' %>
+            </span>
             </div>
             <div class="book-details">
                 <div class="book-detail">

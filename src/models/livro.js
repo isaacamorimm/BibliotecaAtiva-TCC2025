@@ -58,6 +58,13 @@ class Livro extends Model {
                     min: 0
                 }
             },
+
+            disponivel: {
+                type: DataTypes.VIRTUAL,
+                get() {
+                    return this.quantidade_disponivel > 0;
+                }
+            },
             categoria: {
                 type: DataTypes.STRING,
                 allowNull: false,
