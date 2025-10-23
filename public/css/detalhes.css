@@ -1,4 +1,4 @@
-/* detalhes.css (CORRIGIDO) */
+/* detalhes.css (CORRIGIDO E REORGANIZADO) */
 
 .profile-container {
     max-width: 1000px;
@@ -152,12 +152,34 @@
     gap: 0.75rem;
 }
 
-/* Rating Summary */
-.rating-summary {
-    margin-bottom: 2rem;
+/* --- SEÇÃO DE AVALIAÇÕES (REORGANIZADA) --- */
+
+/* Novo container para organizar sumário e formulário */
+.avaliacoes-content {
+    display: flex;
+    flex-wrap: wrap; /* Permite que quebre em telas pequenas */
+    gap: 2rem;
+    align-items: flex-start;
     padding: 1.5rem;
     background: var(--background);
     border-radius: var(--radius);
+}
+
+/* 1. Coluna do Sumário */
+.rating-summary {
+    flex: 1;
+    min-width: 280px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.rating-summary h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+    font-weight: 600;
 }
 
 .media-container {
@@ -165,6 +187,7 @@
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center; /* Centraliza a nota e as estrelas */
 }
 
 .media-nota {
@@ -180,26 +203,30 @@
 
 .total-avaliacoes {
     color: var(--text-light);
+    margin-top: 0.5rem; /* Adiciona um respiro */
 }
 
-/* Rating Form */
+/* 2. Coluna do Formulário */
 .rating-form {
-    padding: 1.5rem;
-    background: var(--background);
-    border-radius: var(--radius);
+    flex: 1;
+    min-width: 280px; 
+    display: flex;
+    flex-direction: column;
 }
 
 .rating-form h4 {
     font-size: 1.1rem;
     margin-bottom: 1rem;
     color: var(--text);
+    text-align: center;
+    font-weight: 600;
 }
 
 .rating-stars {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
+    justify-content: center; /* Centraliza as estrelas */
+    margin-bottom: 1.5rem; /* Mais espaço antes do botão */
     flex-wrap: wrap;
 }
 
@@ -220,6 +247,13 @@
 .rating-stars label:hover ~ label {
     color: #ffc107;
 }
+
+.rating-form .btn {
+    width: 100%; /* Botão ocupa todo o espaço do card */
+}
+
+/* --- FIM DA SEÇÃO DE AVALIAÇÕES --- */
+
 
 /* Comment Form */
 .comment-form {
@@ -342,11 +376,10 @@
     }
     
     .action-buttons {
+        /* Esta é a regra que corrige o alinhamento dos botões */
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
     }
-    
-    /* Regra .btn movida para layout.css */
     
     .media-container {
         flex-wrap: nowrap;
@@ -390,8 +423,6 @@
         grid-template-columns: 1fr;
     }
     
-    /* Regra .btn movida para layout.css */
-    
     .comment-header {
         flex-direction: column;
         align-items: flex-start;
@@ -400,8 +431,6 @@
     .form-actions {
         flex-direction: column;
     }
-    
-    /* Regra .btn movida para layout.css */
 }
 
 @media (max-width: 480px) {

@@ -1,12 +1,12 @@
 function mostrarFormularioEdicao(comentarioId) {
-        document.getElementById('texto-comentario-' + comentarioId).style.display = 'none';
-        document.getElementById('form-editar-' + comentarioId).style.display = 'block';
-    }
+    document.getElementById('texto-comentario-' + comentarioId).style.display = 'none';
+    document.getElementById('form-editar-' + comentarioId).style.display = 'block';
+}
 
-    function cancelarEdicao(comentarioId) {
-        document.getElementById('texto-comentario-' + comentarioId).style.display = 'block';
-        document.getElementById('form-editar-' + comentarioId).style.display = 'none';
-    }
+function cancelarEdicao(comentarioId) {
+    document.getElementById('texto-comentario-' + comentarioId).style.display = 'block';
+    document.getElementById('form-editar-' + comentarioId).style.display = 'none';
+}
 document.addEventListener('DOMContentLoaded', function() {
     // Pega os formulários e botões pelos seus IDs
     const formComentario = document.getElementById('form-comentario');
