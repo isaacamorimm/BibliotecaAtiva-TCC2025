@@ -33,6 +33,7 @@ body {
   padding: 20px;
   justify-content: center;
   align-items: center;
+  transition: padding 0.3s ease; /* Adicionado para suavizar a mudança de padding */
 }
 
 .header {
@@ -129,7 +130,7 @@ body {
   padding: 14px 45px 14px 45px;
   border: 2px solid var(--border);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1rem; /* 1rem (geralmente 16px) é o padrão */
   background: var(--background);
   color: var(--text);
   transition: var(--transition);
@@ -289,6 +290,19 @@ body {
   
   .cadastro-container {
     padding: 30px 20px;
+  }
+
+  /* CORREÇÃO: Reduz o padding do body em telas pequenas */
+  body {
+    padding: 10px;
+    justify-content: flex-start; /* Alinha o conteúdo ao topo em telas pequenas */
+  }
+
+  /* CORREÇÃO: Garante 16px de fonte para evitar zoom automático no mobile */
+  .cadastro-container input[type="text"],
+  .cadastro-container input[type="email"],
+  .cadastro-container input[type="password"] {
+    font-size: 16px;
   }
 }
 
