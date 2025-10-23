@@ -139,6 +139,7 @@
 
 .favorito-action {
     margin-bottom: 0;
+    display: contents; /* Esta linha resolve o alinhamento */
 }
 
 /* Card Titles */
