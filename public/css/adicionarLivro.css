@@ -1,8 +1,8 @@
-/* public/css/adicionarLivro.css */
+/* public/css/adicionarLivro.css (CORRIGIDO) */
 
 /* --- Font Standardization --- */
 /* Titles, buttons, and UI elements use Inter */
-.page-title, .info-title, .form-label, .btn, .actions-title {
+.page-title, .info-title, .form-label, .actions-title {
     font-family: 'Inter', sans-serif;
 }
 
@@ -13,7 +13,7 @@
 
 /* --- Page Specific Layout --- */
 .container {
-    max-width: 800px;
+    max-width: 800px; /* Esta regra é um override, então ela fica */
 }
 
 .page-header {
@@ -124,38 +124,7 @@
 input:checked + .slider { background-color: var(--primary); }
 input:checked + .slider:before { transform: translateX(24px); }
 
-/* --- Botões --- */
-.btn {
-    padding: 0.75rem 1.5rem;
-    background: var(--primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--radius);
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: none;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-}
-
-.btn-outline {
-    background: transparent;
-    border: 2px solid var(--primary);
-    color: var(--primary);
-}
-
-.btn-outline:hover {
-    background: var(--primary);
-    color: white;
-}
-
+/* --- Botões (Apenas o layout do grupo) --- */
 .btn-group {
     display: flex;
     gap: 1rem;

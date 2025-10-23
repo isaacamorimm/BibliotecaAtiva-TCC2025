@@ -3,44 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= locals.title || 'Biblioteca Ativa' %></title> 
+    <title><%= locals.title ||
+'Biblioteca Ativa' %></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/layout.css"> 
+    
+    <link rel="stylesheet" href="/css/layout.css">
+    
     <% if (locals.cssFile) { %>
         <link rel="stylesheet" href="/css/<%= locals.cssFile %>">
     <% } %>
-    <% if (locals.jsFile) { %>
-        <script defer src="/js/<%= locals.jsFile %>"></script>
-    <% } %>
-</head>
+    
+    </head>
 <body>
     <header class="header">
-        <div class="header-container">
+        
+<div class="header-container">
             <a href="/home" class="logo">
                 <i class="fas fa-book-open"></i> Biblioteca Ativa
             </a>
             
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
             <ul class="nav-menu">
-                <li><a href="/home" class="nav-link <%= locals.activePage === 'home' ? 'active' : '' %>">Home</a></li>
-                <li><a href="/catalogo" class="nav-link <%= locals.activePage === 'catalogo' ? 'active' : '' %>">Catálogo</a></li>
+                <li><a href="/home" class="nav-link <%= locals.activePage === 'home' ?
+'active' : '' %>">Home</a></li>
+                <li><a href="/catalogo" class="nav-link <%= locals.activePage === 'catalogo' ?
+'active' : '' %>">Catálogo</a></li>
                 <% if (user && user.role === 'admin') { %>
-                    <li><a href="/catalogo/acervo" class="nav-link <%= locals.activePage === 'acervo' ? 'active' : '' %>">Acervo</a></li>
-                    <li><a href="/catalogo/adicionar" class="nav-link <%= locals.activePage === 'adicionar' ? 'active' : '' %>">Adicionar Livro</a></li>
-                    <li><a href="/emprestimo/dashboard" class="nav-link <%= locals.activePage === 'dashboard' ? 'active' : '' %>">Dashboard</a></li>
+                    <li><a href="/catalogo/acervo" class="nav-link <%= locals.activePage === 'acervo' ?
+'active' : '' %>">Acervo</a></li>
+                    <li><a href="/catalogo/adicionar" class="nav-link <%= locals.activePage === 'adicionar' ?
+'active' : '' %>">Adicionar Livro</a></li>
+                    <li><a href="/emprestimo/dashboard" class="nav-link <%= locals.activePage === 'dashboard' ?
+'active' : '' %>">Dashboard</a></li>
                 <% } %>
             </ul>
             
             <a class="user-menu" href="/perfil">
                 <div class="user-avatar">
                     <%= user.nome.charAt(0).toUpperCase() %>
-                </div>
+  
+              </div>
                 <span class="user-name"><%= user.nome %></span>
             </a>
         </div>

@@ -1,8 +1,8 @@
-/* public/css/editarLivro.css */
+/* public/css/editarLivro.css (CORRIGIDO) */
 
 /* --- Font Standardization --- */
 /* Titles, buttons, and UI elements use Inter */
-.page-title, .info-title, .form-label, .btn, .actions-title, .badge, .info-value {
+.page-title, .info-title, .form-label, .actions-title, .badge, .info-value {
     font-family: 'Inter', sans-serif;
 }
 
@@ -176,36 +176,7 @@
 input:checked + .slider { background-color: var(--primary); }
 input:checked + .slider:before { transform: translateX(24px); }
 
-/* --- Botões --- */
-.btn {
-    padding: 0.75rem 1.5rem;
-    background: var(--primary);
-    color: white;
-    text-decoration: none;
-    border-radius: var(--radius);
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border: none;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-}
-
-.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-.btn-outline:hover { background: var(--primary); color: white; }
-.btn-success { background: var(--success); }
-.btn-success:hover { background: #388e3c; }
-.btn-warning { background: var(--warning); color: #000; }
-.btn-warning:hover { background: #f57c00; }
-.btn-danger { background: var(--error); }
-.btn-danger:hover { background: #c62828; }
-
+/* --- Botões (Layout do Grupo) --- */
 .btn-group {
     display: flex;
     gap: 1rem;
