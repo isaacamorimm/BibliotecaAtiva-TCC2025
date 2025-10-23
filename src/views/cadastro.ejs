@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro - Biblioteca Ativa</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/cadastro.css">
@@ -21,7 +22,8 @@
         <i class="fas fa-exclamation-circle"></i>
         <%= error %>
       </p>
-    <% } %>
+    
+<% } %>
 
     <form action="/cadastro" method="POST">
       <div class="form-grid">
@@ -33,7 +35,8 @@
           </div>
         </div>
 
-        <div class="form-group">
+   
+     <div class="form-group">
           <label for="sobrenome">Sobrenome</label>
           <div class="input-with-icon">
             <i class="fas fa-user-tag input-icon"></i>
@@ -42,10 +45,12 @@
         </div>
 
         <div class="form-group full-width">
-          <label for="email">E-mail institucional</label>
+          <label 
+for="email">E-mail institucional</label>
           <div class="input-with-icon">
             <i class="fas fa-envelope input-icon"></i>
-            <input type="email" name="email" id="email" value="<%= form?.email || '' %>" placeholder="E-mail" required />
+            <input type="email" name="email" id="email" value="<%= form?.email ||
+'' %>" placeholder="E-mail" required />
           </div>
         </div>
 
@@ -54,7 +59,8 @@
           <div class="input-with-icon">
             <i class="fas fa-lock input-icon"></i>
             <input type="password" name="senha" id="senha" placeholder="Senha" minlength="8" required />
-            <button type="button" class="password-toggle" id="toggleSenha">
+            
+<button type="button" class="password-toggle" id="toggleSenha">
               <i class="far fa-eye"></i>
             </button>
           </div>
@@ -62,7 +68,8 @@
             <div class="strength-meter" id="passwordStrength"></div>
           </div>
           <div class="password-feedback" id="passwordFeedback">Digite pelo menos 8 caracteres</div>
-        </div>
+        
+</div>
 
         <div class="form-group full-width">
           <label for="confirmarSenha">Confirmar senha</label>
@@ -70,7 +77,8 @@
             <i class="fas fa-lock input-icon"></i>
             <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirme a senha" minlength="8" required />
             <button type="button" class="password-toggle" id="toggleConfirmSenha">
-              <i class="far fa-eye"></i>
+              <i class="far 
+fa-eye"></i>
             </button>
           </div>
           <div class="password-feedback" id="confirmPasswordFeedback"></div>
@@ -85,12 +93,14 @@
 
     <div class="cadastro-links">
       <span>Já tem conta?</span>
-      <a href="/login">Entrar</a>
+    
+  <a href="/login">Entrar</a>
     </div>
   </div>
 
   <div class="footer">
-    <p>&copy; 2025 Biblioteca Ativa. Todos os direitos reservados.</p>
+    <p>&copy; 2025 Biblioteca Ativa.
+Todos os direitos reservados.</p>
   </div>
   <script src="/js/cadastro.js"></script>
 </body>
