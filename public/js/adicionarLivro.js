@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
         });
+
     const btnBuscarCapa = document.getElementById('btnBuscarCapa');
     const resultadosDiv = document.getElementById('resultados-capas');
     const inputTitulo = document.getElementById('titulo');
@@ -19,22 +20,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (btnBuscarCapa) {
         btnBuscarCapa.addEventListener('click', async () => {
+            
+            // 1. MOSTRAR O LOADER IMEDIATAMENTE
+            resultadosDiv.innerHTML = '<div class="loader"></div>'; 
+
             const titulo = inputTitulo.value.trim();
             const autor = inputAutor.value.trim();
             
+            // 2. FAZER A VALIDAÇÃO
             if (!titulo) {
                 alert('Por favor, digite o título do livro para buscar a capa.');
+                // 3. LIMPAR O LOADER SE A VALIDAÇÃO FALHAR
+                resultadosDiv.innerHTML = ''; 
                 return;
             }
 
-            resultadosDiv.innerHTML = '<div class="loader"></div>'; // Mostra um spinner de loading
+            // A linha do loader foi movida para cima
             const termoBusca = `${titulo} ${autor}`;
 
             try {
                 const response = await fetch(`/catalogo/api/buscar-capa?q=${encodeURIComponent(termoBusca)}`);
                 const livros = await response.json();
 
-                resultadosDiv.innerHTML = ''; // Limpa o loader
+                resultadosDiv.innerHTML = ''; // Limpa o loader (como já fazia)
 
                 if (livros.length === 0) {
                     resultadosDiv.innerHTML = '<p class="form-text">Nenhuma capa encontrada.</p>';

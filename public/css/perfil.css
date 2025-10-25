@@ -1,4 +1,27 @@
-/* perfil.css (CORRIGIDO) */
+/* --- ADICIONADO PARA CORRIGIR CENTRALIZAÇÃO --- */
+.page-header {
+    text-align: center;
+    margin-bottom: 2.5rem; /* Consistência com outras páginas */
+}
+/* --- FIM DA ADIÇÃO --- */
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    font-family: 'Inter', sans-serif; /* Título principal com Inter */
+}
+
+/* ... (o restante do arquivo perfil.css continua igual) ... */
+.page-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-family: 'Lora', serif; /* Subtítulo com Lora */
+    font-style: italic;
+}
 
 /* Profile Cards */
 .profile-card {
@@ -146,6 +169,15 @@
     gap: 1rem;
     margin-top: 1.5rem;
 }
+
+/* (NOVO) Estilos para os botões de ação do card principal */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap; /* Adicionado para responsividade */
+}
+
 
 /* Favoritos e Empréstimos */
 .profile-card h2 { /* Título das seções */
@@ -528,6 +560,46 @@
     opacity: 0; /* Começa invisível */
 }
 
+/* --- (NOVO) ESTILOS DA ZONA DE PERIGO --- */
+.danger-zone {
+    background: var(--surface);
+    border: 2px solid var(--error);
+}
+
+.danger-zone-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+}
+
+.danger-zone-header h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--error); /* Cor de erro */
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.danger-zone-header p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.danger-zone-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha botão à esquerda */
+    gap: 0.75rem;
+}
+
+.danger-zone-actions small {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
 
 /* Responsividade para novas seções e ajustes */
 @media (max-width: 768px) {
@@ -611,11 +683,21 @@
         justify-content: space-between;
     }
 
-    .form-actions {
+    .form-actions,
+    .action-buttons { /* Aplicando também a .action-buttons */
         flex-direction: column;
     }
-     /* Regra .btn movida para layout.css */
+
+    /* (NOVO) Botão da danger zone já será 100% por causa do layout.css */
 }
+
+@media (min-width: 769px) {
+    /* (NOVO) Garante que o botão de sair não seja 100% no desktop */
+    .danger-zone-actions .btn {
+        width: auto;
+    }
+}
+
 
 @media (max-width: 480px) {
     .profile-card {

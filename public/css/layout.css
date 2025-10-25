@@ -50,7 +50,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1.5rem;
+    /* gap: 1.5rem; <--- REMOVIDO para máximo espaçamento */
     position: relative;
 }
 
@@ -63,6 +63,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     white-space: nowrap;
+    flex: 1; /* <--- ADICIONADO */
 }
 
 /* --- NAVEGAÇÃO (Desktop) --- */
@@ -71,7 +72,7 @@ body {
     list-style: none;
     gap: 1.5rem;
     align-items: center;
-    flex: 1;
+    flex: 0 1 auto; /* <--- ALTERADO DE 'flex: 1' */
     justify-content: center;
     margin: 0;
     padding: 0;
@@ -121,6 +122,8 @@ body {
     font-family: inherit; /* Usa a fonte do body */
     cursor: pointer; /* Indica clicável */
     border-radius: 50%; /* Foco redondo no mobile */
+    flex: 1; /* <--- ADICIONADO */
+    justify-content: flex-end; /* <--- ADICIONADO */
 }
 
 .user-menu:hover {
@@ -318,6 +321,11 @@ body {
 @media (max-width: 768px) {
     .header-container {
         flex-wrap: nowrap;
+        gap: 1.5rem; /* <--- Devolve o gap para o mobile */
+    }
+
+    .logo {
+        flex: 0 1 auto; /* <--- ADICIONADO: Reseta o flex no mobile */
     }
     
     .nav-menu {
@@ -333,6 +341,7 @@ body {
         border-radius: var(--radius);
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         border: 1px solid var(--border);
+        flex: 0 1 auto; /* <--- ADICIONADO: Garante que não cresça */
     }
     
     .nav-menu.active {
@@ -360,7 +369,8 @@ body {
     .user-menu {
         order: 2;
         margin-left: auto;
-        /* cursor: pointer; Já definido acima */
+        flex: 0 1 auto; /* <--- ADICIONADO: Reseta o flex no mobile */
+        justify-content: flex-start; /* <--- ADICIONADO: Reseta a justificação */
     }
     
     .nav-profile-link-mobile {

@@ -11,28 +11,32 @@
 </div>
 
 <div class="profile-container">
-    <!-- Card Principal do Perfil -->
     <div class="profile-card">
         <div class="profile-header">
             <div class="profile-avatar"><%= user.nome.charAt(0).toUpperCase() %></div>
             <div class="profile-info">
-                <h2><%= user.nome %> <%= user.sobrenome %></h2>
+   
+              <h2><%= user.nome %> <%= user.sobrenome %></h2>
                 <span class="profile-role"><%= user.role %></span>
                 <p class="profile-email"><i class="fas fa-envelope"></i> <%= user.email %></p>
             </div>
         </div>
 
         <div class="profile-stats">
-            <div class="stat-item">
-                <div class="stat-number"><%= favoritos ? favoritos.length : 0 %></div>
+            
+ <div class="stat-item">
+                <div class="stat-number"><%= favoritos ?
+ favoritos.length : 0 %></div>
                 <div class="stat-label">Favoritos</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number"><%= emprestimos ? emprestimos.filter(e => e.status === 'emprestado' || e.status === 'atrasado').length : 0 %></div>
+                <div class="stat-number"><%= emprestimos ?
+ emprestimos.filter(e => e.status === 'emprestado' || e.status === 'atrasado').length : 0 %></div>
                 <div class="stat-label">Empréstimos Ativos</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number"><%= emprestimos ? emprestimos.filter(e => e.status === 'devolvido').length : 0 %></div>
+                <div class="stat-number"><%= emprestimos ?
+ emprestimos.filter(e => e.status === 'devolvido').length : 0 %></div>
                 <div class="stat-label">Histórico</div>
             </div>
         </div>
@@ -40,35 +44,42 @@
         <div id="display-info">
             <div class="info-grid">
                 <div class="info-item">
-                    <div class="info-icon">
+                 
+    <div class="info-icon">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="info-content">
                         <label>Nome completo</label>
-                        <p><%= user.nome %> <%= user.sobrenome %></p>
+    
+                     <p><%= user.nome %> <%= user.sobrenome %></p>
                     </div>
                 </div>
                 <div class="info-item">
                     <div class="info-icon">
+ 
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="info-content">
                         <label>Email</label>
-                        <p><%= user.email %></p>
+          
+               <p><%= user.email %></p>
                     </div>
                 </div>
                 <div class="info-item">
                     <div class="info-icon">
-                        <i class="fas fa-user-tag"></i>
+          
+               <i class="fas fa-user-tag"></i>
                     </div>
                     <div class="info-content">
                         <label>Função</label>
-                        <p><%= user.role %></p>
+                   
+      <p><%= user.role %></p>
                     </div>
                 </div>
                 <div class="info-item">
                     <div class="info-icon">
-                        <i class="fas fa-calendar"></i>
+                   
+      <i class="fas fa-calendar"></i>
                     </div>
                     <div class="info-content">
                         <label>Membro desde</label>
@@ -79,106 +90,121 @@
 
             <div class="action-buttons">
                 <a href="/home" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Voltar ao Início
+                    
+ <i class="fas fa-arrow-left"></i> Voltar ao Início
                 </a>
                 <button class="btn btn-primary" onclick="toggleEditForm()">
                     <i class="fas fa-edit"></i> Editar Perfil
                 </button>
-                <a href="/logout" class="btn btn-danger">
-                    <i class="fas fa-sign-out-alt"></i> Sair
-                </a>
-            </div>
+                </div>
         </div>
 
         <div id="edit-form" style="display: none;">
             <div class="form-header">
-                <h3><i class="fas fa-edit"></i> Editar Perfil</h3>
+                <h3><i class="fas 
+ fa-edit"></i> Editar Perfil</h3>
                 <p>Atualize suas informações pessoais</p>
             </div>
             
             <form action="/perfil/editar" method="POST" class="profile-form">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="nome" class="form-label">
+  
+                       <label for="nome" class="form-label">
                             <i class="fas fa-user"></i> Nome
                         </label>
-                        <input type="text" class="form-control" id="nome" name="nome" value="<%= user.nome %>" required>
+                     
+    <input type="text" class="form-control" id="nome" name="nome" value="<%= user.nome %>" required>
                     </div>
                     <div class="form-group">
                         <label for="sobrenome" class="form-label">
-                            <i class="fas fa-user"></i> Sobrenome
+                      
+       <i class="fas fa-user"></i> Sobrenome
                         </label>
                         <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="<%= user.sobrenome %>" required>
                     </div>
-                    <div class="form-group">
+               
+      <div class="form-group">
                         <label class="form-label">
                             <i class="fas fa-envelope"></i> Email
                         </label>
-                        <input type="email" class="form-control" value="<%= user.email %>" disabled>
+              
+           <input type="email" class="form-control" value="<%= user.email %>" disabled>
                         <small>O email não pode ser alterado</small>
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-success">
+  
+                   <button type="submit" class="btn btn-success">
                         <i class="fas fa-check"></i> Salvar Alterações
                     </button>
                     <button type="button" class="btn btn-secondary" onclick="toggleEditForm()">
-                        <i class="fas fa-times"></i> Cancelar
+       
+                  <i class="fas fa-times"></i> Cancelar
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Seção de Favoritos -->
     <div class="profile-card">
-        <div class="section-header">
+       
+  <div class="section-header">
             <h2><i class="fas fa-heart"></i> Meus Livros Favoritos</h2>
             <% if (favoritos && favoritos.length > 0) { %>
                 <span class="section-badge"><%= favoritos.length %> livros</span>
             <% } %>
         </div>
         
-        <% if (favoritos && favoritos.length > 0) { %>
+        <% if (favoritos 
+ && favoritos.length > 0) { %>
             <div class="favorites-grid">
                 <% favoritos.forEach(favorito => { %>
                     <div class="favorite-item">
                         <div class="favorite-cover">
-                            <img src="<%= favorito.livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa de <%= favorito.livro.titulo %>">
+                
+             <img src="<%= favorito.livro.capa_url ||
+ '/img/capa-padrao.png' %>" alt="Capa de <%= favorito.livro.titulo %>">
                         </div>
                         <div class="favorite-info">
                             <h4><%= favorito.livro.titulo %></h4>
-                            <p class="favorite-author">
+               
+              <p class="favorite-author">
                                 <i class="fas fa-user"></i> <%= favorito.livro.autor %>
                             </p>
-                            <div class="favorite-actions">
+                     
+        <div class="favorite-actions">
                                 <a href="/catalogo/detalhes/<%= favorito.livro.id %>" class="btn btn-sm btn-primary">
                                     <i class="fas fa-eye"></i> Ver detalhes
-                                </a>
+              
+                   </a>
                             </div>
                         </div>
                     </div>
-                <% }); %>
+          
+       <% }); %>
             </div>
         <% } else { %>
             <div class="empty-state">
                 <div class="empty-icon">
                     <i class="fas fa-heart"></i>
-                </div>
+                
+ </div>
                 <h3>Nenhum livro favoritado</h3>
                 <p>Explore nosso catálogo e adicione seus livros favoritos!</p>
                 <a href="/catalogo" class="btn btn-primary">
                     <i class="fas fa-book"></i> Explorar Catálogo
-                </a>
+                
+ </a>
             </div>
         <% } %>
     </div>
 
-    <!-- Seção de Empréstimos Ativos -->
     <div class="profile-card">
         <div class="section-header">
             <h2><i class="fas fa-book-reader"></i> Empréstimos Ativos</h2>
-            <% const emprestimosAtivos = emprestimos ? emprestimos.filter(e => e.status === 'emprestado' || e.status === 'atrasado') : [] %>
+            <% const emprestimosAtivos = emprestimos ?
+ emprestimos.filter(e => e.status === 'emprestado' || e.status === 'atrasado') : [] %>
             <% if (emprestimosAtivos.length > 0) { %>
                 <span class="section-badge"><%= emprestimosAtivos.length %> ativos</span>
             <% } %>
@@ -186,56 +212,68 @@
 
         <% if (emprestimosAtivos.length > 0) { %>
             <div class="emprestimos-list">
-                <% emprestimosAtivos.forEach(emp => { %>
+  
+               <% emprestimosAtivos.forEach(emp => { %>
                     <div class="emprestimo-card <%= emp.status === 'atrasado' ? 'atrasado' : '' %>">
                         <div class="emprestimo-header">
-                            <h4><%= emp.livro.titulo %></h4>
+                           
+  <h4><%= emp.livro.titulo %></h4>
                             <span class="status-badge status-<%= emp.status %>">
                                 <i class="fas fa-<%= emp.status === 'atrasado' ? 'exclamation-triangle' : 'book' %>"></i>
-                                <%= emp.status === 'atrasado' ? 'Atrasado' : 'Emprestado' %>
+                       
+          <%= emp.status === 'atrasado' ? 'Atrasado' : 'Emprestado' %>
                             </span>
                         </div>
                         <div class="emprestimo-details">
-                            <div class="detail-item">
+      
+                       <div class="detail-item">
                                 <i class="fas fa-user"></i>
                                 <span>Autor: <%= emp.livro.autor %></span>
-                            </div>
+        
+                     </div>
                             <div class="detail-item">
                                 <i class="fas fa-calendar"></i>
-                                <span>Emprestado em: <%= new Date(emp.data_emprestimo).toLocaleDateString('pt-BR') %></span>
+                 
+                <span>Emprestado em: <%= new Date(emp.data_emprestimo).toLocaleDateString('pt-BR') %></span>
                             </div>
                             <div class="detail-item">
-                                <i class="fas fa-flag"></i>
+                       
+          <i class="fas fa-flag"></i>
                                 <span>Devolução: <%= new Date(emp.data_devolucao_prevista).toLocaleDateString('pt-BR') %></span>
                             </div>
                         </div>
+ 
                         <div class="emprestimo-actions">
                             <a href="/catalogo/detalhes/<%= emp.livro.id %>" class="btn btn-outline btn-sm">
                                 <i class="fas fa-eye"></i> Ver livro
-                            </a>
+      
+                       </a>
                         </div>
                     </div>
-                <% }); %>
+                <% });
+ %>
             </div>
         <% } else { %>
             <div class="empty-state">
                 <div class="empty-icon">
                     <i class="fas fa-book-open"></i>
                 </div>
-                <h3>Nenhum empréstimo ativo</h3>
+        
+         <h3>Nenhum empréstimo ativo</h3>
                 <p>Você não possui livros emprestados no momento.</p>
                 <a href="/catalogo" class="btn btn-primary">
                     <i class="fas fa-search"></i> Buscar Livros
                 </a>
-            </div>
+         
+    </div>
         <% } %>
     </div>
 
-    <!-- Seção de Histórico -->
     <div class="profile-card">
         <div class="section-header">
             <h2><i class="fas fa-history"></i> Histórico de Empréstimos</h2>
-            <% const historico = emprestimos ? emprestimos.filter(e => e.status === 'devolvido') : [] %>
+            <% const historico = emprestimos ?
+ emprestimos.filter(e => e.status === 'devolvido') : [] %>
             <% if (historico.length > 0) { %>
                 <span class="section-badge"><%= historico.length %> itens</span>
             <% } %>
@@ -243,40 +281,63 @@
 
         <% if (historico.length > 0) { %>
             <div class="historico-list">
-                <% historico.forEach(emp => { %>
+      
+           <% historico.forEach(emp => { %>
                     <div class="historico-item">
                         <div class="historico-book">
                             <div class="book-cover-small">
-                                <img src="<%= emp.livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa de <%= emp.livro.titulo %>">
+           
+                      <img src="<%= emp.livro.capa_url || '/img/capa-padrao.png' %>" alt="Capa de <%= emp.livro.titulo %>">
                             </div>
                             <div class="book-info">
-                                <h5><%= emp.livro.titulo %></h5>
+            
+                     <h5><%= emp.livro.titulo %></h5>
                                 <p class="book-author"><%= emp.livro.autor %></p>
                             </div>
-                        </div>
+               
+          </div>
                         <div class="historico-dates">
                             <div class="date-item">
                                 <span class="date-label">Emprestado:</span>
-                                <span class="date-value"><%= new Date(emp.data_emprestimo).toLocaleDateString('pt-BR') %></span>
+    
+                             <span class="date-value"><%= new Date(emp.data_emprestimo).toLocaleDateString('pt-BR') %></span>
                             </div>
                             <div class="date-item">
-                                <span class="date-label">Devolvido:</span>
+           
+                      <span class="date-label">Devolvido:</span>
                                 <span class="date-value"><%= new Date(emp.data_devolvido).toLocaleDateString('pt-BR') %></span>
                             </div>
-                        </div>
+              
+           </div>
                     </div>
-                <% }); %>
+                <% });
+ %>
             </div>
         <% } else { %>
             <div class="empty-state">
                 <div class="empty-icon">
                     <i class="fas fa-history"></i>
                 </div>
-                <h3>Histórico vazio</h3>
+        
+         <h3>Histórico vazio</h3>
                 <p>Seu histórico de empréstimos aparecerá aqui.</p>
             </div>
         <% } %>
     </div>
+
+    <div class="profile-card danger-zone">
+        <div class="danger-zone-header">
+            <h3><i class="fas fa-exclamation-triangle"></i> Zona de Perigo</h3>
+            <p>Ações importantes da conta.</p>
+        </div>
+        <div class="danger-zone-actions">
+            <a href="/logout" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Sair da Conta
+            </a>
+            <small>Você será desconectado da sua sessão atual.</small>
+        </div>
+    </div>
+    
 </div>
 
 <%- include('partials/footer') %>

@@ -1,5 +1,33 @@
 /* acervo.css (BOTÕES EM COLUNA) */
 
+/* --- ADICIONADO PARA CORRIGIR CENTRALIZAÇÃO --- */
+.page-header {
+    text-align: center;
+    margin-bottom: 2.5rem; /* Consistência com outras páginas */
+}
+/* --- FIM DA ADIÇÃO --- */
+
+.page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Garante que o ícone e texto fiquem centrados */
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    font-family: 'Inter', sans-serif; /* Título principal com Inter */
+}
+
+/* ... (o restante do arquivo acervo.css continua igual) ... */
+.page-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-family: 'Lora', serif; /* Subtítulo com Lora */
+    font-style: italic;
+}
+
 .profile-container {
     max-width: 1200px;
     margin: 0 auto;
