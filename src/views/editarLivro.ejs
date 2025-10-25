@@ -1,15 +1,14 @@
 <%- include('partials/header', { 
     title: 'Editar Livro - Biblioteca Ativa', 
     activePage: 'editarLivro',
-    cssFile: 'editarLivro.css',
-    jsFile: 'editarLivro.js'
+    cssFile: 'editarLivro.css'
+    /* jsFile FOI REMOVIDO DAQUI */
 }) %>
             <div class="page-header">
                 <h1 class="page-title">Editar Livro</h1>
                 <p class="page-subtitle">Atualize as informações do livro</p>
             </div>
 
-            <!-- Alertas -->
             <% if (error) { %>
                 <div class="alert alert-error">
                     <i class="fas fa-exclamation-triangle alert-icon"></i>
@@ -17,7 +16,6 @@
                 </div>
             <% } %>
 
-            <!-- Informações do Livro -->
             <div class="book-info">
                 <h3 class="info-title">
                     <i class="fas fa-info-circle"></i> Informações Atuais
@@ -52,10 +50,8 @@
                 </div>
             </div>
 
-            <!-- Formulário -->
             <div class="form-container">
                 <form action="/catalogo/editar/<%= livro.id %>" method="POST">
-                    <!-- Título -->
                     <div class="form-group">
                         <label for="titulo" class="form-label">
                             <i class="fas fa-bookmark"></i> Título *
@@ -65,7 +61,6 @@
                         <div class="form-text">Título completo do livro</div>
                     </div>
 
-                    <!-- Autor -->
                     <div class="form-group">
                         <label for="autor" class="form-label">
                             <i class="fas fa-user"></i> Autor *
@@ -75,7 +70,6 @@
                         <div class="form-text">Nome completo do autor</div>
                     </div>
 
-                    <!-- Capa -->
                     <div class="form-group">
                         <label class="form-label">
                             <i class="fas fa-image"></i> Capa do Livro
@@ -101,7 +95,6 @@
                         <input type="hidden" id="capa_url" name="capa_url" value="<%= livro.capa_url || '' %>">
                     </div>
 
-                    <!-- Ano e Categoria -->
                     <div class="form-row">
                         <div class="form-group">
                             <label for="ano" class="form-label">
@@ -122,7 +115,6 @@
                         </div>
                     </div>
 
-                    <!-- Disponibilidade -->
                     <div class="form-group">
                         <label for="quantidade_total" class="form-label">
                             <i class="fas fa-hashtag"></i> Quantidade Total de Cópias *
@@ -136,7 +128,6 @@
                     </div>
 
 
-                    <!-- Botões -->
                     <div class="btn-group">
                         <a href="<%= livro.publicado ? '/catalogo' : '/catalogo/acervo' %>" class="btn btn-outline">
                             <i class="fas fa-arrow-left"></i> Voltar
@@ -148,7 +139,6 @@
                 </form>
             </div>
 
-            <!-- Ações Rápidas -->
             <% if (user && user.role === 'admin') { %>
             <div class="quick-actions">
                 <h3 class="actions-title">
@@ -179,4 +169,7 @@
             </div>
             <% } %>
         </div>
-    <%- include('partials/footer') %>
+
+<%- include('partials/footer', {
+    jsFile: 'editarLivro.js'
+}) %>
