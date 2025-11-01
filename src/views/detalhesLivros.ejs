@@ -1,9 +1,10 @@
 <%- include('partials/header', { 
     title: 'Detalhes - Biblioteca Ativa', 
     activePage: 'detalhes',
-    cssFile: 'detalhes.css',
-    jsFile: 'detalhes.js'
+    cssFile: 'detalhes.css'
 }) %>
+
+<link rel="stylesheet" href="/css/quiz-modal.css">
 
 <div class="page-header">
     <h1 class="page-title">Detalhes do Livro</h1>
@@ -43,10 +44,8 @@
                         <span><%= livro.categoria %></span>
                     </div>
                 
-    <div class="meta-item <%= livro.quantidade_disponivel > 0 ?
-'status-disponivel' : 'status-indisponivel' %>">
-                        <i class="fas <%= livro.quantidade_disponivel > 0 ?
-'fa-check-circle' : 'fa-times-circle' %>"></i>
+                    <div class="meta-item <%= livro.quantidade_disponivel > 0 ? 'status-disponivel' : 'status-indisponivel' %>">
+                        <i class="fas <%= livro.quantidade_disponivel > 0 ? 'fa-check-circle' : 'fa-times-circle' %>"></i>
                         <span><%= livro.quantidade_disponivel > 0 ? `${livro.quantidade_disponivel} cópia(s) disponível(is)` : 'Indisponível' %></span>
                     </div>
                 </div>
@@ -60,40 +59,38 @@
                 <% } %>
 
               
-  <div class="action-buttons">
+                <div class="action-buttons">
                     <div class="favorito-action">
                         <% if (usuarioJaFavoritou) { %>
       
                       <form action="/catalogo/desfavoritar/<%= livro.id %>" method="POST" class="action-form" id="formFavoritar">
                                 <button type="submit" class="btn btn-danger" id="btnFavoritar">
-                                    <i class="fas 
-fa-heart-broken"></i> Remover dos Favoritos
+                                    <i class="fas fa-heart-broken"></i> Remover dos Favoritos
                                 </button>
                             </form>
                         <% } else { %>
          
                    <form action="/catalogo/favoritar/<%= livro.id %>" method="POST" class="action-form" id="formFavoritar">
                                 <button type="submit" class="btn btn-primary" id="btnFavoritar">
-                                    <i class="fas fa-heart"></i> Adicionar aos 
-Favoritos
+                                    <i class="fas fa-heart"></i> Adicionar aos Favoritos
                                 </button>
                             </form>
                         <% } %>
               
-      </div>
+                        </div>
+
 
                     <% if (emprestimoUsuario) { %>
                         <% if (emprestimoUsuario.status === 'solicitado') { %>
                   
-          <form action="/emprestimo/cancelar-solicitacao/<%= emprestimoUsuario.id %>" method="POST" class="action-form">
+                            <form action="/emprestimo/cancelar-solicitacao/<%= emprestimoUsuario.id %>" method="POST" class="action-form">
                                 <button type="submit" class="btn btn-warning">
                                     <i class="fas fa-times"></i> Cancelar Solicitação
-          
-                      </button>
+                                </button>
                             </form>
                         <% } else { %>
                       
-      <button class="btn btn-secondary" disabled>
+                            <button class="btn btn-secondary" disabled>
                                 <i class="fas fa-check"></i> Empréstimo Ativo
                             </button>
                         <% } %>
@@ -107,13 +104,15 @@ Favoritos
                         </form>
                     <% } %>
 
-   
                  <% if (user.role === 'admin') { %>
                         <a href="/catalogo/editar/<%= livro.id %>" class="btn btn-secondary">
-                         
-   <i class="fas fa-edit"></i> Editar Livro
+                            <i class="fas fa-edit"></i> Editar Livro
                         </a>
                     <% } %>
+                
+                    <button class="btn btn-outline" id="btnGerarQuiz" data-livro-id="<%= livro.id %>">
+                        <i class="fas fa-magic"></i> Gerar Quiz com IA
+                    </button>
                 </div>
             </div>
         </div>
@@ -178,8 +177,7 @@ Favoritos
         </h3>
         
         <form action="/catalogo/comentar/<%= livro.id %>" method="POST" class="comment-form" id="form-comentario">
-            <textarea name="texto" placeholder="Deixe seu comentário sobre o 
-livro..." required></textarea>
+            <textarea name="texto" placeholder="Deixe seu comentário sobre o livro..." required></textarea>
             <button type="submit" class="btn btn-primary" id="btnComentar">
                 <i class="fas fa-comment"></i> Comentar
             </button>
@@ -188,7 +186,7 @@ livro..." required></textarea>
         <div class="comments-list">
             <% if (livro.comentarios && livro.comentarios.length > 0) { %>
                 
-<% livro.comentarios.forEach(comentario => { %>
+            <% livro.comentarios.forEach(comentario => { %>
                     <div class="comment-item" id="comentario-<%= comentario.id %>">
                         <div class="comment-header">
                             <div class="comment-author">
@@ -252,5 +250,29 @@ livro..." required></textarea>
         </div>
     </div>
 </div>
+<div class="quiz-modal-backdrop" id="quizModalBackdrop">
+    <div class="quiz-modal-container">
+        <div class="quiz-modal-header">
+            <h3 class="quiz-modal-title" id="quizModalTitle">Gerando seu quiz...</h3>
+            <button class="quiz-modal-close" id="quizModalCloseBtn">&times;</button>
+        </div>
+        <div class="quiz-modal-body" id="quizModalBody">
+            <div class="quiz-loader-container" id="quizLoader">
+                <div class="quiz-loader"></div>
+                <p>Aguarde, a IA está pensando...</p>
+            </div>
 
-<%- include('partials/footer') %>
+            <div class="quiz-perguntas-container" id="quizPerguntasContainer"></div>
+            
+            <div class="quiz-resultado-container" id="quizResultadoContainer"></div>
+        </div>
+        <div class="quiz-modal-footer" id="quizModalFooter">
+            <button class="btn btn-secondary" id="quizModalCloseBtnFooter">Fechar</button>
+            <button class="btn btn-primary" id="quizModalVerificarBtn">Verificar Respostas</button>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer', {
+    jsFile: 'detalhes.js'
+}) %>

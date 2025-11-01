@@ -1,0 +1,242 @@
+/* public/css/quiz-modal.css (VERSÃO MELHORADA) */
+
+.quiz-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: none; /* Começa escondido */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.quiz-modal-backdrop.show {
+    display: flex;
+    opacity: 1;
+}
+
+.quiz-modal-container {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 700px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.quiz-modal-backdrop.show .quiz-modal-container {
+    transform: scale(1);
+}
+
+.quiz-modal-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quiz-modal-title {
+    font-family: 'Inter', sans-serif;
+    color: var(--primary);
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.quiz-modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+.quiz-modal-close:hover {
+    color: var(--primary);
+}
+
+.quiz-modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.quiz-modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+/* Garante que os botões do footer tenham largura automática */
+.quiz-modal-footer .btn {
+    width: auto;
+}
+
+/* --- Loader (sem alteração) --- */
+.quiz-loader-container {
+    text-align: center;
+    padding: 2rem 0;
+}
+.quiz-loader {
+    height: 50px;
+    width: 50px;
+    margin: 0 auto 1rem;
+    background-color: transparent;
+    border: 0.3em solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+.quiz-loader-container p {
+    font-family: 'Lora', serif;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Esconder elementos (sem alteração) --- */
+#quizPerguntasContainer,
+#quizResultadoContainer,
+#quizModalVerificarBtn {
+    display: none;
+}
+
+/* --- Perguntas (Atualizado) --- */
+.quiz-pergunta-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--border);
+}
+.quiz-pergunta-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.quiz-pergunta-item p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.quiz-opcoes-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* --- Opções de Resposta (Totalmente Reformulado) --- */
+.quiz-opcao-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+}
+
+/* Esconde o radio button original */
+.quiz-opcao-label input[type="radio"] {
+    display: none;
+}
+
+/* Cria um "falso" radio button */
+.quiz-opcao-label::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.quiz-opcao-label:hover {
+    background: var(--background);
+    border-color: var(--primary-light);
+}
+
+/* Estilo do "falso" radio button quando selecionado */
+.quiz-opcao-label input[type="radio"]:checked + ::before {
+    border-color: var(--primary);
+    background: var(--primary);
+    box-shadow: 0 0 0 3px var(--surface) inset;
+}
+
+/* --- Estilos de Verificação (Atualizado) --- */
+.quiz-opcao-label.correta {
+    border-color: var(--success) !important;
+    background: #e8f5e9 !important;
+    font-weight: 600;
+    color: var(--success);
+}
+.quiz-opcao-label.correta::before {
+    border-color: var(--success) !important;
+    background: var(--success) !important;
+}
+
+.quiz-opcao-label.incorreta {
+    border-color: var(--error) !important;
+    background: #ffebee !important;
+    color: var(--error);
+    opacity: 0.9;
+}
+.quiz-opcao-label.incorreta::before {
+    border-color: var(--error) !important;
+    background: var(--error) !important;
+}
+
+/* Desabilita o hover quando as respostas são verificadas */
+.quiz-opcoes-group.verificado .quiz-opcao-label:not(.correta):not(.incorreta) {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* --- Resultado (Atualizado) --- */
+#quizResultadoContainer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--background);
+    border-radius: 8px;
+    animation: fadeInResultado 0.5s ease;
+}
+#quizResultadoContainer h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin: 0;
+}
+#quizResultadoContainer p {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-top: 0.25rem;
+}
+
+@keyframes fadeInResultado {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

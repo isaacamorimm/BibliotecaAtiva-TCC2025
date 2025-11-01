@@ -2,7 +2,10 @@ import livroRepository from "../repositories/livroRepository.js";
 import axios from "axios";
 import { Avaliacao, Comentario, Favorito, Emprestimo } from "../models/index.js";
 import { Op } from "sequelize";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 class LivroController {
     async adicionarLivro(req, res) {
@@ -348,6 +351,89 @@ class LivroController {
         } catch (error) {
             console.error('Erro ao remover comentário:', error);
             return res.redirect(`/catalogo/detalhes/${req.body.livroId}?error=Ocorreu um erro ao remover o comentário.`);
+        }
+    }
+
+async gerarQuiz(req, res) {
+        let rawTextForError = "N/A";
+
+        try {
+            const livroId = req.params.id;
+            const livro = await livroRepository.findById(livroId);
+
+            if (!livro) {
+                console.error(`[gerarQuiz] Livro com ID ${livroId} não encontrado.`);
+                return res.status(404).json({ error: 'Livro não encontrado.' });
+            }
+
+            const prompt = `
+                Você é um assistente de biblioteca criando um quiz para testar o conhecimento de um leitor.
+                O livro é: "${livro.titulo}", escrito por ${livro.autor}.
+
+                Usando seu conhecimento geral sobre esta obra (enredo, personagens, temas principais), crie 5 perguntas de múltipla escolha (com 4 opções cada) que um leitor que terminou o livro deveria saber responder.
+
+                IMPORTANTE: As perguntas devem ser sobre o *conteúdo* do livro (plot, personagens, etc.), e NÃO sobre os metadados (como autor, título ou sinopse) que eu forneci para identificar a obra.
+
+                Retorne APENAS um objeto JSON válido.
+                NÃO inclua markdown, como \`\`\`json ou \`\`\`.
+                A sua resposta DEVE começar com { e terminar com }.
+                
+                Siga EXATAMENTE esta estrutura:
+                {
+                  "tituloQuiz": "Quiz sobre ${livro.titulo}",
+                  "perguntas": [
+                    {
+                      "pergunta": "Texto da pergunta aqui...",
+                      "opcoes": ["Opção A", "Opção B", "Opção C", "Opção D"],
+                      "resposta_correta_index": 0 
+                    }
+                    // ... (restante das perguntas)
+                  ]
+                }
+            `;
+            console.log(`[gerarQuiz] Enviando prompt para IA (Livro ID ${livroId}).`);
+
+            let quizJSON;
+            try {
+                const result = await model.generateContent(prompt);
+                const response = result.response;
+                let text = response.text();
+                
+                rawTextForError = text; 
+
+                // LÓGICA DE LIMPEZA
+                const match = text.match(/\{[\s\S]*\}/);
+
+                if (match) {
+                    text = match[0];
+                } else {
+                    throw new Error("Nenhum objeto JSON válido (começando com { e terminando com }) foi encontrado na resposta da IA.");
+                }
+                
+                console.log(`[gerarQuiz] Resposta crua recebida. Tentando limpar...`);
+                quizJSON = JSON.parse(text); 
+                console.log(`[gerarQuiz] Quiz recebido e parseado com sucesso (Livro ID ${livroId}).`);
+
+            } catch (generationError) {
+                console.error(`[gerarQuiz] Erro ao chamar ou parsear resposta da IA (Livro ID ${livroId}):`, generationError.message);
+                console.error("[gerarQuiz] Resposta crua da IA:", rawTextForError);
+                return res.status(500).json({
+                    error: 'A IA não retornou um formato esperado. Tente novamente.',
+                    raw_response: rawTextForError
+                });
+            }
+            
+            // Validar a estrutura básica do JSON recebido
+            if (!quizJSON || !quizJSON.perguntas || !Array.isArray(quizJSON.perguntas) || quizJSON.perguntas.length === 0) {
+                 console.error(`[gerarQuiz] Estrutura JSON inválida recebida da IA (Livro ID ${livroId}):`, quizJSON);
+                 return res.status(500).json({ error: 'A IA retornou dados em um formato inesperado.' });
+            }
+
+            return res.status(200).json(quizJSON);
+
+        } catch (error) {
+            console.error(`[gerarQuiz] Erro GERAL ao gerar quiz para Livro ID ${req.params.id}:`, error);
+            return res.status(500).json({ error: 'Ocorreu um erro interno ao tentar gerar o quiz.' });
         }
     }
 

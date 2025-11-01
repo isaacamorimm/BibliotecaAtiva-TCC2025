@@ -31,4 +31,7 @@ router.post('/comentario/remover/:id', isAuthenticated, isAdmin, livroController
 router.post('/favoritar/:id', isAuthenticated, livroController.favoritarLivro);
 router.post('/desfavoritar/:id', isAuthenticated, livroController.desfavoritarLivro);
 
+// Rota para gerar quiz do livro
+router.post('/livro/:id/gerar-quiz', isAuthenticated, livroController.gerarQuiz);
+
 export default router;
