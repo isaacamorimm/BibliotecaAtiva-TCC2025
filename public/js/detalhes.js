@@ -1,4 +1,3 @@
-/* === LÓGICA ANTIGA (Formulários) === */
 function desabilitarBotao(botao, texto = 'Enviando...') {
     if (botao) {
         botao.disabled = true;
@@ -94,17 +93,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const opcoesGroup = document.createElement('div');
             opcoesGroup.className = 'quiz-opcoes-group';
             
-            pergunta.opcoes.forEach((opcao, i) => {
+                pergunta.opcoes.forEach((opcao, i) => {
                 const label = document.createElement('label');
                 label.className = 'quiz-opcao-label';
                 
                 const input = document.createElement('input');
                 input.type = 'radio';
                 input.name = `pergunta-${index}`;
-                input.value = i; // O valor é o índice da opção
+                input.value = i; 
+                
+                // Cria os spans que o CSS vai estilizar
+                const customRadio = document.createElement('span');
+                customRadio.className = 'quiz-radio-custom';
+
+                const radioText = document.createElement('span');
+                radioText.className = 'quiz-radio-text';
+                radioText.textContent = ` ${opcao}`; 
                 
                 label.appendChild(input);
-                label.appendChild(document.createTextNode(` ${opcao}`));
+                label.appendChild(customRadio); 
+                label.appendChild(radioText);  
                 opcoesGroup.appendChild(label);
             });
             
