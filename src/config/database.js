@@ -1,5 +1,3 @@
-// src/config/database.js
-
 import { Sequelize } from 'sequelize';
 import 'dotenv/config';
 
@@ -12,7 +10,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
       rejectUnauthorized: false
     }
   },
-  dialectModule: await import('pg').then(mod => mod.default) 
+  dialectModule: await import('pg').then(mod => mod.default)
 });
 
 export default sequelize;

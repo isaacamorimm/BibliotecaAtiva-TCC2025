@@ -40,9 +40,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             try {
                 const response = await fetch(`/catalogo/api/buscar-capa?q=${encodeURIComponent(termoBusca)}`);
+                
+                if (!response.ok) {
+                    throw new Error('Falha na comunicação com o servidor');
+                }
+
                 const livros = await response.json();
 
-                resultadosDiv.innerHTML = ''; // Limpa o loader (como já fazia)
+                resultadosDiv.innerHTML = ''; 
+
+                if (!Array.isArray(livros)) {
+                    console.error("Formato inesperado recebido:", livros);
+                    throw new Error('Formato de resposta inválido');
+                }
 
                 if (livros.length === 0) {
                     resultadosDiv.innerHTML = '<p class="form-text">Nenhuma capa encontrada.</p>';
@@ -59,13 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     img.title = `Selecionar capa de: ${livro.titulo}`;
                     
                     img.addEventListener('click', () => {
-                        // Remove a seleção de outras imagens
                         document.querySelectorAll('.capa-item.selected').forEach(item => item.classList.remove('selected'));
                         
-                        // Adiciona a seleção a este container
                         imgContainer.classList.add('selected');
                         
-                        // Guarda a URL no campo oculto!
                         inputCapaUrl.value = livro.capaUrl;
                     });
 
@@ -74,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
             } catch (error) {
-                resultadosDiv.innerHTML = '<p class="form-text error-text">Erro ao buscar capas. Tente novamente.</p>';
+                resultadosDiv.innerHTML = '<p class="form-text error-text">Erro ao buscar capas. Verifique a conexão.</p>';
                 console.error(error);
             }
         });

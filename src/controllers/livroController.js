@@ -177,7 +177,13 @@ class LivroController {
         res.json(livros.slice(0,8)); // Retorna apenas os 8 primeiros resultados
 
         } catch (error) {
-            console.error('Erro ao buscar na Google Books API:', error);
+            if (error.response) {
+                console.error('Erro detalhado da Google API:', JSON.stringify(error.response.data, null, 2));
+            } else {
+                console.error('Erro ao buscar na Google Books API:', error.message);
+            }
+            
+            // Mantenha a resposta de erro
             res.status(500).json({ error: 'Erro ao conectar com a API do Google Books.' });
         }
     }
